@@ -25,21 +25,33 @@ const ProfileForm = () => {
         Authorization: `Bearer ${authCtx.token}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        // error
+        return res.json().then((data) => {
+          let errorMessage =
+            data.error || 'Password must be at least 4 characters long';
+          //
+          throw new Error(errorMessage);
+        });
+      })
       .then((data) => {
         console.log(data);
-        alert(data.message);
+        alert('Password changed');
       })
       .catch((err) => {
         console.log(err);
+        alert(err.message);
       });
   };
 
   return (
     <form className={classes.form} onSubmit={submitHandler}>
       <div className={classes.control}>
-        <label htmlFor="new-password">New Password</label>
-        <input type="password" id="new-password" ref={newPasswordInputRef} />
+        <label htmlFor="newPassword">New Password</label>
+        <input type="password" id="newPassword" ref={newPasswordInputRef} />
       </div>
       <div className={classes.action}>
         <button>Change Password</button>

@@ -1,108 +1,153 @@
-import { useRef, useState, useContext } from 'react';
+import { useContext } from 'react';
+import { Form, Input, Button } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 import AuthContext from '../../store/auth-context';
-import classes from './AuthForm.module.css';
+
+import useFetch from '../../hooks/useFetch';
+
+import './SignUpForm.css';
+
+const formItemLayout = {
+  labelCol: {
+    xs: {
+      span: 8,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 24,
+    },
+  },
+};
+
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 8,
+    },
+  },
+};
 
 const SignUpForm = () => {
   const history = useHistory();
-  const emailInputRef = useRef();
-  const passwordInputRef = useRef();
-  const confirmPasswordInputRef = useRef();
-
-  const [isLoading, setIsLoading] = useState(false);
+  const [form] = Form.useForm();
 
   const authCtx = useContext(AuthContext);
 
-  const submitHandler = (event) => {
-    event.preventDefault();
+  const { isFetching: isLoading, sendRequest } = useFetch();
 
-    const enteredEmail = emailInputRef.current.value.trim();
-    const enteredPassword = passwordInputRef.current.value.trim();
-    const enteredConfirmPassword = confirmPasswordInputRef.current.value.trim();
-
-    //TODO: add validation
-
-    setIsLoading(true);
-
-    if (enteredPassword !== enteredConfirmPassword) {
-      setIsLoading(false);
-      return alert('Passwords do not match');
-    }
+  const onFinish = (values) => {
+    // console.log('Received values of form: ', values);
+    const { username, password, email, confirm } = values;
 
     const url = `${process.env.REACT_APP_AUTH_API_URL}/signup`;
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({
-        email: enteredEmail,
-        password: enteredPassword,
-        confirmPassword: enteredConfirmPassword,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        setIsLoading(false);
-        if (res.ok) {
-          return res.json();
-        }
-        // error
-        return res.json().then((data) => {
-          let errorMessage = data.error || 'Authentication failed';
-          //
-          throw new Error(errorMessage);
-        });
-      })
-      .then((data) => {
+    sendRequest(
+      url,
+      { username, password, email, confirmPassword: confirm },
+      (data) => {
         console.log(data);
-        const { token, user } = data;
+        const { token } = data;
         authCtx.login(token);
 
         history.replace('/');
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        console.log(err);
-        alert(err.message);
-      });
+      },
+    );
   };
 
   return (
-    <section className={classes.auth}>
-      <h1>Sign up</h1>
-      <form onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor="email">Your Email</label>
-          <input type="email" id="email" required ref={emailInputRef} />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="password">Your password</label>
-          <input
-            type="password"
-            id="password"
-            required
-            minlength="4"
-            ref={passwordInputRef}
-          />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="confirmPassword">Confirm your password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            required
-            minlength="4"
-            ref={confirmPasswordInputRef}
-          />
-        </div>
-        <div className={classes.actions}>
-          {!isLoading && <button>Sign Up</button>}
-          {isLoading && <p>Sending request...</p>}
-        </div>
-      </form>
-    </section>
+    <div className="signup-wrapper">
+      <h1>Create your account </h1>
+      <Form
+        {...formItemLayout}
+        form={form}
+        name="register"
+        className="signup-form"
+        onFinish={onFinish}
+        scrollToFirstError
+      >
+        <Form.Item
+          name="username"
+          label="Username"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your Username!',
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="email"
+          label="E-mail"
+          rules={[
+            {
+              type: 'email',
+              message: 'The input is not valid E-mail!',
+            },
+            {
+              required: true,
+              message: 'Please input your E-mail!',
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your password!',
+            },
+          ]}
+          hasFeedback
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          name="confirm"
+          label="Confirm Password"
+          dependencies={['password']}
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: 'Please confirm your password!',
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+
+                return Promise.reject(
+                  new Error('The two passwords that you entered do not match!'),
+                );
+              },
+            }),
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit" loading={isLoading}>
+            Register
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 

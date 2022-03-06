@@ -1,88 +1,97 @@
-import { useRef, useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-
+import React, { useContext } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 import AuthContext from '../../store/auth-context';
-import classes from './AuthForm.module.css';
+ 
+import { Form, Input, Button, Checkbox } from 'antd';
+import { UserOutlined, LockOutlined} from '@ant-design/icons';
+
+import useFetch from '../../hooks/useFetch';
+
+import './LoginForm.css';
 
 const LoginForm = () => {
   const history = useHistory();
-  const emailInputRef = useRef();
-  const passwordInputRef = useRef();
-  const [isLoading, setIsLoading] = useState(false);
+  const { isFetching: isLoading, sendRequest } = useFetch();
 
   const authCtx = useContext(AuthContext);
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-
-    const enteredEmail = emailInputRef.current.value;
-    const enteredPassword = passwordInputRef.current.value;
-
-    //TODO: add validation
-
-    setIsLoading(true);
+  const onFinish = (values) => {
+    // console.log('Received values of form: ', values);
+    const { username, password } = values;
 
     const url = `${process.env.REACT_APP_AUTH_API_URL}/login`;
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({
-        email: enteredEmail,
-        password: enteredPassword,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        setIsLoading(false);
-        if (res.ok) {
-          return res.json();
-        }
-        // error
-        return res.json().then((data) => {
-          let errorMessage = data.error || 'Authentication failed';
-          //
-          throw new Error(errorMessage);
-        });
-      })
-      .then((data) => {
-        console.log(data);
-        const { token, user } = data;
-        authCtx.login(token);
+    sendRequest(url, { username, password }, (data) => {
+      console.log(data);
+      const { token } = data;
+      authCtx.login(token);
 
-        history.replace('/');
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        console.log(err);
-        alert(err.message);
-      });
+      history.replace('/');
+    });
   };
 
   return (
-    <section className={classes.auth}>
-      <h1>Login</h1>
-      <form onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" required ref={emailInputRef} />
+    <Form
+      name="normal_login"
+      className="login-form"
+      initialValues={{
+        remember: true,
+      }}
+      onFinish={onFinish}
+    >
+      <Form.Item
+        name="username"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Username!',
+          },
+        ]}
+      >
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Username"
+        />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Password!',
+          },
+        ]}
+      >
+        <Input
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          type="password"
+          placeholder="Password"
+        />
+      </Form.Item>
+      <Form.Item>
+        <Form.Item name="remember" valuePropName="checked" noStyle>
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+
+        <a className="login-form-forgot" href="/">
+          Forgot password?
+        </a>
+      </Form.Item>
+
+      <Form.Item>
+        <div>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+            loading={isLoading}
+          >
+            Log In
+          </Button>
+          Or <Link to="/auth/signup">Register now!</Link>
         </div>
-        <div className={classes.control}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            required
-            ref={passwordInputRef}
-          />
-        </div>
-        <div className={classes.actions}>
-          {!isLoading && <button>Login</button>}
-          {isLoading && <p>Sending request...</p>}
-        </div>
-      </form>
-    </section>
+      </Form.Item>
+    </Form>
   );
 };
 
