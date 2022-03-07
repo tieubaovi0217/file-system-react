@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import AuthContext from '../../store/auth-context';
- 
+
 import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined} from '@ant-design/icons';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 import useFetch from '../../hooks/useFetch';
 
@@ -19,7 +19,8 @@ const LoginForm = () => {
     // console.log('Received values of form: ', values);
     const { username, password } = values;
 
-    const url = `${process.env.REACT_APP_AUTH_API_URL}/login`;
+    console.log(process.env.REACT_APP_API_URL);
+    const url = `${process.env.REACT_APP_API_URL}/auth/login`;
 
     sendRequest(url, { username, password }, (data) => {
       console.log(data);

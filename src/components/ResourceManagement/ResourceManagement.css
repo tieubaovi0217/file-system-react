@@ -1,0 +1,33 @@
+@import '~antd/dist/antd.css';
+
+[class~='ant-col'] {
+  background: transparent;
+  border: 0;
+  text-align: center;
+}
+[class~='ant-col'] .file-icon {
+  height: 60px;
+  font-size: 48px;
+  line-height: 48px;
+  /* background: #0092ff; */
+  /* border-radius: 4px; */
+}
+
+[class~='ant-col'] .file-name {
+  font-size: 16px;
+}
+pre {
+  padding: 8px 16px;
+  font-size: 13px;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+pre.demo-code {
+  direction: ltr;
+}
+.ant-col {
+  padding: 0;
+}
+[data-theme='dark'] [class~='ant-col'] > div {
+  background: #028ac8;
+}

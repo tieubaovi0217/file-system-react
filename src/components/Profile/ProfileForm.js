@@ -13,7 +13,7 @@ const ProfileForm = () => {
 
     const enteredNewPassword = newPasswordInputRef.current.value;
 
-    const url = `${process.env.REACT_APP_AUTH_API_URL}/changepassword`;
+    const url = `${process.env.REACT_APP_API_URL}/changepassword`;
 
     fetch(url, {
       method: 'POST',

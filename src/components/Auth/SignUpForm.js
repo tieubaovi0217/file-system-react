@@ -46,7 +46,7 @@ const SignUpForm = () => {
     // console.log('Received values of form: ', values);
     const { username, password, email, confirm } = values;
 
-    const url = `${process.env.REACT_APP_AUTH_API_URL}/signup`;
+    const url = `${process.env.REACT_APP_API_URL}/auth/signup`;
 
     sendRequest(
       url,

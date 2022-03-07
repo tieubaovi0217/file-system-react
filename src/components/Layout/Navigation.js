@@ -3,11 +3,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { Menu, Button } from 'antd';
 
-import {
-  MailOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
 import AuthContext from '../../store/auth-context';
 
 const Navigation = () => {
@@ -29,7 +24,6 @@ const Navigation = () => {
     history.replace('/auth/login');
   };
 
-  console.log(isLoggedIn);
   return (
     <Menu
       onClick={handleClick}
@@ -37,7 +31,7 @@ const Navigation = () => {
       mode="horizontal"
       style={{ paddingLeft: '16px', paddingRight: '16px' }}
     >
-      <Menu.Item>Administration</Menu.Item>
+      <Menu.Item key="administration">Administration</Menu.Item>
 
       <Menu.Item key="resources" style={{ marginLeft: 'auto' }}>
         <Link to="/resources">Resources</Link>
@@ -55,9 +49,14 @@ const Navigation = () => {
       )}
 
       {isLoggedIn && (
-        <Menu.Item key="logout">
-          <Button onClick={logoutHandler}>Logout</Button>
-        </Menu.Item>
+        <>
+          <Menu.Item key="profile">
+            <Link to="/profile">Profile</Link>
+          </Menu.Item>
+          <Menu.Item key="logout">
+            <Button onClick={logoutHandler}>Logout</Button>
+          </Menu.Item>
+        </>
       )}
     </Menu>
   );

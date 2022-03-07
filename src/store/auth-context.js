@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 const AuthContext = React.createContext({
   token: '',
   isLoggedIn: false,
-  login: (token) => {},
-  logout: (token) => {},
+  login: () => {},
+  logout: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -18,7 +18,7 @@ export const AuthContextProvider = (props) => {
     localStorage.setItem('token', token);
   };
 
-  const logoutHandler = (token) => {
+  const logoutHandler = () => {
     setToken(null);
     localStorage.removeItem('token');
   };

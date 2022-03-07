@@ -3,7 +3,7 @@
   box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.1);
   padding: 16px;
   max-width: 300px;
-  margin: 100px auto;
+  margin: 0 auto;
 }
 .login-form-forgot {
   float: right;

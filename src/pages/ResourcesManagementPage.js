@@ -1,7 +1,9 @@
 import React from 'react';
 
+import ResourceManagement from '../components/ResourceManagement/ResourceManagement';
+
 const ResourcesManagementPage = () => {
-  return <div>ResourcesManagementPage</div>;
+  return <ResourceManagement />;
 };
 
 export default ResourcesManagementPage;
