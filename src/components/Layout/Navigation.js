@@ -1,14 +1,15 @@
 import { Link, useHistory } from 'react-router-dom';
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Menu, Button } from 'antd';
 
-import AuthContext from '../../store/auth-context';
+import { useSelector, useDispatch } from 'react-redux';
+import { authActions } from '../../store/auth';
 
 const Navigation = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const authCtx = useContext(AuthContext);
-  const { isLoggedIn } = authCtx;
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const [state, setState] = useState({
     current: 'login',
@@ -19,8 +20,7 @@ const Navigation = () => {
   };
 
   const logoutHandler = () => {
-    authCtx.logout();
-    //TODO: redirect user to login
+    dispatch(authActions.logout());
     history.replace('/auth/login');
   };
 
@@ -37,7 +37,7 @@ const Navigation = () => {
         <Link to="/resources">Resources</Link>
       </Menu.Item>
 
-      {!isLoggedIn && (
+      {!isAuthenticated && (
         <>
           <Menu.Item key="login">
             <Link to="/auth/login">Login</Link>
@@ -48,7 +48,7 @@ const Navigation = () => {
         </>
       )}
 
-      {isLoggedIn && (
+      {isAuthenticated && (
         <>
           <Menu.Item key="profile">
             <Link to="/profile">Profile</Link>

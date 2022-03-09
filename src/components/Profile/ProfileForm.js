@@ -1,12 +1,9 @@
-import { useRef, useContext } from 'react';
+import { useRef } from 'react';
 
-import AuthContext from '../../store/auth-context';
 import classes from './ProfileForm.module.css';
 
 const ProfileForm = () => {
   const newPasswordInputRef = useRef();
-
-  const authCtx = useContext(AuthContext);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -22,7 +19,9 @@ const ProfileForm = () => {
       }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${authCtx.token}`,
+        Authorization: `Bearer ${
+          localStorage.getItem('token') ? localStorage.getItem('token') : ''
+        }`,
       },
     })
       .then((res) => {

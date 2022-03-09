@@ -1,12 +1,11 @@
-import { useContext } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { useHistory } from 'react-router-dom';
-
-import AuthContext from '../../store/auth-context';
 
 import useFetch from '../../hooks/useFetch';
 
 import './SignUpForm.css';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../store/auth';
 
 const formItemLayout = {
   labelCol: {
@@ -35,10 +34,9 @@ const tailFormItemLayout = {
 };
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [form] = Form.useForm();
-
-  const authCtx = useContext(AuthContext);
 
   const { isFetching: isLoading, sendRequest } = useFetch();
 
@@ -48,17 +46,27 @@ const SignUpForm = () => {
 
     const url = `${process.env.REACT_APP_API_URL}/auth/signup`;
 
-    sendRequest(
-      url,
-      { username, password, email, confirmPassword: confirm },
-      (data) => {
-        console.log(data);
-        const { token } = data;
-        authCtx.login(token);
-
-        history.replace('/');
+    sendRequest(url, {
+      method: 'POST',
+      body: JSON.stringify({
+        username,
+        password,
+        email,
+        confirmPassword: confirm,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+    })
+      .then((data) => {
+        console.log(data);
+        dispatch(authActions.login(data));
+        history.replace('/');
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error(err.message, 1);
+      });
   };
 
   return (

@@ -1,7 +1,5 @@
-import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-
-import AuthContext from '../../store/auth-context';
 
 export const ProtectedRoute = ({
   path,
@@ -9,14 +7,14 @@ export const ProtectedRoute = ({
   render,
   ...rest
 }) => {
-  const authCtx = useContext(AuthContext);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <Route
       path={path}
       {...rest}
       render={(props) => {
-        if (authCtx.isLoggedIn) {
+        if (isAuthenticated) {
           return Component ? <Component {...props} /> : render(props);
         } else {
           return <Redirect to="/auth/login" />;

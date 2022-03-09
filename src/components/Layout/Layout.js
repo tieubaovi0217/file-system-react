@@ -8,7 +8,9 @@ const Layout = (props) => {
       <header>
         <Navigation />
       </header>
-      <main className={classes.main}>{props.children}</main>
+      <main>
+        <div className={classes.main}>{props.children}</div>
+      </main>
     </>
   );
 };
