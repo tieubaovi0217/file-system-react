@@ -48,6 +48,10 @@ const LoginForm = () => {
       }}
       onFinish={onFinish}
     >
+      {/* TODO: fix this temporary style */}
+      <Form.Item style={{ textAlign: 'center' }}>
+        <LockOutlined style={{ fontSize: '28px' }} />
+      </Form.Item>
       <Form.Item
         name="username"
         rules={[
@@ -76,15 +80,6 @@ const LoginForm = () => {
           type="password"
           placeholder="Password"
         />
-      </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <a className="login-form-forgot" href="/">
-          Forgot password?
-        </a>
       </Form.Item>
 
       <Form.Item>

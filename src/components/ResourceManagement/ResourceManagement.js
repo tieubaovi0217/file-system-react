@@ -1,17 +1,15 @@
+import File from './File';
+import Folder from './Folder';
 import * as moment from 'moment';
 import prettyBytes from 'pretty-bytes';
 import { useState, useEffect } from 'react';
 
 import './ResourceManagement.css';
 
-import { Row, Col, Button, Breadcrumb, Input, Spin, message } from 'antd';
+import { Row, Button, Breadcrumb, Input, Spin, message } from 'antd';
 import useFetch from '../../hooks/useFetch';
 
-import {
-  FileOutlined,
-  FolderOpenFilled,
-  ArrowLeftOutlined,
-} from '@ant-design/icons';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 
@@ -57,42 +55,14 @@ const ResourceManagement = () => {
       });
   }, [sendRequest, resourcesPath]);
 
-  const folderDoubleClickHandler = (folderName) => {
-    setResourcesPath(
-      (prevResourcesPath) => `${prevResourcesPath}/${folderName}`,
-    );
-  };
-
-  const fileDoubleClickHandler = (fileName) => {
-    console.log(fileName);
-  };
-
-  const resourceDoubleClickHandler = (resource) => {
-    if (resource.isFile) {
-      return fileDoubleClickHandler(resource.name);
-    }
-
-    folderDoubleClickHandler(resource.name);
-  };
-
-  const cols = resources.map((resource, index) => {
+  const cols = resources.map((resource) => {
     //TODO: map icons to resources
     //TODO: long resource name
+    if (resource.isFile)
+      return <File fileName={resource.name} onDoubleClick={() => {}} />;
+
     return (
-      <Col
-        className="resource"
-        key={`${index + 1}`}
-        span={3}
-        onDoubleClick={() => {
-          resourceDoubleClickHandler(resource);
-        }}
-      >
-        <div className="resource__icon">
-          {resource.isFile && <FileOutlined />}
-          {resource.isDirectDirectory && <FolderOpenFilled />}
-        </div>
-        <div className="resource__name">{resource.name}</div>
-      </Col>
+      <Folder folderName={resource.name} onDoubleClick={setResourcesPath} />
     );
   });
 
@@ -110,7 +80,6 @@ const ResourceManagement = () => {
   const breadcrumbItems = resourcesPath
     .split('/')
     .map((resourcePath, index) => {
-      if (index === 0) resourcePath = 'root';
       return <Breadcrumb.Item key={index + 1}>{resourcePath}</Breadcrumb.Item>;
     });
 

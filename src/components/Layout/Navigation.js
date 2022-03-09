@@ -2,6 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { useState } from 'react';
 import { Menu, Button } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '../../store/auth';
@@ -10,6 +11,7 @@ const Navigation = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user);
 
   const [state, setState] = useState({
     current: 'login',
@@ -51,7 +53,9 @@ const Navigation = () => {
       {isAuthenticated && (
         <>
           <Menu.Item key="profile">
-            <Link to="/profile">Profile</Link>
+            <Link to="/profile">
+              Profile, {user?.username} <UserOutlined />
+            </Link>
           </Menu.Item>
           <Menu.Item key="logout">
             <Button onClick={logoutHandler}>Logout</Button>
