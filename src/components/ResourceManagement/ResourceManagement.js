@@ -1,17 +1,14 @@
+import './ResourceManagement.css';
 import File from './File';
 import Folder from './Folder';
 import * as moment from 'moment';
 import prettyBytes from 'pretty-bytes';
 import { useState, useEffect } from 'react';
 
-import './ResourceManagement.css';
-
-import { Row, Button, Breadcrumb, Input, Spin, message } from 'antd';
+import { Row, Spin, message } from 'antd';
 import useFetch from '../../hooks/useFetch';
 
-import { ArrowLeftOutlined } from '@ant-design/icons';
-
-const { Search } = Input;
+import ResourcesHeader from './Header';
 
 const ResourceManagement = () => {
   const { sendRequest, isFetching: isLoading } = useFetch();
@@ -66,44 +63,12 @@ const ResourceManagement = () => {
     );
   });
 
-  const onSearch = (value) => {
-    console.log(value);
-  };
-
-  const backButtonClickHandler = () => {
-    const updatedResourcesPath = resourcesPath.split('/');
-    updatedResourcesPath.pop();
-
-    setResourcesPath(updatedResourcesPath.join('/'));
-  };
-
-  const breadcrumbItems = resourcesPath
-    .split('/')
-    .map((resourcePath, index) => {
-      return <Breadcrumb.Item key={index + 1}>{resourcePath}</Breadcrumb.Item>;
-    });
-
   return (
     <section className="resources">
-      <div className="resources__header">
-        <Button
-          shape="circle"
-          onClick={backButtonClickHandler}
-          disabled={
-            resourcesPath === process.env.REACT_APP_RESOURCES_ROOT_FOLDER_PATH
-          }
-        >
-          <ArrowLeftOutlined />
-        </Button>
-        <Breadcrumb className="resources__path">{breadcrumbItems}</Breadcrumb>
-        <Search
-          className="resources__search-bar"
-          placeholder="Search file"
-          allowClear
-          onSearch={onSearch}
-          style={{ width: 240 }}
-        />
-      </div>
+      <ResourcesHeader
+        resourcesPath={resourcesPath}
+        onBackButtonClicked={setResourcesPath}
+      />
       {!isLoading && <Row gutter={[8, 12]}>{cols}</Row>}
       {isLoading && (
         <div className="resources__spinner">

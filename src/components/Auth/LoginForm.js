@@ -1,3 +1,4 @@
+import './LoginForm.css';
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 
@@ -5,8 +6,6 @@ import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 import useFetch from '../../hooks/useFetch';
-
-import './LoginForm.css';
 
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/auth';

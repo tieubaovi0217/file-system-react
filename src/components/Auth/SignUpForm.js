@@ -1,9 +1,9 @@
+import './SignUpForm.css';
 import { Form, Input, Button, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 import useFetch from '../../hooks/useFetch';
 
-import './SignUpForm.css';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/auth';
 
