@@ -1,11 +1,12 @@
 import { Link, useHistory } from 'react-router-dom';
 
 import { useState } from 'react';
-import { Menu, Button } from 'antd';
+import { Menu, Button, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { authActions } from '../../store/auth';
+
+import { logoutUser } from '../../store/authActions';
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -13,8 +14,9 @@ const Navigation = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const user = useSelector((state) => state.auth.user);
 
+  // fix this
   const [state, setState] = useState({
-    current: 'login',
+    current: history.location.pathname,
   });
 
   const handleClick = (e) => {
@@ -22,29 +24,32 @@ const Navigation = () => {
   };
 
   const logoutHandler = () => {
-    dispatch(authActions.logout());
-    history.replace('/auth/login');
+    dispatch(logoutUser()).then(() => {
+      history.replace('/');
+      message.success('Logout Successfully', 1);
+    });
   };
 
   return (
     <Menu
       onClick={handleClick}
-      selectedKeys={[state.current]}
+      selectedKeys={[history.location.pathname]}
       mode="horizontal"
-      style={{ paddingLeft: '16px', paddingRight: '16px' }}
     >
-      <Menu.Item key="administration">Administration</Menu.Item>
+      <Menu.Item key="/">
+        <Link to="/">Administration</Link>
+      </Menu.Item>
 
-      <Menu.Item key="resources" style={{ marginLeft: 'auto' }}>
-        <Link to="/resources">Resources</Link>
+      <Menu.Item key="/root" style={{ marginLeft: 'auto' }}>
+        <Link to="/root">Resources</Link>
       </Menu.Item>
 
       {!isAuthenticated && (
         <>
-          <Menu.Item key="login">
+          <Menu.Item key="/auth/login">
             <Link to="/auth/login">Login</Link>
           </Menu.Item>
-          <Menu.Item key="signup">
+          <Menu.Item key="/auth/signup">
             <Link to="/auth/signup">Sign Up</Link>
           </Menu.Item>
         </>
@@ -52,12 +57,12 @@ const Navigation = () => {
 
       {isAuthenticated && (
         <>
-          <Menu.Item key="profile">
+          <Menu.Item key="/profile">
             <Link to="/profile">
               Profile, {user?.username} <UserOutlined />
             </Link>
           </Menu.Item>
-          <Menu.Item key="logout">
+          <Menu.Item>
             <Button onClick={logoutHandler}>Logout</Button>
           </Menu.Item>
         </>

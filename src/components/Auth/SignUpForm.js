@@ -4,8 +4,10 @@ import { useHistory } from 'react-router-dom';
 
 import useFetch from '../../hooks/useFetch';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../store/auth';
+
+import { signUpUser } from '../../store/authActions';
 
 const formItemLayout = {
   labelCol: {
@@ -36,32 +38,18 @@ const tailFormItemLayout = {
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [form] = Form.useForm();
 
-  const { isFetching: isLoading, sendRequest } = useFetch();
+  const isSigningUp = useSelector((state) => state.auth.isAuthenticating);
+
+  const [form] = Form.useForm();
 
   const onFinish = (values) => {
     // console.log('Received values of form: ', values);
-    const { username, password, email, confirm } = values;
-
-    const url = `${process.env.REACT_APP_API_URL}/auth/signup`;
-
-    sendRequest(url, {
-      method: 'POST',
-      body: JSON.stringify({
-        username,
-        password,
-        email,
-        confirmPassword: confirm,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((data) => {
-        console.log(data);
-        dispatch(authActions.login(data));
-        history.replace('/');
+    const { username, password, email, confirmPassword } = values;
+    dispatch(signUpUser({ username, password, email, confirmPassword }))
+      .then(() => {
+        message.success('Signup Successfully');
+        history.push('/');
       })
       .catch((err) => {
         console.log(err);
@@ -124,7 +112,7 @@ const SignUpForm = () => {
         </Form.Item>
 
         <Form.Item
-          name="confirm"
+          name="confirmPassword"
           label="Confirm Password"
           dependencies={['password']}
           hasFeedback
@@ -150,7 +138,7 @@ const SignUpForm = () => {
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit" loading={isLoading}>
+          <Button type="primary" htmlType="submit" loading={isSigningUp}>
             Register
           </Button>
         </Form.Item>

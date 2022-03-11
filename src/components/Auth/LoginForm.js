@@ -2,34 +2,24 @@ import './LoginForm.css';
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 
-import { Form, Input, Button, Checkbox, message } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-import useFetch from '../../hooks/useFetch';
-
-import { useDispatch } from 'react-redux';
-import { authActions } from '../../store/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../store/authActions';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isFetching: isLoading, sendRequest } = useFetch();
+  const isAuthenticating = useSelector((state) => state.auth.isAuthenticating);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const onFinish = (values) => {
     // console.log('Received values of form: ', values);
     const { username, password } = values;
-    const url = `${process.env.REACT_APP_API_URL}/auth/login`;
-
-    sendRequest(url, {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((data) => {
-        console.log(data);
-        dispatch(authActions.login(data));
+    dispatch(loginUser({ username, password }))
+      .then(() => {
+        message.success('Login Successfully', 1);
         history.replace('/');
       })
       .catch((err) => {
@@ -87,7 +77,7 @@ const LoginForm = () => {
             type="primary"
             htmlType="submit"
             className="login-form-button"
-            loading={isLoading}
+            loading={isAuthenticating}
           >
             Log In
           </Button>

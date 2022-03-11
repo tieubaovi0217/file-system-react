@@ -1,37 +1,24 @@
-import { useCallback, useState } from 'react';
+// import { useEffect, useState } from 'react';
 
-const useFetch = () => {
-  const [isFetching, setIsFetching] = useState(false);
+// const useFetch = (url, initialData = null) => {
+//   const [data, setData] = useState(initialData);
+//   const [error, setError] = useState(null);
+//   const [isLoading, setIsLoading] = useState(false);
 
-  const sendRequest = useCallback((url, input) => {
-    return new Promise((resolve, reject) => {
-      setIsFetching(true);
+//   useEffect(() => {
+//     setIsLoading(true);
+//     fetch(url)
+//       .then((res) => res.json())
+//       .then(setData)
+//       .catch(setError)
+//       .finally(() => setIsLoading(false));
+//   }, [url]);
 
-      // start to fetch
-      fetch(url, input)
-        .then((response) => {
-          setIsFetching(false);
-          if (response.ok) return response.json();
+//   return {
+//     data,
+//     error,
+//     isLoading,
+//   };
+// };
 
-          // error
-          return response.json().then((data) => {
-            throw new Error(data.error || 'Failed to fetch');
-          });
-        })
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((err) => {
-          setIsFetching(false);
-          reject(err);
-        });
-    });
-  }, []);
-
-  return {
-    isFetching,
-    sendRequest,
-  };
-};
-
-export default useFetch;
+// export default useFetch;

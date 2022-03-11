@@ -1,13 +1,17 @@
-.resources {
+.file-browser {
   border: 1px solid #d7d7d7;
-  padding: 16px;
-  max-width: 800px;
+  border-radius: 4px;
   margin: auto;
-  box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  padding: 8px;
   min-height: 400px;
 }
 
-/* TODO: fix this with login form */
+.file-browser__content {
+  min-height: 300px;
+}
+
 .resource {
   border: 0;
   text-align: center;
@@ -20,31 +24,36 @@
 }
 
 .resource__icon {
-  font-size: 30px;
+  font-size: 32px;
 }
 
 .resource__name {
+  font-weight: 300;
   font-size: 12px;
 }
 
-.resources__header {
+.file-browser__header {
   padding: 8px;
   margin-bottom: 8px;
   /* border: 1px solid red; */
   display: flex;
 }
 
-.resources__path {
+.file-browser__path {
   display: flex;
   align-items: center;
   margin-left: 16px;
 }
 
-.resources__search-bar {
+.file-browser__search-bar {
   margin-left: auto;
 }
 
-.resources__spinner {
+.file-browser__spinner {
   margin-top: 120px;
   text-align: center;
+}
+
+.file-browser__footer {
+  display: flex;
 }
