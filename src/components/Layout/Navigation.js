@@ -1,6 +1,6 @@
 import { Link, useHistory } from 'react-router-dom';
 
-// import { useState } from 'react';
+import { useState } from 'react';
 import { Menu, Button, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
@@ -15,13 +15,13 @@ const Navigation = () => {
   const user = useSelector((state) => state.auth.user);
 
   // fix this
-  // const [state, setState] = useState({
-  //   current: history.location.pathname,
-  // });
+  const [state, setState] = useState({
+    current: history.location.pathname,
+  });
 
-  // const handleClick = (e) => {
-  //   setState({ current: e.key });
-  // };
+  const handleClick = (e) => {
+    setState({ current: e.key });
+  };
 
   const logoutHandler = () => {
     dispatch(logoutUser()).then(() => {
@@ -31,7 +31,11 @@ const Navigation = () => {
   };
 
   return (
-    <Menu selectedKeys={[history.location.pathname]} mode="horizontal">
+    <Menu
+      onClick={handleClick}
+      selectedKeys={[state.current]}
+      mode="horizontal"
+    >
       <Menu.Item key="/">
         <Link to="/">Administration</Link>
       </Menu.Item>

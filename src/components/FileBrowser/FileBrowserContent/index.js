@@ -33,12 +33,12 @@ const FileBrowserContent = ({ items }) => {
 
   const files = data
     .filter((item) => item.isFile)
-    .map((file) => <File key={`${file.relativePath}`} fileName={file.name} />);
+    .map((file) => <File key={`${file.relativePath}`} fileInfo={file} />);
 
   const folders = data
     .filter((item) => item.isDirectDirectory)
     .map((folder) => (
-      <Folder key={`${folder.relativePath}`} folderName={folder.name} />
+      <Folder key={`${folder.relativePath}`} folderInfo={folder} />
     ));
 
   return (

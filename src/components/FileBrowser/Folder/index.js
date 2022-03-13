@@ -1,30 +1,63 @@
 import React from 'react';
 
-import { Col, Dropdown, Menu } from 'antd';
+import { Col, Dropdown, Menu, Modal } from 'antd';
 
 import { FolderOpenFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
 
-const Folder = ({ folderName, onDoubleClick }) => {
-  const dispatch = useDispatch();
+const Folder = ({ folderInfo, onDoubleClick }) => {
+  const { name, size, lastModified } = folderInfo;
 
+  const dispatch = useDispatch();
   const path = useSelector((state) => state.fileBrowser.path);
 
   const folderDoubleClickedHandler = () => {
-    const newPath = `${path}/${folderName}`;
+    const newPath = `${path}/${folderInfo.name}`;
     dispatch(fetchFileBrowserData(newPath));
   };
 
-  const folderRightClickedHandler = (e) => {
-    e.stopPropagation();
+  const folderRightClickedHandler = (e) => {};
+
+  const showInfoModal = () => {
+    Modal.info({
+      title: 'File Info',
+      content: (
+        <div>
+          <FolderOpenFilled className="info-modal__icon" />
+          <table className="info-modal">
+            <tr>
+              <td align="right">
+                <strong>Name:</strong>
+              </td>
+              <td>{name}</td>
+            </tr>
+            <tr>
+              <td align="right">
+                <strong>Size:</strong>
+              </td>
+              <td>{size}</td>
+            </tr>
+            <tr>
+              <td align="right">
+                <strong>Last modified:</strong>
+              </td>
+              <td>{lastModified}</td>
+            </tr>
+          </table>
+        </div>
+      ),
+      onOk() {},
+    });
   };
 
   const menu = (
     <Menu>
       <Menu.Item key="0">Open</Menu.Item>
-      <Menu.Item key="1">Get Info</Menu.Item>
+      <Menu.Item key="1" onClick={showInfoModal}>
+        Get Info
+      </Menu.Item>
       <Menu.Item key="2">Rename</Menu.Item>
       <Menu.Divider />
       <Menu.Item key="3" style={{ color: 'red' }}>
@@ -44,7 +77,7 @@ const Folder = ({ folderName, onDoubleClick }) => {
         <div className="resource__icon">
           <FolderOpenFilled />
         </div>
-        <div className="resource__name">{folderName}</div>
+        <div className="resource__name">{name}</div>
       </Col>
     </Dropdown>
   );

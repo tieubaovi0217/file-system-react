@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Col, Dropdown, Menu } from 'antd';
+import { Col, Dropdown, Menu, Modal } from 'antd';
 
 import { FileOutlined } from '@ant-design/icons';
 
-const File = ({ fileName, onDoubleClick, onDeleteFile }) => {
-  const fileRightClickedHandler = (e) => {
-    e.stopPropagation();
-  };
+const File = ({ fileInfo, onDoubleClick, onDeleteFile }) => {
+  const { name, size, lastModified, ext } = fileInfo;
+
+  const fileRightClickedHandler = (e) => {};
 
   const openFileHandler = () => {
     console.log('file open');
@@ -17,10 +17,50 @@ const File = ({ fileName, onDoubleClick, onDeleteFile }) => {
 
   const renameFileHandler = () => {};
 
+  const showInfoModal = () => {
+    Modal.info({
+      title: 'File Info',
+      content: (
+        <div>
+          <FileOutlined className="info-modal__icon" />
+          <table className="info-modal">
+            <tr>
+              <td align="right">
+                <strong>Name:</strong>
+              </td>
+              <td>{name}</td>
+            </tr>
+            <tr>
+              <td align="right">
+                <strong>Type of file:</strong>
+              </td>
+              <td>{ext}</td>
+            </tr>
+            <tr>
+              <td align="right">
+                <strong>Size:</strong>
+              </td>
+              <td>{size}</td>
+            </tr>
+            <tr>
+              <td align="right">
+                <strong>Last modified:</strong>
+              </td>
+              <td>{lastModified}</td>
+            </tr>
+          </table>
+        </div>
+      ),
+      onOk() {},
+    });
+  };
+
   const menu = (
     <Menu>
       <Menu.Item key="0">Open</Menu.Item>
-      <Menu.Item key="1">Get Info</Menu.Item>
+      <Menu.Item key="1" onClick={showInfoModal}>
+        Get Info
+      </Menu.Item>
       <Menu.Item key="2" onClick={renameFileHandler}>
         Rename
       </Menu.Item>
@@ -42,7 +82,7 @@ const File = ({ fileName, onDoubleClick, onDeleteFile }) => {
         <div className="resource__icon">
           <FileOutlined />
         </div>
-        <div className="resource__name">{fileName}</div>
+        <div className="resource__name">{name}</div>
       </Col>
     </Dropdown>
   );

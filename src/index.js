@@ -8,6 +8,9 @@ import App from './App';
 import store from './store/index';
 import { Provider } from 'react-redux';
 
+window.onpopstate = function (event) {
+  window.location.reload(true);
+};
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>

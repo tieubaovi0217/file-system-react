@@ -59,3 +59,16 @@
 .file-browser__footer {
   display: flex;
 }
+
+/* File info modal */
+.info-modal tr > td:first-child {
+  padding-right: 16px;
+}
+
+.info-modal__icon {
+  font-size: 60px;
+  display: block;
+  margin: auto;
+  margin-bottom: 24px;
+}
+/**/
