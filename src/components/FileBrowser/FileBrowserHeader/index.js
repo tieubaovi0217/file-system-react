@@ -1,25 +1,26 @@
 import React from 'react';
 
-import { Button, Breadcrumb, Input, message } from 'antd';
+import { Button, Breadcrumb, Input } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
+import { fileBrowserActions } from '../../../store/fileBrowser';
 
 const { Search } = Input;
 
-const seperateUrl2Array = (url) => {
-  return url.split('/');
+const seperatePath2Array = (path) => {
+  return path.split('/');
 };
 
 const FileBrowserHeader = () => {
   const dispatch = useDispatch();
-  const url = useSelector((state) => state.fileBrowser.url);
-  const folderPathArray = seperateUrl2Array(url);
+  const path = useSelector((state) => state.fileBrowser.path);
+
+  const folderPathArray = seperatePath2Array(path);
 
   const backButtonClickedHandler = () => {
     if (folderPathArray.length <= 1) {
-      message.error('Can not go back, this is root');
       return;
     }
     folderPathArray.pop();
@@ -30,6 +31,10 @@ const FileBrowserHeader = () => {
 
   const onSearch = (value) => {
     console.log(value);
+  };
+
+  const onChange = (e) => {
+    dispatch(fileBrowserActions.filterData(e.target.value));
   };
 
   const breadcrumbItems = folderPathArray.map((folderName, index) => {
@@ -54,8 +59,8 @@ const FileBrowserHeader = () => {
         className="file-browser__search-bar"
         placeholder="Search file"
         allowClear
+        onChange={onChange}
         onSearch={onSearch}
-        style={{ width: 240 }}
       />
     </div>
   );

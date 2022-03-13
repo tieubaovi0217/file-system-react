@@ -24,25 +24,23 @@ function App() {
           </Route>
         )}
 
-        {isAuthenticated && (
-          <>
-            <ProtectedRoute
-              exact
-              path="/profile"
-              component={UserProfile}
-            ></ProtectedRoute>
+        <ProtectedRoute
+          exact
+          path="/profile"
+          component={UserProfile}
+          isAuthenticated={isAuthenticated}
+        ></ProtectedRoute>
 
-            <ProtectedRoute
-              exact
-              path="/root"
-              component={FileBrowserPage}
-            ></ProtectedRoute>
-          </>
-        )}
+        {/* <ProtectedRoute
+          exact
+          path="/root"
+          component={FileBrowserPage}
+          isAuthenticated={isAuthenticated}
+        ></ProtectedRoute> */}
 
-        {/* <Route path="/root">
+        <Route path="/root">
           <FileBrowserPage />
-        </Route> */}
+        </Route>
 
         <Route path="*">
           <Redirect to="/" />

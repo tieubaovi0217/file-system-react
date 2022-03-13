@@ -47,11 +47,13 @@
 
 .file-browser__search-bar {
   margin-left: auto;
+  width: 240px;
 }
 
 .file-browser__spinner {
-  margin-top: 120px;
+  display: block;
   text-align: center;
+  font-size: 32px;
 }
 
 .file-browser__footer {

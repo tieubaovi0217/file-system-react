@@ -1,14 +1,12 @@
 import { fileBrowserActions } from './fileBrowser';
 
-import { message } from 'antd';
-
 import * as moment from 'moment';
 import prettyBytes from 'pretty-bytes';
 
-export const fetchFileBrowserData = (url) => {
+export const fetchFileBrowserData = (path) => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/${url}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -29,17 +27,12 @@ export const fetchFileBrowserData = (url) => {
       });
     };
 
-    dispatch(fileBrowserActions.setLoading(true));
-
     try {
       const data = await fetchData();
-      dispatch(fileBrowserActions.setData(data));
-      dispatch(fileBrowserActions.setUrl(url));
+      dispatch(fileBrowserActions.setData({ data, path }));
+      return Promise.resolve(data);
     } catch (err) {
-      console.log(err);
-      message.error(err.message, 1); // display error message
+      return Promise.reject(err);
     }
-
-    dispatch(fileBrowserActions.setLoading(false));
   };
 };

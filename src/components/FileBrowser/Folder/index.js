@@ -10,11 +10,11 @@ import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
 const Folder = ({ folderName, onDoubleClick }) => {
   const dispatch = useDispatch();
 
-  const url = useSelector((state) => state.fileBrowser.url);
+  const path = useSelector((state) => state.fileBrowser.path);
 
   const folderDoubleClickedHandler = () => {
-    const updatedUrl = `${url}/${folderName}`;
-    dispatch(fetchFileBrowserData(updatedUrl));
+    const newPath = `${path}/${folderName}`;
+    dispatch(fetchFileBrowserData(newPath));
   };
 
   const folderRightClickedHandler = (e) => {

@@ -1,8 +1,8 @@
-import classes from './StartingPageContent.module.css';
+import './index.css';
 
 const StartingPageContent = () => {
   return (
-    <section className={classes.starting}>
+    <section className="starting">
       <h1>Welcome</h1>
     </section>
   );

@@ -5,16 +5,22 @@
   max-width: 300px;
   margin: 0 auto;
 }
-.login-form-forgot {
+.login-form__forgot {
   float: right;
 }
-.ant-col-rtl .login-form-forgot {
+.ant-col-rtl .login-form__forgot {
   float: left;
 }
-.login-form-button {
+.login-form__button {
   width: 100%;
 }
 
 .spinner {
   margin: auto auto;
+}
+
+.lock-circle {
+  display: block;
+  color: red;
+  font-size: 32px;
 }

@@ -20,14 +20,11 @@ export const loginUser = (userData) => {
       return data;
     };
 
-    dispatch(authActions.setIsAuthenticating(true));
     try {
       const res = await sendLogin();
       dispatch(authActions.login(res));
-      dispatch(authActions.setIsAuthenticating(false));
-      return Promise.resolve(true);
+      return Promise.resolve(res);
     } catch (err) {
-      dispatch(authActions.setIsAuthenticating(false));
       return Promise.reject(err);
     }
   };
@@ -60,14 +57,11 @@ export const signUpUser = (userData) => {
       return data;
     };
 
-    dispatch(authActions.setIsAuthenticating(true));
     try {
       const res = await sendSignUp();
       dispatch(authActions.login(res));
-      dispatch(authActions.setIsAuthenticating(false));
-      return Promise.resolve(true);
+      return Promise.resolve(res);
     } catch (err) {
-      dispatch(authActions.setIsAuthenticating(false));
       return Promise.reject(err);
     }
   };

@@ -5,7 +5,6 @@ const initialAuthState = {
     ? JSON.parse(localStorage.getItem('user'))
     : {},
   isAuthenticated: localStorage.getItem('token') ? true : false,
-  isAuthenticating: false,
 };
 
 const authSlice = createSlice({
@@ -19,16 +18,11 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
     },
 
-    setIsAuthenticating(state, action) {
-      state.isAuthenticating = action.payload;
-    },
-
     logout(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       state.user = null;
       state.isAuthenticated = false;
-      state.isAuthenticating = false;
     },
   },
 });

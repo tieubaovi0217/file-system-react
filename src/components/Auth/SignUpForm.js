@@ -2,10 +2,7 @@ import './SignUpForm.css';
 import { Form, Input, Button, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 
-import useFetch from '../../hooks/useFetch';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { authActions } from '../../store/auth';
+import { useDispatch } from 'react-redux';
 
 import { signUpUser } from '../../store/authActions';
 
@@ -38,8 +35,6 @@ const tailFormItemLayout = {
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const isSigningUp = useSelector((state) => state.auth.isAuthenticating);
 
   const [form] = Form.useForm();
 
@@ -138,7 +133,7 @@ const SignUpForm = () => {
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit" loading={isSigningUp}>
+          <Button type="primary" htmlType="submit" loading={false}>
             Register
           </Button>
         </Form.Item>

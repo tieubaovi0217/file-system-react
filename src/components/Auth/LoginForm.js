@@ -5,14 +5,12 @@ import { useHistory, Link } from 'react-router-dom';
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginUser } from '../../store/authActions';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const isAuthenticating = useSelector((state) => state.auth.isAuthenticating);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const onFinish = (values) => {
     // console.log('Received values of form: ', values);
@@ -38,8 +36,8 @@ const LoginForm = () => {
       onFinish={onFinish}
     >
       {/* TODO: fix this temporary style */}
-      <Form.Item style={{ textAlign: 'center' }}>
-        <LockOutlined style={{ fontSize: '28px' }} />
+      <Form.Item>
+        <LockOutlined className="lock-circle" />
       </Form.Item>
       <Form.Item
         name="username"
@@ -76,8 +74,8 @@ const LoginForm = () => {
           <Button
             type="primary"
             htmlType="submit"
-            className="login-form-button"
-            loading={isAuthenticating}
+            className="login-form__button"
+            loading={false}
           >
             Log In
           </Button>
