@@ -1,10 +1,10 @@
 import { Upload, Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { CloudUploadOutlined } from '@ant-design/icons';
 
 const UploadFolder = () => {
   return (
     <Upload>
-      <Button icon={<UploadOutlined />}>Upload Folder</Button>
+      <Button icon={<CloudUploadOutlined />}>Upload folder</Button>
     </Upload>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Button, Breadcrumb, Input } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined } from '@ant-design/icons';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
@@ -52,7 +52,7 @@ const FileBrowserHeader = () => {
         onClick={backButtonClickedHandler}
         disabled={folderPathArray.length <= 1 ? true : false}
       >
-        <ArrowLeftOutlined />
+        <ArrowUpOutlined />
       </Button>
       <Breadcrumb className="file-browser__path">{breadcrumbItems}</Breadcrumb>
       <Search

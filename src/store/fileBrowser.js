@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialFileBrowserState = {
   data: [],
+  totalSize: 0,
   filteredData: [],
   path: '',
 };
@@ -14,6 +15,7 @@ const fileBrowserSlice = createSlice({
       state.path = action.payload.path;
       state.data = action.payload.data;
       state.filteredData = action.payload.data;
+      state.totalSize = action.payload.totalSize;
     },
 
     filterData(state, action) {

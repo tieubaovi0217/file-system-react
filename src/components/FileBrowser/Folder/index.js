@@ -27,24 +27,26 @@ const Folder = ({ folderInfo, onDoubleClick }) => {
         <div>
           <FolderOpenFilled className="info-modal__icon" />
           <table className="info-modal">
-            <tr>
-              <td align="right">
-                <strong>Name:</strong>
-              </td>
-              <td>{name}</td>
-            </tr>
-            <tr>
-              <td align="right">
-                <strong>Size:</strong>
-              </td>
-              <td>{size}</td>
-            </tr>
-            <tr>
-              <td align="right">
-                <strong>Last modified:</strong>
-              </td>
-              <td>{lastModified}</td>
-            </tr>
+            <tbody>
+              <tr>
+                <td align="right">
+                  <strong>Name:</strong>
+                </td>
+                <td>{name}</td>
+              </tr>
+              <tr>
+                <td align="right">
+                  <strong>Size:</strong>
+                </td>
+                <td>{size}</td>
+              </tr>
+              <tr>
+                <td align="right">
+                  <strong>Last modified:</strong>
+                </td>
+                <td>{lastModified}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       ),

@@ -56,10 +56,6 @@
   font-size: 32px;
 }
 
-.file-browser__footer {
-  display: flex;
-}
-
 /* File info modal */
 .info-modal tr > td:first-child {
   padding-right: 16px;
@@ -72,3 +68,17 @@
   margin-bottom: 24px;
 }
 /**/
+
+.file-browser__footer {
+  display: flex;
+  align-items: center;
+}
+.file-browser__actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.file-browser__upload {
+  padding-right: 16px;
+}
