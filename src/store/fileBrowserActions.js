@@ -9,6 +9,9 @@ export const fetchFileBrowserData = (path) => {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${
+            localStorage.getItem('token') ? localStorage.getItem('token') : ''
+          }`,
         },
       });
       if (!res.ok) throw new Error('Failed to fetch');
