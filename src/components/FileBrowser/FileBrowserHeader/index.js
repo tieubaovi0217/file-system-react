@@ -9,24 +9,20 @@ import { fileBrowserActions } from '../../../store/fileBrowser';
 
 const { Search } = Input;
 
-const seperatePath2Array = (path) => {
-  return path.split('/');
-};
-
 const FileBrowserHeader = () => {
   const dispatch = useDispatch();
-  const path = useSelector((state) => state.fileBrowser.path);
-
-  const folderPathArray = seperatePath2Array(path);
+  const currentPath = useSelector((state) => state.fileBrowser.path);
 
   const backButtonClickedHandler = () => {
-    if (folderPathArray.length <= 1) {
+    // /folderA/folderB/folderC
+    if (currentPath.length <= 1) {
       return;
     }
-    folderPathArray.pop();
-    const updatedUrl = folderPathArray.join('/');
-
-    dispatch(fetchFileBrowserData(updatedUrl));
+    dispatch(
+      fetchFileBrowserData(
+        currentPath.substring(0, currentPath.lastIndexOf('/')),
+      ),
+    );
   };
 
   const onSearch = (value) => {
@@ -37,7 +33,7 @@ const FileBrowserHeader = () => {
     dispatch(fileBrowserActions.filterData(e.target.value));
   };
 
-  const breadcrumbItems = folderPathArray.map((folderName, index) => {
+  const breadcrumbItems = currentPath.split('/').map((folderName, index) => {
     return (
       <Breadcrumb.Item key={`${folderName}-${index}`}>
         {folderName}
@@ -50,7 +46,7 @@ const FileBrowserHeader = () => {
       <Button
         shape="circle"
         onClick={backButtonClickedHandler}
-        disabled={folderPathArray.length <= 1 ? true : false}
+        disabled={currentPath.length <= 1 ? true : false}
       >
         <ArrowUpOutlined />
       </Button>

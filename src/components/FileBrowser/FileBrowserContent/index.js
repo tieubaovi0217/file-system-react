@@ -9,7 +9,7 @@ import Folder from '../Folder';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
 
-const FileBrowserContent = ({ items }) => {
+const FileBrowserContent = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.fileBrowser.filteredData); // attention: this is filtered files and dirs
 
@@ -17,8 +17,7 @@ const FileBrowserContent = ({ items }) => {
 
   useEffect(() => {
     setIsLoading(true);
-
-    dispatch(fetchFileBrowserData(process.env.REACT_APP_ROOT_PATH))
+    dispatch(fetchFileBrowserData('/')) //get data at root
       .then((res) => {
         console.log(res);
       })

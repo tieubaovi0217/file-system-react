@@ -6,14 +6,17 @@ import prettyBytes from 'pretty-bytes';
 export const fetchFileBrowserData = (path) => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/${path}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${
-            localStorage.getItem('token') ? localStorage.getItem('token') : ''
-          }`,
+      const res = await fetch(
+        `${process.env.REACT_APP_ROOT_RESOURCES_URL}${path}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${
+              localStorage.getItem('token') ? localStorage.getItem('token') : ''
+            }`,
+          },
         },
-      });
+      );
       if (!res.ok) throw new Error('Failed to fetch');
 
       const { data, totalSize } = await res.json();

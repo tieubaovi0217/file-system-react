@@ -14,8 +14,7 @@ const Folder = ({ folderInfo, onDoubleClick }) => {
   const path = useSelector((state) => state.fileBrowser.path);
 
   const folderDoubleClickedHandler = () => {
-    const newPath = `${path}/${folderInfo.name}`;
-    dispatch(fetchFileBrowserData(newPath));
+    dispatch(fetchFileBrowserData(`${path}/${folderInfo.name}`));
   };
 
   const folderRightClickedHandler = (e) => {};
