@@ -1,14 +1,19 @@
 import React from 'react';
 
-import { Col, Dropdown, Menu, Modal } from 'antd';
+import { Col, Dropdown, Menu, message, Modal } from 'antd';
 
 import { FolderOpenFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
+import {
+  deleteFileOrFolder,
+  fetchFileBrowserData,
+} from '../../../store/fileBrowserActions';
 
-const Folder = ({ folderInfo, onDoubleClick }) => {
-  const { name, size, lastModified } = folderInfo;
+import { normalizeRelativePath } from '../../../helpers';
+
+const Folder = ({ folderInfo }) => {
+  const { name, size, lastModified, relativePath } = folderInfo;
 
   const dispatch = useDispatch();
   const path = useSelector((state) => state.fileBrowser.path);
@@ -18,6 +23,18 @@ const Folder = ({ folderInfo, onDoubleClick }) => {
   };
 
   const folderRightClickedHandler = (e) => {};
+
+  const deleteFolderHandler = () => {
+    dispatch(deleteFileOrFolder(normalizeRelativePath(relativePath)))
+      .then((res) => {
+        console.log(res);
+        message.success(`Delete folder ${name} successfully`);
+        dispatch(fetchFileBrowserData(path));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const showInfoModal = () => {
     Modal.info({
@@ -61,7 +78,7 @@ const Folder = ({ folderInfo, onDoubleClick }) => {
       </Menu.Item>
       <Menu.Item key="2">Rename</Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" style={{ color: 'red' }}>
+      <Menu.Item key="3" style={{ color: 'red' }} onClick={deleteFolderHandler}>
         Delete
       </Menu.Item>
     </Menu>
@@ -71,7 +88,7 @@ const Folder = ({ folderInfo, onDoubleClick }) => {
     <Dropdown overlay={menu} trigger={['contextMenu']}>
       <Col
         className="resource"
-        span={3}
+        span={process.env.REACT_APP_FILE_FOLDER_SPAN}
         onDoubleClick={folderDoubleClickedHandler}
         onContextMenu={folderRightClickedHandler}
       >

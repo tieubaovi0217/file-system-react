@@ -17,7 +17,13 @@ const FileBrowserContent = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    dispatch(fetchFileBrowserData('/')) //get data at root
+    dispatch(
+      fetchFileBrowserData(
+        localStorage.getItem('currentPath')
+          ? localStorage.getItem('currentPath')
+          : '',
+      ),
+    ) //get data at root
       .then((res) => {
         console.log(res);
       })

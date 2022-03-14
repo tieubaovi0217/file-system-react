@@ -3,7 +3,7 @@
   border-radius: 4px;
   margin: auto;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
+  max-width: 1000px;
   padding: 8px;
   min-height: 400px;
 }
@@ -82,6 +82,10 @@
 }
 
 .file-browser__upload {
-  padding-right: 16px;
+  padding-right: 8px;
   max-width: 200px;
+}
+
+.file-browser__refresh {
+  padding-right: 8px;
 }

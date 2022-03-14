@@ -4,7 +4,9 @@ const initialFileBrowserState = {
   data: [],
   filteredData: [],
   totalSize: 0,
-  path: '',
+  path: localStorage.getItem('currentPath')
+    ? localStorage.getItem('currentPath')
+    : '',
 };
 
 const fileBrowserSlice = createSlice({
@@ -16,6 +18,8 @@ const fileBrowserSlice = createSlice({
       state.data = action.payload.data;
       state.filteredData = action.payload.data;
       state.totalSize = action.payload.totalSize;
+
+      localStorage.setItem('currentPath', state.path);
     },
 
     filterData(state, action) {

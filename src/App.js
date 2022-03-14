@@ -31,16 +31,16 @@ function App() {
           isAuthenticated={isAuthenticated}
         ></ProtectedRoute>
 
-        {/* <ProtectedRoute
+        <ProtectedRoute
           exact
           path="/root"
           component={FileBrowserPage}
           isAuthenticated={isAuthenticated}
-        ></ProtectedRoute> */}
+        ></ProtectedRoute>
 
-        <Route path="/root">
+        {/* <Route path="/root">
           <FileBrowserPage />
-        </Route>
+        </Route> */}
 
         <Route path="*">
           <Redirect to="/" />

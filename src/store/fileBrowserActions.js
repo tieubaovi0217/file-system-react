@@ -3,10 +3,10 @@ import { fileBrowserActions } from './fileBrowser';
 import * as moment from 'moment';
 import prettyBytes from 'pretty-bytes';
 
-export const fetchFileBrowserData = (path) => {
+export const fetchFileBrowserData = (path = '') => {
   return async (dispatch) => {
     const getData = async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/root${path}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/root/${path}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${
@@ -50,7 +50,7 @@ export const deleteFileOrFolder = (relativePath) => {
   return async (dispatch) => {
     const deleteData = async () => {
       const res = await fetch(
-        `${process.env.REACT_APP_ROOT_RESOURCES_URL}/delete/${relativePath}`,
+        `${process.env.REACT_APP_API_URL}/root/delete/${relativePath}`,
         {
           method: 'DELETE',
           headers: {

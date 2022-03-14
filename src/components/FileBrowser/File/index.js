@@ -9,9 +9,7 @@ import {
 } from '../../../store/fileBrowserActions';
 import { useDispatch, useSelector } from 'react-redux';
 
-const normalizeRelativePath = (path) => {
-  return path.replace('\\', '/');
-};
+import { normalizeRelativePath } from '../../../helpers';
 
 const File = ({ fileInfo }) => {
   const dispatch = useDispatch();
@@ -98,7 +96,7 @@ const File = ({ fileInfo }) => {
     <Dropdown overlay={menu} trigger={['contextMenu']}>
       <Col
         className="resource"
-        span={3}
+        span={process.env.REACT_APP_FILE_FOLDER_SPAN}
         onContextMenu={fileRightClickedHandler}
         onDoubleClick={openFileHandler}
       >
