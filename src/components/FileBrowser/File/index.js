@@ -1,11 +1,22 @@
 import React from 'react';
 
-import { Col, Dropdown, Menu, Modal } from 'antd';
+import { Col, Dropdown, Menu, message, Modal } from 'antd';
 
 import { FileOutlined } from '@ant-design/icons';
+import {
+  deleteFileOrFolder,
+  fetchFileBrowserData,
+} from '../../../store/fileBrowserActions';
+import { useDispatch, useSelector } from 'react-redux';
 
-const File = ({ fileInfo, onDoubleClick, onDeleteFile }) => {
-  const { name, size, lastModified, ext } = fileInfo;
+const normalizeRelativePath = (path) => {
+  return path.replace('\\', '/');
+};
+
+const File = ({ fileInfo }) => {
+  const dispatch = useDispatch();
+  const path = useSelector((state) => state.fileBrowser.path);
+  const { name, size, lastModified, ext, relativePath } = fileInfo;
 
   const fileRightClickedHandler = (e) => {};
 
@@ -13,7 +24,17 @@ const File = ({ fileInfo, onDoubleClick, onDeleteFile }) => {
     console.log('file open');
   };
 
-  const deleteFileHandler = () => {};
+  const deleteFileHandler = () => {
+    dispatch(deleteFileOrFolder(normalizeRelativePath(relativePath)))
+      .then((res) => {
+        console.log(res);
+        message.success(`Delete file ${name} successfully`, 0.5);
+        dispatch(fetchFileBrowserData(path));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const renameFileHandler = () => {};
 

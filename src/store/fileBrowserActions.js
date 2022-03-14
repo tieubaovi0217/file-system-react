@@ -5,18 +5,15 @@ import prettyBytes from 'pretty-bytes';
 
 export const fetchFileBrowserData = (path) => {
   return async (dispatch) => {
-    const fetchData = async () => {
-      const res = await fetch(
-        `${process.env.REACT_APP_ROOT_RESOURCES_URL}${path}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${
-              localStorage.getItem('token') ? localStorage.getItem('token') : ''
-            }`,
-          },
+    const getData = async () => {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/root${path}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${
+            localStorage.getItem('token') ? localStorage.getItem('token') : ''
+          }`,
         },
-      );
+      });
       if (!res.ok) throw new Error('Failed to fetch');
 
       const { data, totalSize } = await res.json();
@@ -40,9 +37,37 @@ export const fetchFileBrowserData = (path) => {
     };
 
     try {
-      const { data, totalSize } = await fetchData();
+      const { data, totalSize } = await getData();
       dispatch(fileBrowserActions.setData({ data, path, totalSize }));
       return Promise.resolve(data);
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  };
+};
+
+export const deleteFileOrFolder = (relativePath) => {
+  return async (dispatch) => {
+    const deleteData = async () => {
+      const res = await fetch(
+        `${process.env.REACT_APP_ROOT_RESOURCES_URL}/delete/${relativePath}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${
+              localStorage.getItem('token') ? localStorage.getItem('token') : ''
+            }`,
+          },
+        },
+      );
+      if (!res.ok) throw new Error('Failed to delete');
+
+      return res.json();
+    };
+
+    try {
+      await deleteData();
+      return Promise.resolve(true);
     } catch (err) {
       return Promise.reject(err);
     }
