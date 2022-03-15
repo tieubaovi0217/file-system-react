@@ -87,15 +87,16 @@ const Folder = ({ folderInfo }) => {
   return (
     <Dropdown overlay={menu} trigger={['contextMenu']}>
       <Col
-        className="resource"
         span={process.env.REACT_APP_FILE_FOLDER_SPAN}
         onDoubleClick={folderDoubleClickedHandler}
         onContextMenu={folderRightClickedHandler}
       >
-        <div className="resource__icon">
-          <FolderOpenFilled />
+        <div className="resource">
+          <div className="resource__icon">
+            <FolderOpenFilled />
+          </div>
+          <div className="resource__name">{name}</div>
         </div>
-        <div className="resource__name">{name}</div>
       </Col>
     </Dropdown>
   );

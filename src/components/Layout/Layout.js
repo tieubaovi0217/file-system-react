@@ -1,17 +1,16 @@
+import './index.css';
 import Navigation from './Navigation';
-
-import classes from './Layout.module.css';
 
 const Layout = (props) => {
   return (
-    <>
+    <div>
       <header>
         <Navigation />
       </header>
       <main>
-        <div className={classes.main}>{props.children}</div>
+        <div className="main">{props.children}</div>
       </main>
-    </>
+    </div>
   );
 };
 

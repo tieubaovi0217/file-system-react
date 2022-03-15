@@ -6,6 +6,7 @@ import { ArrowUpOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
 import { fileBrowserActions } from '../../../store/fileBrowser';
+import FileBrowserActions from '../FileBrowserActions';
 
 const { Search } = Input;
 
@@ -33,7 +34,7 @@ const FileBrowserHeader = () => {
     dispatch(fileBrowserActions.filterData(e.target.value));
   };
 
-  const breadcrumbItems = currentPath.split('/').map((folderName, index) => {
+  const breadcrumbItems = 'a/b/c'.split('/').map((folderName, index) => {
     return (
       <Breadcrumb.Item key={`${folderName}-${index}`}>
         {folderName}
@@ -51,9 +52,9 @@ const FileBrowserHeader = () => {
       >
         <ArrowUpOutlined />
       </Button>
-      <Breadcrumb className="file-browser__path">{breadcrumbItems}</Breadcrumb>
+      <Breadcrumb>{breadcrumbItems}</Breadcrumb>
       <Search
-        className="file-browser__search-bar"
+        className="file-browser__search"
         placeholder="Search files"
         allowClear
         onChange={onChange}

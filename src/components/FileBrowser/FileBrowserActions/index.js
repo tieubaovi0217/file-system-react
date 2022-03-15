@@ -32,23 +32,17 @@ const FileBrowserFooter = () => {
 
   return (
     <div className="file-browser__actions">
-      <div className="file-browser__upload-folder">
-        <UploadFolder />
-      </div>
-      <div className="file-browser__upload-file">
-        <UploadFile />
-      </div>
-      <div className="file-browser__refresh">
-        <Button
-          type="text"
-          icon={<SyncOutlined spin />}
-          onClick={refreshContentHandler}
-        >
-          Refresh
-        </Button>
-      </div>
+      <UploadFolder />
+      <UploadFile />
+      <Button
+        type="text"
+        icon={<SyncOutlined spin />}
+        onClick={refreshContentHandler}
+      >
+        Refresh
+      </Button>
 
-      <div className="file-browser__total-size">
+      <div className="file-browser__size-info">
         <strong>Size: </strong>
         {prettyBytes(totalSize)}
       </div>

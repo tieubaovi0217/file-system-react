@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { Route, Redirect } from 'react-router-dom';
 
 export const ProtectedRoute = ({

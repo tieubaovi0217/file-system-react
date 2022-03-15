@@ -11,7 +11,7 @@ import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
 
 const FileBrowserContent = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.fileBrowser.filteredData); // attention: this is filtered files and dirs
+  const filterData = useSelector((state) => state.fileBrowser.filteredData); // attention: this is filtered files and dirs
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,11 +36,11 @@ const FileBrowserContent = () => {
       });
   }, [dispatch]);
 
-  const files = data
+  const files = filterData
     .filter((item) => item.isFile)
     .map((file) => <File key={`${file.relativePath}`} fileInfo={file} />);
 
-  const folders = data
+  const folders = filterData
     .filter((item) => item.isDirectDirectory)
     .map((folder) => (
       <Folder key={`${folder.relativePath}`} folderInfo={folder} />
@@ -48,13 +48,9 @@ const FileBrowserContent = () => {
 
   return (
     <div className="file-browser__content">
-      {isLoading && (
-        <span className="file-browser__spinner">
-          <SyncOutlined spin />
-        </span>
-      )}
+      {isLoading && <SyncOutlined spin />}
       {!isLoading && (
-        <Row gutter={[8, 12]}>
+        <Row gutter={[8, 8]}>
           {folders}
           {files}
         </Row>

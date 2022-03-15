@@ -36,7 +36,10 @@ const UploadFile = () => {
   return (
     <div>
       <Upload {...props}>
-        <Button type="text" icon={<UploadOutlined />}>
+        <Button
+          type="text"
+          icon={<UploadOutlined style={{ fontSize: '125%' }} />}
+        >
           Upload
         </Button>
       </Upload>

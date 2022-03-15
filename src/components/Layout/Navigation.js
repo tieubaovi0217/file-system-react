@@ -40,13 +40,9 @@ const Navigation = () => {
         <Link to="/">Administration</Link>
       </Menu.Item>
 
-      <Menu.Item key="/root" style={{ marginLeft: 'auto' }}>
-        <Link to="/root">Resources</Link>
-      </Menu.Item>
-
       {!isAuthenticated && (
         <>
-          <Menu.Item key="/auth/login">
+          <Menu.Item key="/auth/login" style={{ marginLeft: 'auto' }}>
             <Link to="/auth/login">Login</Link>
           </Menu.Item>
           <Menu.Item key="/auth/signup">
@@ -57,13 +53,18 @@ const Navigation = () => {
 
       {isAuthenticated && (
         <>
+          <Menu.Item key="/root" style={{ marginLeft: 'auto' }}>
+            <Link to="/root">Resources</Link>
+          </Menu.Item>
           <Menu.Item key="/profile">
             <Link to="/profile">
               Profile, {user?.username} <UserOutlined />
             </Link>
           </Menu.Item>
           <Menu.Item key="/auth/logout">
-            <Button onClick={logoutHandler}>Logout</Button>
+            <Button type="primary" onClick={logoutHandler}>
+              Logout
+            </Button>
           </Menu.Item>
         </>
       )}

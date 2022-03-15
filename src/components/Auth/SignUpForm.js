@@ -1,4 +1,5 @@
 import './SignUpForm.css';
+import { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 
@@ -37,10 +38,12 @@ const SignUpForm = () => {
   const history = useHistory();
 
   const [form] = Form.useForm();
+  const [isSigningUp, setIsSigningUp] = useState(false);
 
   const onFinish = (values) => {
     // console.log('Received values of form: ', values);
     const { username, password, email, confirmPassword } = values;
+    setIsSigningUp(true);
     dispatch(signUpUser({ username, password, email, confirmPassword }))
       .then(() => {
         message.success('Signup Successfully');
@@ -49,17 +52,17 @@ const SignUpForm = () => {
       .catch((err) => {
         console.log(err);
         message.error(err.message, 1);
-      });
+      })
+      .finally(() => setIsSigningUp(false));
   };
 
   return (
-    <div className="signup-wrapper">
+    <div className="signup-form">
       <h1>Create your account </h1>
       <Form
         {...formItemLayout}
         form={form}
         name="register"
-        className="signup-form"
         onFinish={onFinish}
         scrollToFirstError
       >
@@ -133,7 +136,7 @@ const SignUpForm = () => {
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit" loading={false}>
+          <Button type="primary" htmlType="submit" loading={isSigningUp}>
             Register
           </Button>
         </Form.Item>

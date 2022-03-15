@@ -1,5 +1,5 @@
 import './LoginForm.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 
 import { Form, Input, Button, message } from 'antd';
@@ -12,9 +12,12 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
   const onFinish = (values) => {
     // console.log('Received values of form: ', values);
     const { username, password } = values;
+    setIsLoggingIn(true);
     dispatch(loginUser({ username, password }))
       .then(() => {
         message.success('Login Successfully', 1);
@@ -23,7 +26,8 @@ const LoginForm = () => {
       .catch((err) => {
         console.log(err);
         message.error(err.message, 1);
-      });
+      })
+      .finally(() => setIsLoggingIn(false));
   };
 
   return (
@@ -75,7 +79,7 @@ const LoginForm = () => {
             type="primary"
             htmlType="submit"
             className="login-form__button"
-            loading={false}
+            loading={isLoggingIn}
           >
             Log In
           </Button>

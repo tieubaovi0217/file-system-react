@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Col, Dropdown, Menu, message, Modal } from 'antd';
+import { Col, Dropdown, Menu, message, Modal, Tooltip } from 'antd';
 
 import { FileOutlined } from '@ant-design/icons';
 import {
@@ -95,15 +95,19 @@ const File = ({ fileInfo }) => {
   return (
     <Dropdown overlay={menu} trigger={['contextMenu']}>
       <Col
-        className="resource"
         span={process.env.REACT_APP_FILE_FOLDER_SPAN}
         onContextMenu={fileRightClickedHandler}
         onDoubleClick={openFileHandler}
       >
-        <div className="resource__icon">
-          <FileOutlined />
-        </div>
-        <div className="resource__name">{name}</div>
+        <Tooltip title={name}>
+          <div className="resource">
+            <div className="resource__icon">
+              <FileOutlined />
+            </div>
+
+            <div className="resource__name">{name}</div>
+          </div>
+        </Tooltip>
       </Col>
     </Dropdown>
   );

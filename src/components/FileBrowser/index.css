@@ -1,101 +1,82 @@
+@import '~antd/dist/antd.css';
+
+.ant-layout-header,
+.ant-layout-sider,
+.ant-layout-content,
+.ant-layout-footer {
+  background: #fff;
+  padding: 0;
+}
+
+.ant-layout-header {
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.ant-layout-sider {
+  /* background: #d7d7d7; */
+}
+
 .file-browser {
+  margin: 40px auto;
   border: 1px solid #d7d7d7;
   border-radius: 4px;
-  margin: auto;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
   max-width: 1000px;
+  min-height: 560px;
   /* padding: 8px; */
 }
 
-.file-browser__content {
-  padding: 16px;
-  min-height: 400px;
+.file-browser__actions {
+  display: flex;
+  align-items: center;
+  /* background: red; */
+  padding: 0 8px;
+}
+
+.file-browser__size-info {
+  margin-left: auto;
+}
+
+.file-browser__header {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.file-browser__search {
+  margin-left: auto;
+  width: 240px;
+}
+
+.file-browser__backbutton {
+  margin-right: 16px;
 }
 
 .resource {
   border: 0;
   text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* overflow: hidden; */
 }
 
 .resource:hover {
   cursor: pointer;
-  transform: scale(1.1);
+  transform: scale(105%);
   background: #f4f4f4;
 }
 
 .resource__icon {
-  font-size: 32px;
+  font-size: 28px;
 }
 
 .resource__name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-weight: 300;
   font-size: 12px;
 }
 
-.file-browser__header {
+.file-browser__content {
   padding: 8px;
-  margin-bottom: 8px;
-  display: flex;
-  border-bottom: 1px solid #d7d7d7;
-}
-
-.file-browser__path {
-  display: flex;
-  align-items: center;
-  margin-left: 16px;
-}
-
-.file-browser__search-bar {
-  margin-left: auto;
-  width: 240px;
-}
-
-.file-browser__spinner {
-  display: block;
-  text-align: center;
-  font-size: 32px;
-}
-
-/* File info modal */
-.info-modal tr > td:first-child {
-  padding-right: 16px;
-}
-
-.info-modal__icon {
-  font-size: 60px;
-  display: block;
-  margin: auto;
-  margin-bottom: 24px;
-}
-/**/
-
-.file-browser__actions {
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-}
-.file-browser__actions {
-  flex: 1;
-  display: flex;
-  /* justify-content: flex-end; */
-}
-
-.file-browser__upload-file {
-  margin-right: 8px;
-  max-width: 200px;
-}
-
-.file-browser__upload-folder {
-  margin-right: 8px;
-}
-
-.file-browser__backbutton {
-  margin-left: 16px;
-}
-
-.file-browser__total-size {
-  margin-left: auto;
 }
