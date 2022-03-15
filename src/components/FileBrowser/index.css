@@ -4,12 +4,12 @@
   margin: auto;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
   max-width: 1000px;
-  padding: 8px;
-  min-height: 400px;
+  /* padding: 8px; */
 }
 
 .file-browser__content {
-  min-height: 300px;
+  padding: 16px;
+  min-height: 400px;
 }
 
 .resource {
@@ -22,7 +22,7 @@
 .resource:hover {
   cursor: pointer;
   transform: scale(1.1);
-  background: #f0f0f0;
+  background: #f4f4f4;
 }
 
 .resource__icon {
@@ -37,8 +37,8 @@
 .file-browser__header {
   padding: 8px;
   margin-bottom: 8px;
-  /* border: 1px solid red; */
   display: flex;
+  border-bottom: 1px solid #d7d7d7;
 }
 
 .file-browser__path {
@@ -71,21 +71,31 @@
 }
 /**/
 
-.file-browser__footer {
+.file-browser__actions {
   display: flex;
   align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
 }
 .file-browser__actions {
   flex: 1;
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
 }
 
-.file-browser__upload {
-  padding-right: 8px;
+.file-browser__upload-file {
+  margin-right: 8px;
   max-width: 200px;
 }
 
-.file-browser__refresh {
-  padding-right: 8px;
+.file-browser__upload-folder {
+  margin-right: 8px;
+}
+
+.file-browser__backbutton {
+  margin-left: 16px;
+}
+
+.file-browser__total-size {
+  margin-left: auto;
 }

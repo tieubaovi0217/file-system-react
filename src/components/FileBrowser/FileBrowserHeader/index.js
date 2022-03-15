@@ -44,6 +44,7 @@ const FileBrowserHeader = () => {
   return (
     <div className="file-browser__header">
       <Button
+        className="file-browser__backbutton"
         shape="circle"
         onClick={backButtonClickedHandler}
         disabled={currentPath.length <= 1 ? true : false}
@@ -53,7 +54,7 @@ const FileBrowserHeader = () => {
       <Breadcrumb className="file-browser__path">{breadcrumbItems}</Breadcrumb>
       <Search
         className="file-browser__search-bar"
-        placeholder="Search file"
+        placeholder="Search files"
         allowClear
         onChange={onChange}
         onSearch={onSearch}

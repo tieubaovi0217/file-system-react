@@ -15,13 +15,13 @@ const FileBrowserFooter = () => {
   const path = useSelector((state) => state.fileBrowser.path);
 
   const refreshContentHandler = () => {
-    message.loading('Syncing...');
+    message.loading('Syncing...', 10);
     setTimeout(() => {
       dispatch(fetchFileBrowserData(path))
         .then((res) => {
           console.log(res);
           message.destroy();
-          message.success('Synced');
+          message.success('Synced', 1);
         })
         .catch((err) => {
           console.log(err);
@@ -31,23 +31,26 @@ const FileBrowserFooter = () => {
   };
 
   return (
-    <div className="file-browser__footer">
-      <span>
-        <strong>Total Size:</strong> {prettyBytes(totalSize)}
-      </span>
-      <div className="file-browser__actions">
-        <div className="file-browser__refresh">
-          <Button icon={<SyncOutlined spin />} onClick={refreshContentHandler}>
-            Refresh
-          </Button>
-        </div>
+    <div className="file-browser__actions">
+      <div className="file-browser__upload-folder">
+        <UploadFolder />
+      </div>
+      <div className="file-browser__upload-file">
+        <UploadFile />
+      </div>
+      <div className="file-browser__refresh">
+        <Button
+          type="text"
+          icon={<SyncOutlined spin />}
+          onClick={refreshContentHandler}
+        >
+          Refresh
+        </Button>
+      </div>
 
-        <div className="file-browser__upload">
-          <UploadFile />
-        </div>
-        <div>
-          <UploadFolder />
-        </div>
+      <div className="file-browser__total-size">
+        <strong>Size: </strong>
+        {prettyBytes(totalSize)}
       </div>
     </div>
   );

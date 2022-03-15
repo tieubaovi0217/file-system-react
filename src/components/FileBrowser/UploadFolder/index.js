@@ -1,14 +1,11 @@
 import { Upload, Button } from 'antd';
-import { CloudUploadOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { FolderAddOutlined } from '@ant-design/icons';
 
 const UploadFolder = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
   return (
     <Upload>
-      <Button disabled={!isAuthenticated} icon={<CloudUploadOutlined />}>
-        Upload folder
+      <Button type="text" icon={<FolderAddOutlined />}>
+        New folder
       </Button>
     </Upload>
   );

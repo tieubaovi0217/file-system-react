@@ -3,16 +3,16 @@ import { Divider } from 'antd';
 
 import FileBrowserHeader from './FileBrowserHeader';
 import FileBrowserContent from './FileBrowserContent';
-import FileBrowserFooter from './FileBrowserFooter';
+import FileBrowserActions from './FileBrowserActions';
 
 const FileBrowser = () => {
   return (
     <div className="file-browser">
+      <FileBrowserActions />
+      {/* <Divider /> */}
       <FileBrowserHeader />
-      <Divider />
+      {/* <Divider /> */}
       <FileBrowserContent />
-      <Divider />
-      <FileBrowserFooter />
     </div>
   );
 };

@@ -1,12 +1,11 @@
 import { Upload, Button, message } from 'antd';
-import { CloudUploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
 
 const UploadFile = () => {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const path = useSelector((state) => state.fileBrowser.path);
 
   //TODO: fix issue long file name
@@ -37,8 +36,8 @@ const UploadFile = () => {
   return (
     <div>
       <Upload {...props}>
-        <Button disabled={!isAuthenticated} icon={<CloudUploadOutlined />}>
-          Upload files
+        <Button type="text" icon={<UploadOutlined />}>
+          Upload
         </Button>
       </Upload>
     </div>
