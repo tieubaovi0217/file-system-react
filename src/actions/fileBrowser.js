@@ -1,8 +1,5 @@
 import { fileBrowserActions } from '../slices/fileBrowser';
 
-import * as moment from 'moment';
-import prettyBytes from 'pretty-bytes';
-
 export const fetchFileBrowserDataAsync = (path) => {
   return async (dispatch) => {
     const getData = async () => {
@@ -25,11 +22,9 @@ export const fetchFileBrowserDataAsync = (path) => {
             isDirectDirectory: item.isDirectDirectory,
             name: item.name,
             ext: item.ext,
-            size: prettyBytes(item.size),
+            size: item.size,
             relativePath: item.relativePath,
-            lastModified: moment(item.lastModified).format(
-              'DD/MM/YYYY HH:mm:ss',
-            ),
+            lastModified: item.lastModified,
           };
         }),
         totalSize,
@@ -38,7 +33,7 @@ export const fetchFileBrowserDataAsync = (path) => {
 
     try {
       const { data, totalSize } = await getData();
-      dispatch(fileBrowserActions.setData({ data, path, totalSize }));
+      await dispatch(fileBrowserActions.setData({ data, path, totalSize }));
       localStorage.setItem('currentPath', path);
       return Promise.resolve(data);
     } catch (err) {
@@ -47,7 +42,7 @@ export const fetchFileBrowserDataAsync = (path) => {
   };
 };
 
-export const deleteFileOrFolderAsync = (relativePath) => {
+export const deleteFileOrFolderAsync = (currentPath, relativePath) => {
   return async (dispatch) => {
     const deleteData = async () => {
       const res = await fetch(
@@ -68,6 +63,33 @@ export const deleteFileOrFolderAsync = (relativePath) => {
 
     try {
       await deleteData();
+      return Promise.resolve(true);
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  };
+};
+
+export const createNewFolderAsync = (relativePath, newFolderName) => {
+  return async (dispatch) => {
+    const sendCreateNewFolder = async () => {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/root/mkdir`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${
+            localStorage.getItem('token') ? localStorage.getItem('token') : ''
+          }`,
+        },
+        body: JSON.stringify({ relativePath, newFolderName }),
+      });
+
+      if (!res.ok) throw new Error('Create new folder failed');
+      return true;
+    };
+
+    try {
+      await sendCreateNewFolder();
       return Promise.resolve(true);
     } catch (err) {
       return Promise.reject(err);

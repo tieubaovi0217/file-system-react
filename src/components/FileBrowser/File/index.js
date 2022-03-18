@@ -10,6 +10,8 @@ import {
 import { useDispatch } from 'react-redux';
 
 import { normalizeRelativePath } from '../../../helpers';
+import prettyBytes from 'pretty-bytes';
+import * as moment from 'moment';
 
 const File = ({ fileInfo, path }) => {
   const dispatch = useDispatch();
@@ -20,50 +22,54 @@ const File = ({ fileInfo, path }) => {
   };
 
   const deleteFileHandler = () => {
-    dispatch(deleteFileOrFolderAsync(normalizeRelativePath(relativePath)))
-      .then((res) => {
-        console.log(res);
+    dispatch(deleteFileOrFolderAsync(path, normalizeRelativePath(relativePath)))
+      .then(() => {
+        return dispatch(fetchFileBrowserDataAsync(path));
+      })
+      .then(() => {
         message.success(`Delete file ${name} successfully`, 0.5);
-        dispatch(fetchFileBrowserDataAsync(path));
       })
       .catch((err) => {
         console.log(err);
+        message.error(err.message, 0.5);
       });
   };
 
   const renameFileHandler = () => {};
+
+  const downloadFileHandler = () => {};
 
   const showInfoModal = () => {
     Modal.info({
       title: 'File Info',
       content: (
         <div>
-          <FileOutlined className="info-modal__icon" />
-          <table className="info-modal">
+          <FileOutlined className="file-info-modal__icon" />
+          <table className="file-info-modal">
             <tbody>
               <tr>
                 <td align="right">
-                  <strong>Name:</strong>
+                  <strong>Name: </strong>
                 </td>
                 <td>{name}</td>
               </tr>
               <tr>
                 <td align="right">
-                  <strong>Type of file:</strong>
+                  <strong>Type of file: </strong>
                 </td>
                 <td>{ext}</td>
               </tr>
               <tr>
                 <td align="right">
-                  <strong>Size:</strong>
+                  <strong>Size: </strong>
                 </td>
-                <td>{size}</td>
+                <td>{prettyBytes(size)}</td>
               </tr>
               <tr>
                 <td align="right">
-                  <strong>Last modified:</strong>
+                  <strong>Last modified: </strong>
                 </td>
-                <td>{lastModified}</td>
+                <td>{moment(lastModified).format('DD/MM/YYYY HH:mm:ss')}</td>
               </tr>
             </tbody>
           </table>
@@ -85,6 +91,14 @@ const File = ({ fileInfo, path }) => {
       <Menu.Divider />
       <Menu.Item key="3" style={{ color: 'red' }} onClick={deleteFileHandler}>
         Delete
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item
+        key="4"
+        style={{ color: 'blue' }}
+        onClick={downloadFileHandler}
+      >
+        Download
       </Menu.Item>
     </Menu>
   );

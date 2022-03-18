@@ -27,9 +27,7 @@ const FileBrowser = () => {
         console.log(err);
         message.error(err.message, 0.5);
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .finally(() => setIsLoading(false));
   }, [dispatch, path]);
 
   const refreshHandler = () => {
@@ -47,9 +45,7 @@ const FileBrowser = () => {
           console.log(err);
           message.error(err.message, 0.5);
         })
-        .finally(() => {
-          setIsLoading(false);
-        });
+        .finally(() => setIsLoading(false));
     }, 1000); // simulate 1s :))
   };
 

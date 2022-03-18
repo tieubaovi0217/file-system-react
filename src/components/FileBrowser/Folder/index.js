@@ -18,20 +18,26 @@ const Folder = ({ folderInfo, path }) => {
   const dispatch = useDispatch();
 
   const folderDoubleClickedHandler = () => {
-    dispatch(fetchFileBrowserDataAsync(`${path}/${folderInfo.name}`));
+    const updatedPath =
+      path === '' ? folderInfo.name : `${path}/${folderInfo.name}`;
+    // console.log(updatedPath);
+    dispatch(fetchFileBrowserDataAsync(updatedPath));
   };
 
   const folderRightClickedHandler = (e) => {};
 
   const deleteFolderHandler = () => {
-    dispatch(deleteFileOrFolderAsync(normalizeRelativePath(relativePath)))
+    dispatch(deleteFileOrFolderAsync(path, normalizeRelativePath(relativePath)))
+      .then(() => {
+        return dispatch(fetchFileBrowserDataAsync(path));
+      })
       .then((res) => {
         console.log(res);
         message.success(`Delete folder ${name} successfully`);
-        dispatch(fetchFileBrowserDataAsync(path));
       })
       .catch((err) => {
         console.log(err);
+        message.error(err.message, 0.5);
       });
   };
 
