@@ -4,9 +4,8 @@ import { Button, Breadcrumb, Input } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
-import { fileBrowserActions } from '../../../store/fileBrowser';
-import FileBrowserActions from '../FileBrowserActions';
+import { fileBrowserActions } from '../../../slices/fileBrowser';
+import { fetchFileBrowserDataAsync } from '../../../actions/fileBrowser';
 
 const { Search } = Input;
 
@@ -20,7 +19,7 @@ const FileBrowserHeader = () => {
       return;
     }
     dispatch(
-      fetchFileBrowserData(
+      fetchFileBrowserDataAsync(
         currentPath.substring(0, currentPath.lastIndexOf('/')),
       ),
     );

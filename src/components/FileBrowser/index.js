@@ -27,14 +27,6 @@ const FileBrowser = () => {
         </Layout>
       </Layout>
     </Layout>
-
-    // <div className="file-browser">
-    //   <FileBrowserActions />
-    //   {/* <Divider /> */}
-    //   <FileBrowserHeader />
-    //   {/* <Divider /> */}
-    //   <FileBrowserContent />
-    // </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import { authActions } from './auth';
+import { authActions } from '../slices/auth';
 
 export const loginUser = (userData) => {
   return async (dispatch) => {

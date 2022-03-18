@@ -6,9 +6,9 @@ import { FolderOpenFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  deleteFileOrFolder,
-  fetchFileBrowserData,
-} from '../../../store/fileBrowserActions';
+  deleteFileOrFolderAsync,
+  fetchFileBrowserDataAsync,
+} from '../../../actions/fileBrowser';
 
 import { normalizeRelativePath } from '../../../helpers';
 
@@ -19,17 +19,17 @@ const Folder = ({ folderInfo }) => {
   const path = useSelector((state) => state.fileBrowser.path);
 
   const folderDoubleClickedHandler = () => {
-    dispatch(fetchFileBrowserData(`${path}/${folderInfo.name}`));
+    dispatch(fetchFileBrowserDataAsync(`${path}/${folderInfo.name}`));
   };
 
   const folderRightClickedHandler = (e) => {};
 
   const deleteFolderHandler = () => {
-    dispatch(deleteFileOrFolder(normalizeRelativePath(relativePath)))
+    dispatch(deleteFileOrFolderAsync(normalizeRelativePath(relativePath)))
       .then((res) => {
         console.log(res);
         message.success(`Delete folder ${name} successfully`);
-        dispatch(fetchFileBrowserData(path));
+        dispatch(fetchFileBrowserDataAsync(path));
       })
       .catch((err) => {
         console.log(err);

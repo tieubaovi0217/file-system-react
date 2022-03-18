@@ -7,7 +7,7 @@ import UploadFolder from '../UploadFolder';
 
 import { Button, message } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
-import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
+import { fetchFileBrowserDataAsync } from '../../../actions/fileBrowser';
 
 const FileBrowserFooter = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const FileBrowserFooter = () => {
   const refreshContentHandler = () => {
     message.loading('Syncing...', 10);
     setTimeout(() => {
-      dispatch(fetchFileBrowserData(path))
+      dispatch(fetchFileBrowserDataAsync(path))
         .then((res) => {
           console.log(res);
           message.destroy();

@@ -1,9 +1,9 @@
-import { fileBrowserActions } from './fileBrowser';
+import { fileBrowserActions } from '../slices/fileBrowser';
 
 import * as moment from 'moment';
 import prettyBytes from 'pretty-bytes';
 
-export const fetchFileBrowserData = (path = '') => {
+export const fetchFileBrowserDataAsync = (path = '') => {
   return async (dispatch) => {
     const getData = async () => {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/root/${path}`, {
@@ -46,7 +46,7 @@ export const fetchFileBrowserData = (path = '') => {
   };
 };
 
-export const deleteFileOrFolder = (relativePath) => {
+export const deleteFileOrFolderAsync = (relativePath) => {
   return async (dispatch) => {
     const deleteData = async () => {
       const res = await fetch(

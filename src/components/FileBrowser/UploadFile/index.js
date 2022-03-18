@@ -2,7 +2,7 @@ import { Upload, Button, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
+import { fetchFileBrowserDataAsync } from '../../../actions/fileBrowser';
 
 const UploadFile = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const UploadFile = () => {
       }
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`, 1);
-        dispatch(fetchFileBrowserData(path));
+        dispatch(fetchFileBrowserDataAsync(path));
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`, 1);
       }

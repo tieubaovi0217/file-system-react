@@ -4,9 +4,9 @@ import { Col, Dropdown, Menu, message, Modal, Tooltip } from 'antd';
 
 import { FileOutlined } from '@ant-design/icons';
 import {
-  deleteFileOrFolder,
-  fetchFileBrowserData,
-} from '../../../store/fileBrowserActions';
+  deleteFileOrFolderAsync,
+  fetchFileBrowserDataAsync,
+} from '../../../actions/fileBrowser';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { normalizeRelativePath } from '../../../helpers';
@@ -23,11 +23,11 @@ const File = ({ fileInfo }) => {
   };
 
   const deleteFileHandler = () => {
-    dispatch(deleteFileOrFolder(normalizeRelativePath(relativePath)))
+    dispatch(deleteFileOrFolderAsync(normalizeRelativePath(relativePath)))
       .then((res) => {
         console.log(res);
         message.success(`Delete file ${name} successfully`, 0.5);
-        dispatch(fetchFileBrowserData(path));
+        dispatch(fetchFileBrowserDataAsync(path));
       })
       .catch((err) => {
         console.log(err);

@@ -7,7 +7,7 @@ import File from '../File';
 import Folder from '../Folder';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFileBrowserData } from '../../../store/fileBrowserActions';
+import { fetchFileBrowserDataAsync } from '../../../actions/fileBrowser';
 
 const FileBrowserContent = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const FileBrowserContent = () => {
   useEffect(() => {
     setIsLoading(true);
     dispatch(
-      fetchFileBrowserData(
+      fetchFileBrowserDataAsync(
         localStorage.getItem('currentPath')
           ? localStorage.getItem('currentPath')
           : '',
