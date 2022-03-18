@@ -6,7 +6,7 @@ import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../../actions/auth';
+import { loginUserAsync } from '../../actions/auth';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -15,17 +15,16 @@ const LoginForm = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const onFinish = (values) => {
-    // console.log('Received values of form: ', values);
     const { username, password } = values;
     setIsLoggingIn(true);
-    dispatch(loginUser({ username, password }))
+    dispatch(loginUserAsync({ username, password }))
       .then(() => {
-        message.success('Login Successfully', 1);
+        message.success('Login Successfully', 0.5);
         history.replace('/');
       })
       .catch((err) => {
         console.log(err);
-        message.error(err.message, 1);
+        message.error(err.message, 0.5);
       })
       .finally(() => setIsLoggingIn(false));
   };
@@ -39,7 +38,6 @@ const LoginForm = () => {
       }}
       onFinish={onFinish}
     >
-      {/* TODO: fix this temporary style */}
       <Form.Item>
         <LockOutlined className="lock-circle" />
       </Form.Item>

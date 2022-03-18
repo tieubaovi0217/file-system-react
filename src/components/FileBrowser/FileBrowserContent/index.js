@@ -1,61 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { message, Row } from 'antd';
+import { Row, Layout } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 
 import File from '../File';
 import Folder from '../Folder';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchFileBrowserDataAsync } from '../../../actions/fileBrowser';
+import FileBrowserHeader from '../FileBrowserHeader';
 
-const FileBrowserContent = () => {
-  const dispatch = useDispatch();
-  const filterData = useSelector((state) => state.fileBrowser.filteredData); // attention: this is filtered files and dirs
+const { Header, Content } = Layout;
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    dispatch(
-      fetchFileBrowserDataAsync(
-        localStorage.getItem('currentPath')
-          ? localStorage.getItem('currentPath')
-          : '',
-      ),
-    ) //get data at root
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        message.error(err.message, 1);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [dispatch]);
-
-  const files = filterData
+const FileBrowserContent = ({ data, loading, path }) => {
+  const files = data
     .filter((item) => item.isFile)
-    .map((file) => <File key={`${file.relativePath}`} fileInfo={file} />);
+    .map((file) => (
+      <File path={path} key={`${file.relativePath}`} fileInfo={file} />
+    ));
 
-  const folders = filterData
+  const folders = data
     .filter((item) => item.isDirectDirectory)
     .map((folder) => (
-      <Folder key={`${folder.relativePath}`} folderInfo={folder} />
+      <Folder path={path} key={`${folder.relativePath}`} folderInfo={folder} />
     ));
 
   return (
-    <div className="file-browser__content">
-      {isLoading && <SyncOutlined spin />}
-      {!isLoading && (
-        <Row gutter={[8, 8]}>
-          {folders}
-          {files}
-        </Row>
-      )}
-    </div>
+    <Layout>
+      <Header style={{ borderBottom: '0px' }}>
+        <FileBrowserHeader currentPath={path} />
+      </Header>
+      <Content>
+        <div className="file-browser__content">
+          {loading && (
+            <div className="file-browser__spinner">
+              <SyncOutlined spin />
+            </div>
+          )}
+          {!loading && (
+            <Row gutter={[8, 8]}>
+              {folders}
+              {files}
+            </Row>
+          )}
+        </div>
+      </Content>
+    </Layout>
   );
 };
 

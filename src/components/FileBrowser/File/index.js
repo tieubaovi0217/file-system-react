@@ -7,16 +7,13 @@ import {
   deleteFileOrFolderAsync,
   fetchFileBrowserDataAsync,
 } from '../../../actions/fileBrowser';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { normalizeRelativePath } from '../../../helpers';
 
-const File = ({ fileInfo }) => {
+const File = ({ fileInfo, path }) => {
   const dispatch = useDispatch();
-  const path = useSelector((state) => state.fileBrowser.path);
   const { name, size, lastModified, ext, relativePath } = fileInfo;
-
-  const fileRightClickedHandler = (e) => {};
 
   const openFileHandler = () => {
     console.log('file open');
@@ -96,7 +93,6 @@ const File = ({ fileInfo }) => {
     <Dropdown overlay={menu} trigger={['contextMenu']}>
       <Col
         span={process.env.REACT_APP_FILE_FOLDER_SPAN}
-        onContextMenu={fileRightClickedHandler}
         onDoubleClick={openFileHandler}
       >
         <Tooltip title={name}>
@@ -105,7 +101,7 @@ const File = ({ fileInfo }) => {
               <FileOutlined />
             </div>
 
-            <div className="resource__name">{name}</div>
+            <div className="resource__name disable-text-selection">{name}</div>
           </div>
         </Tooltip>
       </Col>

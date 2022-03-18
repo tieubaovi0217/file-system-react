@@ -1,14 +1,12 @@
 import { Upload, Button, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { fetchFileBrowserDataAsync } from '../../../actions/fileBrowser';
 
-const UploadFile = () => {
+const UploadFile = ({ path }) => {
   const dispatch = useDispatch();
-  const path = useSelector((state) => state.fileBrowser.path);
 
-  //TODO: fix issue long file name
   const props = {
     name: 'file',
     multiple: true,
@@ -21,15 +19,16 @@ const UploadFile = () => {
     data: {
       path,
     },
+    showUploadList: false,
     onChange(info) {
       if (info.file.status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
       if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`, 1);
+        message.success(`${info.file.name} file uploaded successfully`, 0.5);
         dispatch(fetchFileBrowserDataAsync(path));
       } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`, 1);
+        message.error(`${info.file.name} file upload failed.`, 0.5);
       }
     },
   };

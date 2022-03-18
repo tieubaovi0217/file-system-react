@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
-import { signUpUser } from '../../actions/auth';
+import { signUpUserAsync } from '../../actions/auth';
 
 const formItemLayout = {
   labelCol: {
@@ -41,17 +41,16 @@ const SignUpForm = () => {
   const [isSigningUp, setIsSigningUp] = useState(false);
 
   const onFinish = (values) => {
-    // console.log('Received values of form: ', values);
     const { username, password, email, confirmPassword } = values;
     setIsSigningUp(true);
-    dispatch(signUpUser({ username, password, email, confirmPassword }))
+    dispatch(signUpUserAsync({ username, password, email, confirmPassword }))
       .then(() => {
         message.success('Signup Successfully');
         history.push('/');
       })
       .catch((err) => {
         console.log(err);
-        message.error(err.message, 1);
+        message.error(err.message, 0.5);
       })
       .finally(() => setIsSigningUp(false));
   };

@@ -3,7 +3,7 @@ import React from 'react';
 import { Col, Dropdown, Menu, message, Modal } from 'antd';
 
 import { FolderOpenFilled } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import {
   deleteFileOrFolderAsync,
@@ -12,11 +12,10 @@ import {
 
 import { normalizeRelativePath } from '../../../helpers';
 
-const Folder = ({ folderInfo }) => {
+const Folder = ({ folderInfo, path }) => {
   const { name, size, lastModified, relativePath } = folderInfo;
 
   const dispatch = useDispatch();
-  const path = useSelector((state) => state.fileBrowser.path);
 
   const folderDoubleClickedHandler = () => {
     dispatch(fetchFileBrowserDataAsync(`${path}/${folderInfo.name}`));
@@ -95,7 +94,7 @@ const Folder = ({ folderInfo }) => {
           <div className="resource__icon">
             <FolderOpenFilled />
           </div>
-          <div className="resource__name">{name}</div>
+          <div className="resource__name disable-text-selection">{name}</div>
         </div>
       </Col>
     </Dropdown>

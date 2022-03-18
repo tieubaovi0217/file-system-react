@@ -15,16 +15,13 @@ const fileBrowserSlice = createSlice({
   reducers: {
     setData(state, action) {
       state.path = action.payload.path;
-      state.data = [...action.payload.data];
-      state.filteredData = [...action.payload.data];
+      state.data = action.payload.data;
+      state.filteredData = action.payload.data;
       state.totalSize = action.payload.totalSize;
-
-      localStorage.setItem('currentPath', state.path);
     },
 
     filterData(state, action) {
-      if (action.payload.trim().length === 0)
-        state.filteredData = [...state.data];
+      if (action.payload.trim().length === 0) state.filteredData = state.data;
 
       state.filteredData = state.data.filter((item) =>
         item.name.startsWith(action.payload),

@@ -5,12 +5,15 @@
   max-width: 300px;
   margin: 100px auto;
 }
+
 .login-form__forgot {
   float: right;
 }
+
 .ant-col-rtl .login-form__forgot {
   float: left;
 }
+
 .login-form__button {
   width: 100%;
 }

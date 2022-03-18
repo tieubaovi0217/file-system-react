@@ -3,21 +3,18 @@ import React from 'react';
 import { Button, Breadcrumb, Input } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fileBrowserActions } from '../../../slices/fileBrowser';
 import { fetchFileBrowserDataAsync } from '../../../actions/fileBrowser';
 
 const { Search } = Input;
 
-const FileBrowserHeader = () => {
+const FileBrowserHeader = ({ currentPath }) => {
   const dispatch = useDispatch();
-  const currentPath = useSelector((state) => state.fileBrowser.path);
 
-  const backButtonClickedHandler = () => {
+  const backButtonClickHandler = () => {
     // /folderA/folderB/folderC
-    if (currentPath.length <= 1) {
-      return;
-    }
+    if (currentPath.length <= 1) return;
     dispatch(
       fetchFileBrowserDataAsync(
         currentPath.substring(0, currentPath.lastIndexOf('/')),
@@ -33,7 +30,7 @@ const FileBrowserHeader = () => {
     dispatch(fileBrowserActions.filterData(e.target.value));
   };
 
-  const breadcrumbItems = 'a/b/c'.split('/').map((folderName, index) => {
+  const breadcrumbItems = currentPath.split('/').map((folderName, index) => {
     return (
       <Breadcrumb.Item key={`${folderName}-${index}`}>
         {folderName}
@@ -46,7 +43,7 @@ const FileBrowserHeader = () => {
       <Button
         className="file-browser__backbutton"
         shape="circle"
-        onClick={backButtonClickedHandler}
+        onClick={backButtonClickHandler}
         disabled={currentPath.length <= 1 ? true : false}
       >
         <ArrowUpOutlined />

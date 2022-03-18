@@ -3,7 +3,7 @@ import { fileBrowserActions } from '../slices/fileBrowser';
 import * as moment from 'moment';
 import prettyBytes from 'pretty-bytes';
 
-export const fetchFileBrowserDataAsync = (path = '') => {
+export const fetchFileBrowserDataAsync = (path) => {
   return async (dispatch) => {
     const getData = async () => {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/root/${path}`, {
@@ -39,6 +39,7 @@ export const fetchFileBrowserDataAsync = (path = '') => {
     try {
       const { data, totalSize } = await getData();
       dispatch(fileBrowserActions.setData({ data, path, totalSize }));
+      localStorage.setItem('currentPath', path);
       return Promise.resolve(data);
     } catch (err) {
       return Promise.reject(err);

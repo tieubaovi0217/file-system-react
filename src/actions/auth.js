@@ -1,6 +1,6 @@
 import { authActions } from '../slices/auth';
 
-export const loginUser = (userData) => {
+export const loginUserAsync = (userData) => {
   return async (dispatch) => {
     const sendLogin = async () => {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
@@ -21,9 +21,11 @@ export const loginUser = (userData) => {
     };
 
     try {
-      const res = await sendLogin();
-      dispatch(authActions.login(res));
-      return Promise.resolve(res);
+      const { token, user } = await sendLogin();
+      dispatch(authActions.login({ token, user }));
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      return Promise.resolve({ token, user });
     } catch (err) {
       return Promise.reject(err);
     }
@@ -33,11 +35,14 @@ export const loginUser = (userData) => {
 export const logoutUser = () => {
   return async (dispatch) => {
     dispatch(authActions.logout());
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('currentPath');
     return Promise.resolve(true);
   };
 };
 
-export const signUpUser = (userData) => {
+export const signUpUserAsync = (userData) => {
   return async (dispatch) => {
     const sendSignUp = async () => {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {
@@ -53,14 +58,14 @@ export const signUpUser = (userData) => {
         throw new Error(error);
       }
 
-      const data = await res.json();
-      return data;
+      const { token, user } = await res.json();
+      return { token, user };
     };
 
     try {
-      const res = await sendSignUp();
-      dispatch(authActions.login(res));
-      return Promise.resolve(res);
+      const { token, user } = await sendSignUp();
+      dispatch(authActions.login({ token, user }));
+      return Promise.resolve({ token, user });
     } catch (err) {
       return Promise.reject(err);
     }

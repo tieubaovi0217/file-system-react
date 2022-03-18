@@ -80,3 +80,17 @@
 .file-browser__content {
   padding: 8px;
 }
+
+.file-browser__spinner {
+  display: block;
+  text-align: center;
+  font-size: 200%;
+}
+
+.disable-text-selection {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
