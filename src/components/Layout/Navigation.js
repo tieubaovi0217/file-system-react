@@ -26,7 +26,7 @@ const Navigation = () => {
   const logoutHandler = () => {
     dispatch(logoutUser()).then(() => {
       history.replace('/');
-      message.success('Logout Successfully', 0.5);
+      message.success('Logout Successfully');
     });
   };
 

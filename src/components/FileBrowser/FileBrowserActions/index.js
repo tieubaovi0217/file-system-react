@@ -11,7 +11,7 @@ const FileBrowserActions = ({ onRefresh, path }) => {
     <div className="file-browser__actions">
       <UploadFolder path={path} />
       <UploadFile path={path} />
-      <Button type="text" icon={<SyncOutlined spin />} onClick={onRefresh}>
+      <Button type="text" icon={<SyncOutlined />} onClick={onRefresh}>
         Refresh
       </Button>
     </div>

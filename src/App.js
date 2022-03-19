@@ -8,6 +8,10 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import FileBrowserPage from './pages/FileBrowserPage';
 import { useSelector } from 'react-redux';
 
+import { message } from 'antd';
+
+message.config({ maxCount: 1, duration: 0.5 });
+
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -29,22 +33,16 @@ function App() {
           path="/profile"
           component={UserProfile}
           isAuthenticated={isAuthenticated}
-        ></ProtectedRoute>
+        />
 
         <ProtectedRoute
           exact
           path="/root"
           component={FileBrowserPage}
           isAuthenticated={isAuthenticated}
-        ></ProtectedRoute>
+        />
 
-        {/* <Route path="/root">
-          <FileBrowserPage />
-        </Route> */}
-
-        <Route path="*">
-          <Redirect to="/" />
-        </Route>
+        <Redirect to="/" />
       </Switch>
     </Layout>
   );

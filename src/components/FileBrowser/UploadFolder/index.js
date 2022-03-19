@@ -30,11 +30,11 @@ const UploadFolder = ({ path }) => {
         return dispatch(fetchFileBrowserDataAsync(path));
       })
       .then(() => {
-        message.success(`Create new folder successfully`, 0.5);
+        message.success(`Create new folder successfully`);
       })
       .catch((err) => {
         console.log('here', err);
-        message.error(err.message, 0.5);
+        message.error(err.message);
       })
       .finally(() => {
         setConfirmLoading(false);

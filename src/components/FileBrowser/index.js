@@ -8,13 +8,16 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFileBrowserDataAsync } from '../../actions/fileBrowser';
 
+import { SyncOutlined } from '@ant-design/icons';
+
 const { Header, Sider, Content } = Layout;
 
 const FileBrowser = () => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
-  const filteredData = useSelector((state) => state.fileBrowser.filteredData);
+
+  const data = useSelector((state) => state.fileBrowser.data);
   const path = useSelector((state) => state.fileBrowser.path);
 
   useEffect(() => {
@@ -25,28 +28,29 @@ const FileBrowser = () => {
       })
       .catch((err) => {
         console.log(err);
-        message.error(err.message, 0.5);
+        message.error(err.message);
       })
       .finally(() => setIsLoading(false));
   }, [dispatch, path]);
 
   const refreshHandler = () => {
-    message.loading('Syncing...', 10);
+    message.loading('Syncing...', 5);
     //
     setIsLoading(true);
     setTimeout(() => {
       dispatch(fetchFileBrowserDataAsync(path))
         .then((res) => {
           console.log(res);
-          message.destroy();
-          message.success('Synced', 0.5);
+          message.success('Synced');
         })
         .catch((err) => {
           console.log(err);
-          message.error(err.message, 0.5);
+          message.error(err.message);
         })
-        .finally(() => setIsLoading(false));
-    }, 1000); // simulate 1s :))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }, 500); // simulate 0.5s
   };
 
   return (
@@ -57,11 +61,12 @@ const FileBrowser = () => {
       <Layout>
         <Sider style={{ borderRight: '1px solid #d7d7d7' }}>Tree view</Sider>
         <Content>
-          <FileBrowserContent
-            path={path}
-            data={filteredData}
-            loading={isLoading}
-          />
+          {isLoading && (
+            <div className="file-browser__spinner">
+              <SyncOutlined spin />
+            </div>
+          )}
+          {!isLoading && <FileBrowserContent path={path} items={data} />}
         </Content>
       </Layout>
     </Layout>

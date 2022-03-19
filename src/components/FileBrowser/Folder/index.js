@@ -37,7 +37,7 @@ const Folder = ({ folderInfo, path }) => {
       })
       .catch((err) => {
         console.log(err);
-        message.error(err.message, 0.5);
+        message.error(err.message);
       });
   };
 

@@ -25,10 +25,10 @@ const UploadFile = ({ path }) => {
         console.log(info.file, info.fileList);
       }
       if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`, 0.5);
+        message.success(`${info.file.name} file uploaded successfully`);
         dispatch(fetchFileBrowserDataAsync(path));
       } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`, 0.5);
+        message.error(`${info.file.name} file upload failed.`);
       }
     },
   };

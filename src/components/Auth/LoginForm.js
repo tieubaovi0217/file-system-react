@@ -19,12 +19,12 @@ const LoginForm = () => {
     setIsLoggingIn(true);
     dispatch(loginUserAsync({ username, password }))
       .then(() => {
-        message.success('Login Successfully', 0.5);
+        message.success('Login Successfully');
         history.replace('/');
       })
       .catch((err) => {
         console.log(err);
-        message.error(err.message, 0.5);
+        message.error(err.message);
       })
       .finally(() => setIsLoggingIn(false));
   };

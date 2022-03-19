@@ -27,11 +27,11 @@ const File = ({ fileInfo, path }) => {
         return dispatch(fetchFileBrowserDataAsync(path));
       })
       .then(() => {
-        message.success(`Delete file ${name} successfully`, 0.5);
+        message.success(`Delete file ${name} successfully`);
       })
       .catch((err) => {
         console.log(err);
-        message.error(err.message, 0.5);
+        message.error(err.message);
       });
   };
 
