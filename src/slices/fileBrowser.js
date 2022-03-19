@@ -24,8 +24,14 @@ const fileBrowserSlice = createSlice({
       if (action.payload.trim().length === 0) state.filteredData = state.data;
 
       state.filteredData = state.data.filter((item) =>
-        item.name.startsWith(action.payload),
+        item.name.startsWith(action.payload.trim()),
       );
+    },
+
+    popPath(state) {
+      if (state.path.length > 1) {
+        state.path = state.path.substring(0, state.path.lastIndexOf('/'));
+      }
     },
   },
 });

@@ -5,7 +5,6 @@ import { ArrowUpOutlined } from '@ant-design/icons';
 
 import { useDispatch } from 'react-redux';
 import { fileBrowserActions } from '../../../slices/fileBrowser';
-import { fetchFileBrowserDataAsync } from '../../../actions/fileBrowser';
 
 const { Search } = Input;
 
@@ -15,11 +14,7 @@ const FileBrowserHeader = ({ currentPath }) => {
   const backButtonClickHandler = () => {
     // /folderA/folderB/folderC
     if (currentPath.length <= 1) return;
-    dispatch(
-      fetchFileBrowserDataAsync(
-        currentPath.substring(0, currentPath.lastIndexOf('/')),
-      ),
-    );
+    dispatch(fileBrowserActions.popPath());
   };
 
   const onSearch = (value) => {

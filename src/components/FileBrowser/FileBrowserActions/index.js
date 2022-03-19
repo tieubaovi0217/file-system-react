@@ -14,10 +14,6 @@ const FileBrowserActions = ({ onRefresh, path }) => {
       <Button type="text" icon={<SyncOutlined spin />} onClick={onRefresh}>
         Refresh
       </Button>
-
-      {/* <div className="file-browser__size-info">
-        <strong>Size: ...Mb</strong>
-      </div> */}
     </div>
   );
 };
