@@ -10,17 +10,17 @@ import * as moment from 'moment';
 const File = ({ fileInfo, onDelete }) => {
   const { name, size, lastModified, ext, relativePath } = fileInfo;
 
-  const openFileHandler = () => {
+  const handleOpenFile = () => {
     console.log('file open');
   };
 
-  const deleteFileHandler = () => {
+  const handleDeleteFile = () => {
     onDelete(relativePath, name);
   };
 
-  const renameFileHandler = () => {};
+  const handleRename = () => {};
 
-  const downloadFileHandler = () => {};
+  const handleDownload = () => {};
 
   const showInfoModal = () => {
     Modal.info({
@@ -68,19 +68,15 @@ const File = ({ fileInfo, onDelete }) => {
       <Menu.Item key="1" onClick={showInfoModal}>
         Get Info
       </Menu.Item>
-      <Menu.Item key="2" onClick={renameFileHandler}>
+      <Menu.Item key="2" onClick={handleRename}>
         Rename
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" style={{ color: 'red' }} onClick={deleteFileHandler}>
+      <Menu.Item key="3" style={{ color: 'red' }} onClick={handleDeleteFile}>
         Delete
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item
-        key="4"
-        style={{ color: 'blue' }}
-        onClick={downloadFileHandler}
-      >
+      <Menu.Item key="4" style={{ color: 'blue' }} onClick={handleDownload}>
         Download
       </Menu.Item>
     </Menu>
@@ -90,7 +86,7 @@ const File = ({ fileInfo, onDelete }) => {
     <Dropdown overlay={menu} trigger={['contextMenu']}>
       <Col
         span={process.env.REACT_APP_FILE_FOLDER_SPAN}
-        onDoubleClick={openFileHandler}
+        onDoubleClick={handleOpenFile}
       >
         <Tooltip title={name}>
           <div className="resource">

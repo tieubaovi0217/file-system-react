@@ -7,13 +7,13 @@ import { FolderOpenFilled } from '@ant-design/icons';
 const Folder = ({ folderInfo, path, onDelete, onDoubleClick }) => {
   const { name, size, lastModified, relativePath } = folderInfo;
 
-  const folderDoubleClickedHandler = () => {
+  const handleDoubleClick = () => {
     onDoubleClick(name);
   };
 
-  const folderRightClickedHandler = (e) => {};
+  const handleRightClick = (e) => {};
 
-  const deleteFolderHandler = () => {
+  const handleDeleteFolder = () => {
     onDelete(relativePath, name);
   };
 
@@ -59,7 +59,7 @@ const Folder = ({ folderInfo, path, onDelete, onDoubleClick }) => {
       </Menu.Item>
       <Menu.Item key="2">Rename</Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" style={{ color: 'red' }} onClick={deleteFolderHandler}>
+      <Menu.Item key="3" style={{ color: 'red' }} onClick={handleDeleteFolder}>
         Delete
       </Menu.Item>
     </Menu>
@@ -69,8 +69,8 @@ const Folder = ({ folderInfo, path, onDelete, onDoubleClick }) => {
     <Dropdown overlay={menu} trigger={['contextMenu']}>
       <Col
         span={process.env.REACT_APP_FILE_FOLDER_SPAN}
-        onDoubleClick={folderDoubleClickedHandler}
-        onContextMenu={folderRightClickedHandler}
+        onDoubleClick={handleDoubleClick}
+        onContextMenu={handleRightClick}
       >
         <div className="resource">
           <div className="resource__icon">

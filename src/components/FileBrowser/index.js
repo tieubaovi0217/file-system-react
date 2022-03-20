@@ -39,10 +39,6 @@ const FileBrowser = () => {
     };
   }, [dispatch, path, isRefreshing]);
 
-  useEffect(() => {
-    message.success('Synced');
-  }, [isRefreshing]);
-
   const refreshHandler = () => {
     setIsRefreshing((prevState) => !prevState);
   };

@@ -21,26 +21,24 @@ const FileBrowserContent = ({ items, path }) => {
   const [filterValue, setFilterValue] = useState('');
 
   const handleDeleteFileOrFolder = async (relativePath, name) => {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/root/delete/${normalizeRelativePath(
-        relativePath,
-      )}`,
-      {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${
-            localStorage.getItem('token') ? localStorage.getItem('token') : ''
-          }`,
-        },
+    console.log(normalizeRelativePath(relativePath));
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/root/delete/`, {
+      method: 'POST',
+      body: JSON.stringify({ path: normalizeRelativePath(relativePath) }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${
+          localStorage.getItem('token') ? localStorage.getItem('token') : ''
+        }`,
       },
-    );
+    });
     if (!res.ok) {
       const { error } = await res.json();
       return message.error(error);
     }
 
     dispatch(fetchFileBrowserDataAsync(path))
-      .then(() => message.success(`Delete file ${name} successfully`))
+      .then(() => message.success(`Delete ${name} successfully`))
       .catch((err) => {
         console.log(err);
         message.error(err.message);
@@ -61,6 +59,8 @@ const FileBrowserContent = ({ items, path }) => {
     console.log(updatedPath);
     dispatch(fetchFileBrowserDataAsync(updatedPath));
   };
+
+  const handleDownload = (name) => {};
 
   const files = items
     .filter((item) => item.isFile && item.name.startsWith(filterValue.trim()))

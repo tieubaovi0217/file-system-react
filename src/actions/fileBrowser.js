@@ -26,32 +26,6 @@ export const fetchFileBrowserDataAsync = (path) => {
   };
 };
 
-export const deleteFileOrFolderAsync = (currentPath, relativePath) => {
-  return async (dispatch) => {
-    const deleteData = async () => {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/root/delete/${relativePath}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${
-              localStorage.getItem('token') ? localStorage.getItem('token') : ''
-            }`,
-          },
-        },
-      );
-      if (!res.ok) {
-        const { error } = await res.json();
-        throw new Error(error);
-      }
-
-      return res.json();
-    };
-
-    await deleteData();
-  };
-};
-
 export const createNewFolderAsync = (relativePath, newFolderName) => {
   return async (dispatch) => {
     const sendCreateNewFolder = async () => {
