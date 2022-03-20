@@ -16,41 +16,35 @@ const FileBrowser = () => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const data = useSelector((state) => state.fileBrowser.data);
   const path = useSelector((state) => state.fileBrowser.path);
 
   useEffect(() => {
+    let isMounted = true;
+
     setIsLoading(true);
+
     dispatch(fetchFileBrowserDataAsync(path))
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => console.log(res))
       .catch((err) => {
         console.log(err);
         message.error(err.message);
       })
-      .finally(() => setIsLoading(false));
-  }, [dispatch, path]);
+      .finally(() => isMounted && setIsLoading(false));
+
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, path, isRefreshing]);
+
+  useEffect(() => {
+    message.success('Synced');
+  }, [isRefreshing]);
 
   const refreshHandler = () => {
-    message.loading('Syncing...', 5);
-    //
-    setIsLoading(true);
-    setTimeout(() => {
-      dispatch(fetchFileBrowserDataAsync(path))
-        .then((res) => {
-          console.log(res);
-          message.success('Synced');
-        })
-        .catch((err) => {
-          console.log(err);
-          message.error(err.message);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }, 500); // simulate 0.5s
+    setIsRefreshing((prevState) => !prevState);
   };
 
   return (

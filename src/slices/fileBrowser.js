@@ -19,7 +19,7 @@ const fileBrowserSlice = createSlice({
     },
 
     popPath(state) {
-      if (state.path.length > 1) {
+      if (state.path.length > 0) {
         state.path = state.path.substring(0, state.path.lastIndexOf('/'));
       }
     },

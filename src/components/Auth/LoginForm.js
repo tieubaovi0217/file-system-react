@@ -16,6 +16,7 @@ const LoginForm = () => {
 
   const onFinish = (values) => {
     const { username, password } = values;
+
     setIsLoggingIn(true);
     dispatch(loginUserAsync({ username, password }))
       .then(() => {

@@ -11,34 +11,18 @@ export const fetchFileBrowserDataAsync = (path) => {
           }`,
         },
       });
-      if (!res.ok) throw new Error('Failed to fetch');
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error);
+      }
 
-      const { data, totalSize } = await res.json();
-
-      return {
-        data: data.map((item) => {
-          return {
-            isFile: item.isFile,
-            isDirectDirectory: item.isDirectDirectory,
-            name: item.name,
-            ext: item.ext,
-            size: item.size,
-            relativePath: item.relativePath,
-            lastModified: item.lastModified,
-          };
-        }),
-        totalSize,
-      };
+      return res.json();
     };
 
-    try {
-      const { data, totalSize } = await getData();
-      await dispatch(fileBrowserActions.setData({ data, path, totalSize }));
-      localStorage.setItem('currentPath', path);
-      return Promise.resolve(data);
-    } catch (err) {
-      return Promise.reject(err);
-    }
+    const { data, totalSize } = await getData();
+    await dispatch(fileBrowserActions.setData({ data, path, totalSize }));
+    localStorage.setItem('currentPath', path);
+    return data;
   };
 };
 
@@ -56,17 +40,15 @@ export const deleteFileOrFolderAsync = (currentPath, relativePath) => {
           },
         },
       );
-      if (!res.ok) throw new Error('Failed to delete');
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error);
+      }
 
       return res.json();
     };
 
-    try {
-      await deleteData();
-      return Promise.resolve(true);
-    } catch (err) {
-      return Promise.reject(err);
-    }
+    await deleteData();
   };
 };
 
@@ -84,15 +66,14 @@ export const createNewFolderAsync = (relativePath, newFolderName) => {
         body: JSON.stringify({ relativePath, newFolderName }),
       });
 
-      if (!res.ok) throw new Error('Create new folder failed');
-      return true;
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error);
+      }
+
+      return res.json();
     };
 
-    try {
-      await sendCreateNewFolder();
-      return Promise.resolve(true);
-    } catch (err) {
-      return Promise.reject(err);
-    }
+    await sendCreateNewFolder();
   };
 };

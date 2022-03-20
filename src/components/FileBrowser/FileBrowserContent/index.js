@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Row, Layout } from 'antd';
+import { Row, Layout, message } from 'antd';
 
 import File from '../File';
 import Folder from '../Folder';
@@ -9,6 +9,9 @@ import FileBrowserHeader from '../FileBrowserHeader';
 import { useDispatch } from 'react-redux';
 
 import { fileBrowserActions } from '../../../slices/fileBrowser';
+import { fetchFileBrowserDataAsync } from '../../../actions/fileBrowser';
+
+import { normalizeRelativePath } from '../../../helpers';
 
 const { Header, Content } = Layout;
 
@@ -17,10 +20,56 @@ const FileBrowserContent = ({ items, path }) => {
 
   const [filterValue, setFilterValue] = useState('');
 
+  const handleDeleteFileOrFolder = async (relativePath, name) => {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/root/delete/${normalizeRelativePath(
+        relativePath,
+      )}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${
+            localStorage.getItem('token') ? localStorage.getItem('token') : ''
+          }`,
+        },
+      },
+    );
+    if (!res.ok) {
+      const { error } = await res.json();
+      return message.error(error);
+    }
+
+    dispatch(fetchFileBrowserDataAsync(path))
+      .then(() => message.success(`Delete file ${name} successfully`))
+      .catch((err) => {
+        console.log(err);
+        message.error(err.message);
+      });
+  };
+
+  const handleBackButtonClick = () => {
+    if (path.length <= 0) return;
+    dispatch(fileBrowserActions.popPath());
+  };
+
+  const handleSearchChange = (value) => {
+    setFilterValue(value);
+  };
+
+  const handleFolderDoubleClick = (name) => {
+    const updatedPath = path === '' ? name : `${path}/${name}`;
+    console.log(updatedPath);
+    dispatch(fetchFileBrowserDataAsync(updatedPath));
+  };
+
   const files = items
     .filter((item) => item.isFile && item.name.startsWith(filterValue.trim()))
     .map((file) => (
-      <File path={path} key={`${file.relativePath}`} fileInfo={file} />
+      <File
+        key={`${file.relativePath}`}
+        fileInfo={file}
+        onDelete={handleDeleteFileOrFolder}
+      />
     ));
 
   const folders = items
@@ -29,17 +78,14 @@ const FileBrowserContent = ({ items, path }) => {
         item.isDirectDirectory && item.name.startsWith(filterValue.trim()),
     )
     .map((folder) => (
-      <Folder path={path} key={`${folder.relativePath}`} folderInfo={folder} />
+      <Folder
+        path={path}
+        key={`${folder.relativePath}`}
+        folderInfo={folder}
+        onDelete={handleDeleteFileOrFolder}
+        onDoubleClick={handleFolderDoubleClick}
+      />
     ));
-
-  const handleBackButtonClick = () => {
-    if (path.length <= 1) return;
-    dispatch(fileBrowserActions.popPath());
-  };
-
-  const handleSearchChange = (value) => {
-    setFilterValue(value);
-  };
 
   return (
     <Layout>

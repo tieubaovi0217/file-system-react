@@ -24,16 +24,15 @@ const UploadFolder = ({ path }) => {
   };
 
   const handleOk = () => {
+    if (newFolderName.trim().length === 0) return handleFormCancel();
+
     setConfirmLoading(true);
+
     dispatch(createNewFolderAsync(path, newFolderName))
-      .then(() => {
-        return dispatch(fetchFileBrowserDataAsync(path));
-      })
-      .then(() => {
-        message.success(`Create new folder successfully`);
-      })
+      .then(() => dispatch(fetchFileBrowserDataAsync(path)))
+      .then(() => message.success(`Create new folder successfully`))
       .catch((err) => {
-        console.log('here', err);
+        console.log(err);
         message.error(err.message);
       })
       .finally(() => {
@@ -53,6 +52,7 @@ const UploadFolder = ({ path }) => {
         New folder
       </Button>
       <Modal
+        width={300}
         title="Create a new folder"
         visible={showNewFolderForm}
         onOk={handleOk}

@@ -9,8 +9,8 @@ import { SyncOutlined } from '@ant-design/icons';
 const FileBrowserActions = ({ onRefresh, path }) => {
   return (
     <div className="file-browser__actions">
-      <UploadFolder path={path} />
-      <UploadFile path={path} />
+      <UploadFolder path={path} onSuccess={onRefresh} />
+      <UploadFile path={path} onSuccess={onRefresh} />
       <Button type="text" icon={<SyncOutlined />} onClick={onRefresh}>
         Refresh
       </Button>

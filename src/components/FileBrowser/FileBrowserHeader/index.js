@@ -32,7 +32,7 @@ const FileBrowserHeader = ({
         className="file-browser__backbutton"
         shape="circle"
         onClick={onBackButtonClick}
-        disabled={currentPath.length <= 1 ? true : false}
+        disabled={currentPath.length === 0 ? true : false}
       >
         <ArrowUpOutlined />
       </Button>

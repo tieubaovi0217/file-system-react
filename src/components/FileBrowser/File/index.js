@@ -1,20 +1,13 @@
 import React from 'react';
 
-import { Col, Dropdown, Menu, message, Modal, Tooltip } from 'antd';
+import { Col, Dropdown, Menu, Modal, Tooltip } from 'antd';
 
 import { FileOutlined } from '@ant-design/icons';
-import {
-  deleteFileOrFolderAsync,
-  fetchFileBrowserDataAsync,
-} from '../../../actions/fileBrowser';
-import { useDispatch } from 'react-redux';
 
-import { normalizeRelativePath } from '../../../helpers';
 import prettyBytes from 'pretty-bytes';
 import * as moment from 'moment';
 
-const File = ({ fileInfo, path }) => {
-  const dispatch = useDispatch();
+const File = ({ fileInfo, onDelete }) => {
   const { name, size, lastModified, ext, relativePath } = fileInfo;
 
   const openFileHandler = () => {
@@ -22,17 +15,7 @@ const File = ({ fileInfo, path }) => {
   };
 
   const deleteFileHandler = () => {
-    dispatch(deleteFileOrFolderAsync(path, normalizeRelativePath(relativePath)))
-      .then(() => {
-        return dispatch(fetchFileBrowserDataAsync(path));
-      })
-      .then(() => {
-        message.success(`Delete file ${name} successfully`);
-      })
-      .catch((err) => {
-        console.log(err);
-        message.error(err.message);
-      });
+    onDelete(relativePath, name);
   };
 
   const renameFileHandler = () => {};

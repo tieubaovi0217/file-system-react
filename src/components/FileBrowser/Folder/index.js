@@ -1,44 +1,20 @@
 import React from 'react';
 
-import { Col, Dropdown, Menu, message, Modal } from 'antd';
+import { Col, Dropdown, Menu, Modal } from 'antd';
 
 import { FolderOpenFilled } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
 
-import {
-  deleteFileOrFolderAsync,
-  fetchFileBrowserDataAsync,
-} from '../../../actions/fileBrowser';
-
-import { normalizeRelativePath } from '../../../helpers';
-
-const Folder = ({ folderInfo, path }) => {
+const Folder = ({ folderInfo, path, onDelete, onDoubleClick }) => {
   const { name, size, lastModified, relativePath } = folderInfo;
 
-  const dispatch = useDispatch();
-
   const folderDoubleClickedHandler = () => {
-    const updatedPath =
-      path === '' ? folderInfo.name : `${path}/${folderInfo.name}`;
-    // console.log(updatedPath);
-    dispatch(fetchFileBrowserDataAsync(updatedPath));
+    onDoubleClick(name);
   };
 
   const folderRightClickedHandler = (e) => {};
 
   const deleteFolderHandler = () => {
-    dispatch(deleteFileOrFolderAsync(path, normalizeRelativePath(relativePath)))
-      .then(() => {
-        return dispatch(fetchFileBrowserDataAsync(path));
-      })
-      .then((res) => {
-        console.log(res);
-        message.success(`Delete folder ${name} successfully`);
-      })
-      .catch((err) => {
-        console.log(err);
-        message.error(err.message);
-      });
+    onDelete(relativePath, name);
   };
 
   const showInfoModal = () => {
