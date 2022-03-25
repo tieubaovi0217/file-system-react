@@ -6,7 +6,7 @@ import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 import { useDispatch } from 'react-redux';
-import { loginUserAsync } from '../../actions/auth';
+import { loginUserAsync } from 'actions/auth';
 
 const LoginForm = () => {
   const dispatch = useDispatch();

@@ -6,7 +6,7 @@ import { UserOutlined } from '@ant-design/icons';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { logoutUser } from '../../actions/auth';
+import { logoutUser } from 'actions/auth';
 
 const Navigation = () => {
   const dispatch = useDispatch();

@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialFileBrowserState = {
   data: [],
-  totalSize: 0,
   path: localStorage.getItem('currentPath')
     ? localStorage.getItem('currentPath')
     : '',
@@ -15,7 +14,6 @@ const fileBrowserSlice = createSlice({
     setData(state, action) {
       state.path = action.payload.path;
       state.data = action.payload.data;
-      state.totalSize = action.payload.totalSize;
     },
 
     popPath(state) {

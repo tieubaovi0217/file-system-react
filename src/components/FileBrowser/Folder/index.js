@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Col, Dropdown, Menu, Modal } from 'antd';
+import * as moment from 'moment';
+
+import { Col, Dropdown, Menu, Modal, Tooltip } from 'antd';
 
 import { FolderOpenFilled } from '@ant-design/icons';
 
-const Folder = ({ folderInfo, path, onDelete, onDoubleClick }) => {
-  const { name, size, lastModified, relativePath } = folderInfo;
-
+const Folder = ({ name, size, mtime, path, onDelete, onDoubleClick }) => {
   const handleDoubleClick = () => {
     onDoubleClick(name);
   };
@@ -14,7 +14,7 @@ const Folder = ({ folderInfo, path, onDelete, onDoubleClick }) => {
   const handleRightClick = (e) => {};
 
   const handleDeleteFolder = () => {
-    onDelete(relativePath, name);
+    // onDelete(relativePath, name);
   };
 
   const showInfoModal = () => {
@@ -41,7 +41,7 @@ const Folder = ({ folderInfo, path, onDelete, onDoubleClick }) => {
                 <td align="right">
                   <strong>Last modified:</strong>
                 </td>
-                <td>{lastModified}</td>
+                <td>{moment(mtime).format('DD/MM/YYYY HH:mm:ss')}</td>
               </tr>
             </tbody>
           </table>
@@ -68,16 +68,18 @@ const Folder = ({ folderInfo, path, onDelete, onDoubleClick }) => {
   return (
     <Dropdown overlay={menu} trigger={['contextMenu']}>
       <Col
-        span={process.env.REACT_APP_FILE_FOLDER_SPAN}
+        span={3}
         onDoubleClick={handleDoubleClick}
         onContextMenu={handleRightClick}
       >
-        <div className="resource">
-          <div className="resource__icon">
-            <FolderOpenFilled />
+        <Tooltip title={name}>
+          <div className="resource">
+            <div className="resource__icon">
+              <FolderOpenFilled />
+            </div>
+            <div className="resource__name disable-text-selection">{name}</div>
           </div>
-          <div className="resource__name disable-text-selection">{name}</div>
-        </div>
+        </Tooltip>
       </Col>
     </Dropdown>
   );

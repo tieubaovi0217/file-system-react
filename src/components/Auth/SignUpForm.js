@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
-import { signUpUserAsync } from '../../actions/auth';
+import { signUpUserAsync } from 'actions/auth';
 
 const formItemLayout = {
   labelCol: {

@@ -8,10 +8,10 @@ import Folder from '../Folder';
 import FileBrowserHeader from '../FileBrowserHeader';
 import { useDispatch } from 'react-redux';
 
-import { fileBrowserActions } from '../../../slices/fileBrowser';
-import { fetchFileBrowserDataAsync } from '../../../actions/fileBrowser';
+import { fileBrowserActions } from 'slices/fileBrowser';
+import { fetchFileBrowserDataAsync } from 'actions/fileBrowser';
 
-import { normalizeRelativePath } from '../../../helpers';
+import { normalizeRelativePath } from 'helpers';
 
 const { Header, Content } = Layout;
 
@@ -55,19 +55,23 @@ const FileBrowserContent = ({ items, path }) => {
   };
 
   const handleFolderDoubleClick = (name) => {
-    const updatedPath = path === '' ? name : `${path}/${name}`;
-    console.log(updatedPath);
-    dispatch(fetchFileBrowserDataAsync(updatedPath));
+    // const updatedPath = path === '' ? name : `${path}/${name}`;
+    // console.log(updatedPath);
+    dispatch(fetchFileBrowserDataAsync(`${path}/${name}`));
   };
 
   const handleDownload = (name) => {};
 
   const files = items
-    .filter((item) => item.isFile && item.name.startsWith(filterValue.trim()))
+    .filter(
+      (item) =>
+        item.type === 'file' && item.name.startsWith(filterValue.trim()),
+    )
     .map((file) => (
       <File
-        key={`${file.relativePath}`}
-        fileInfo={file}
+        name={file.name}
+        mtime={file.mtime}
+        size={file.size}
         onDelete={handleDeleteFileOrFolder}
       />
     ));
@@ -75,13 +79,14 @@ const FileBrowserContent = ({ items, path }) => {
   const folders = items
     .filter(
       (item) =>
-        item.isDirectDirectory && item.name.startsWith(filterValue.trim()),
+        item.type === 'directory' && item.name.startsWith(filterValue.trim()),
     )
     .map((folder) => (
       <Folder
         path={path}
-        key={`${folder.relativePath}`}
-        folderInfo={folder}
+        mtime={folder.mtime}
+        name={folder.name}
+        size={folder.size}
         onDelete={handleDeleteFileOrFolder}
         onDoubleClick={handleFolderDoubleClick}
       />

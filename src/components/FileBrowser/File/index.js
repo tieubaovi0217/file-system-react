@@ -7,15 +7,13 @@ import { FileOutlined } from '@ant-design/icons';
 import prettyBytes from 'pretty-bytes';
 import * as moment from 'moment';
 
-const File = ({ fileInfo, onDelete }) => {
-  const { name, size, lastModified, ext, relativePath } = fileInfo;
-
+const File = ({ name, mtime, size, onDelete }) => {
   const handleOpenFile = () => {
     console.log('file open');
   };
 
   const handleDeleteFile = () => {
-    onDelete(relativePath, name);
+    // onDelete(relativePath, name);
   };
 
   const handleRename = () => {};
@@ -38,12 +36,6 @@ const File = ({ fileInfo, onDelete }) => {
               </tr>
               <tr>
                 <td align="right">
-                  <strong>Type of file: </strong>
-                </td>
-                <td>{ext}</td>
-              </tr>
-              <tr>
-                <td align="right">
                   <strong>Size: </strong>
                 </td>
                 <td>{prettyBytes(size)}</td>
@@ -52,7 +44,7 @@ const File = ({ fileInfo, onDelete }) => {
                 <td align="right">
                   <strong>Last modified: </strong>
                 </td>
-                <td>{moment(lastModified).format('DD/MM/YYYY HH:mm:ss')}</td>
+                <td>{moment(mtime).format('DD/MM/YYYY HH:mm:ss')}</td>
               </tr>
             </tbody>
           </table>
@@ -84,10 +76,7 @@ const File = ({ fileInfo, onDelete }) => {
 
   return (
     <Dropdown overlay={menu} trigger={['contextMenu']}>
-      <Col
-        span={process.env.REACT_APP_FILE_FOLDER_SPAN}
-        onDoubleClick={handleOpenFile}
-      >
+      <Col span={3} onDoubleClick={handleOpenFile}>
         <Tooltip title={name}>
           <div className="resource">
             <div className="resource__icon">

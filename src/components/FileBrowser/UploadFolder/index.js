@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import {
   createNewFolderAsync,
   fetchFileBrowserDataAsync,
-} from '../../../actions/fileBrowser';
+} from 'actions/fileBrowser';
 
 const UploadFolder = ({ path }) => {
   const dispatch = useDispatch();

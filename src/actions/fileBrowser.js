@@ -1,16 +1,20 @@
-import { fileBrowserActions } from '../slices/fileBrowser';
+import { fileBrowserActions } from 'slices/fileBrowser';
 
-export const fetchFileBrowserDataAsync = (path) => {
+// TODO fix hardcoded username='admin'
+export const fetchFileBrowserDataAsync = (path, username = 'admin') => {
   return async (dispatch) => {
     const getData = async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/root/${path}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${
-            localStorage.getItem('token') ? localStorage.getItem('token') : ''
-          }`,
+      const res = await fetch(
+        `${process.env.REACT_APP_WEB_SERVER_URL}/root/${username}${path}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${
+              localStorage.getItem('token') ? localStorage.getItem('token') : ''
+            }`,
+          },
         },
-      });
+      );
       if (!res.ok) {
         const { error } = await res.json();
         throw new Error(error);
@@ -19,8 +23,8 @@ export const fetchFileBrowserDataAsync = (path) => {
       return res.json();
     };
 
-    const { data, totalSize } = await getData();
-    await dispatch(fileBrowserActions.setData({ data, path, totalSize }));
+    const data = await getData();
+    await dispatch(fileBrowserActions.setData({ data, path }));
     localStorage.setItem('currentPath', path);
     return data;
   };

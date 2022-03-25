@@ -1,11 +1,11 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Layout from './components/Layout/Layout';
-import UserProfile from './components/Profile/UserProfile';
-import AuthPage from './pages/AuthPage';
-import HomePage from './pages/HomePage';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import FileBrowserPage from './pages/FileBrowserPage';
+import Layout from 'components/Layout/Layout';
+import UserProfile from 'components/Profile/UserProfile';
+import AuthPage from 'pages/AuthPage';
+import HomePage from 'pages/HomePage';
+import ProtectedRoute from 'components/ProtectedRoute/ProtectedRoute';
+import FileBrowserPage from 'pages/FileBrowserPage';
 import { useSelector } from 'react-redux';
 
 import { message } from 'antd';
@@ -18,15 +18,9 @@ function App() {
   return (
     <Layout className="layout">
       <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
+        <Route exact path="/" component={HomePage} />
 
-        {!isAuthenticated && (
-          <Route path="/auth">
-            <AuthPage />
-          </Route>
-        )}
+        {!isAuthenticated && <Route path="/auth" component={AuthPage} />}
 
         <ProtectedRoute
           exact
@@ -35,12 +29,14 @@ function App() {
           isAuthenticated={isAuthenticated}
         />
 
-        <ProtectedRoute
+        {/* <ProtectedRoute
           exact
           path="/root"
           component={FileBrowserPage}
           isAuthenticated={isAuthenticated}
-        />
+        /> */}
+
+        <Route exact path="/root" component={FileBrowserPage} />
 
         <Redirect to="/" />
       </Switch>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FileBrowser from '../components/FileBrowser';
+import FileBrowser from 'components/FileBrowser';
 
 const FileBrowserPage = () => {
   return <FileBrowser />;

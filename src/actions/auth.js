@@ -1,4 +1,4 @@
-import { authActions } from '../slices/auth';
+import { authActions } from 'slices/auth';
 
 export const loginUserAsync = (userData) => {
   return async (dispatch) => {
@@ -65,6 +65,8 @@ export const signUpUserAsync = (userData) => {
     try {
       const { token, user } = await sendSignUp();
       dispatch(authActions.login({ token, user }));
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
       return Promise.resolve({ token, user });
     } catch (err) {
       return Promise.reject(err);

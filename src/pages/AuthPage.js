@@ -1,7 +1,7 @@
 import { Route } from 'react-router-dom';
 
-import LoginForm from '../components/Auth/LoginForm';
-import SignUpForm from '../components/Auth/SignUpForm';
+import LoginForm from 'components/Auth/LoginForm';
+import SignUpForm from 'components/Auth/SignUpForm';
 
 const AuthPage = () => {
   return (

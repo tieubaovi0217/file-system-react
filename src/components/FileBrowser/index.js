@@ -6,7 +6,7 @@ import FileBrowserActions from './FileBrowserActions';
 import { Layout, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFileBrowserDataAsync } from '../../actions/fileBrowser';
+import { fetchFileBrowserDataAsync } from 'actions/fileBrowser';
 
 import { SyncOutlined } from '@ant-design/icons';
 
