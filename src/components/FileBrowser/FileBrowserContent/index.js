@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 import { Row, Layout, message } from 'antd';
@@ -9,9 +10,10 @@ import FileBrowserHeader from '../FileBrowserHeader';
 import { useDispatch } from 'react-redux';
 
 import { fileBrowserActions } from 'slices/fileBrowser';
-import { fetchFileBrowserDataAsync } from 'actions/fileBrowser';
+import { fetchFileBrowserDataThunk } from 'actions/fileBrowser';
 
 import { normalizeRelativePath } from 'common/helpers';
+import { getUserFromLocalStorage } from 'common/localStorage';
 
 const { Header, Content } = Layout;
 
@@ -27,9 +29,7 @@ const FileBrowserContent = ({ items, path }) => {
       body: JSON.stringify({ path: normalizeRelativePath(relativePath) }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${
-          localStorage.getItem('token') ? localStorage.getItem('token') : ''
-        }`,
+        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
       },
     });
     if (!res.ok) {
@@ -37,7 +37,7 @@ const FileBrowserContent = ({ items, path }) => {
       return message.error(error);
     }
 
-    dispatch(fetchFileBrowserDataAsync(path))
+    dispatch(fetchFileBrowserDataThunk(path))
       .then(() => message.success(`Delete ${name} successfully`))
       .catch((err) => {
         console.log(err);
@@ -57,10 +57,15 @@ const FileBrowserContent = ({ items, path }) => {
   const handleFolderDoubleClick = (name) => {
     // const updatedPath = path === '' ? name : `${path}/${name}`;
     // console.log(updatedPath);
-    dispatch(fetchFileBrowserDataAsync(`${path}/${name}`));
+    dispatch(fetchFileBrowserDataThunk(`${path}/${name}`));
   };
 
-  const handleDownload = (name) => {};
+  const handleDownload = async (name) => {
+    const { username } = getUserFromLocalStorage();
+    // const resp = await axios.get(
+    //   `${process.env.REACT_APP_WEB_SERVER_URL}/root/${user.username}`,
+    // );
+  };
 
   const files = items
     .filter(

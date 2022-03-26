@@ -1,22 +1,29 @@
 import { Link, useHistory } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
-import { Menu, Button } from 'antd';
+import { Menu, Button, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUserThunk } from 'actions/auth';
 
 const Navigation = ({ onLogout }) => {
-  // fix this
   const history = useHistory();
+  const dispatch = useDispatch();
   const [current, setCurrent] = useState(history.location.pathname);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     setCurrent(history.location.pathname);
   }, [history.location.pathname]);
 
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
   const handleClick = (e) => {
     setCurrent(e.key);
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUserThunk());
+    history.replace('/');
+    message.success('Logout Successfully');
   };
 
   return (
@@ -52,7 +59,7 @@ const Navigation = ({ onLogout }) => {
             </Link>
           </Menu.Item>
           <Menu.Item key="/auth/logout">
-            <Button type="primary" onClick={onLogout}>
+            <Button type="primary" onClick={handleLogout}>
               Logout
             </Button>
           </Menu.Item>

@@ -2,9 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialFileBrowserState = {
   data: [],
-  path: localStorage.getItem('currentPath')
-    ? localStorage.getItem('currentPath')
-    : '',
+  path: localStorage.getItem('currentPath') || '',
 };
 
 const fileBrowserSlice = createSlice({

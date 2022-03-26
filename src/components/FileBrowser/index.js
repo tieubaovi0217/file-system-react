@@ -6,7 +6,7 @@ import FileBrowserActions from './FileBrowserActions';
 import { Layout, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFileBrowserDataAsync } from 'actions/fileBrowser';
+import { fetchFileBrowserDataThunk } from 'actions/fileBrowser';
 
 import { SyncOutlined } from '@ant-design/icons';
 import { useMounted } from 'hooks/useMounted';
@@ -25,11 +25,10 @@ const FileBrowser = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    dispatch(fetchFileBrowserDataAsync(path))
+    dispatch(fetchFileBrowserDataThunk(path))
       .then((res) => console.log(res))
       .catch((err) => {
-        console.log(err);
-        message.error(err.message);
+        message.error(err);
       })
       .finally(() => mounted.current && setIsLoading(false));
   }, [dispatch, path, isRefreshing, mounted]);

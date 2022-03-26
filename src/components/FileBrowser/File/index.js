@@ -7,7 +7,7 @@ import { FileOutlined } from '@ant-design/icons';
 import prettyBytes from 'pretty-bytes';
 import * as moment from 'moment';
 
-const File = ({ name, mtime, size, onDelete }) => {
+const File = ({ name, mtime, size, onDelete, onDownload }) => {
   const handleOpenFile = () => {
     console.log('file open');
   };
@@ -18,36 +18,44 @@ const File = ({ name, mtime, size, onDelete }) => {
 
   const handleRename = () => {};
 
-  const handleDownload = () => {};
+  const handleDownload = () => {
+    onDownload(name);
+  };
 
   const showInfoModal = () => {
     Modal.info({
       title: 'File Info',
       content: (
         <div>
-          <FileOutlined className="file-info-modal__icon" />
-          <table className="file-info-modal">
-            <tbody>
-              <tr>
-                <td align="right">
-                  <strong>Name: </strong>
-                </td>
-                <td>{name}</td>
-              </tr>
-              <tr>
-                <td align="right">
-                  <strong>Size: </strong>
-                </td>
-                <td>{prettyBytes(size)}</td>
-              </tr>
-              <tr>
-                <td align="right">
-                  <strong>Last modified: </strong>
-                </td>
-                <td>{moment(mtime).format('DD/MM/YYYY HH:mm:ss')}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="file-info-icon">
+            <FileOutlined />
+          </div>
+          <div className="file-info-modal">
+            <table>
+              <tbody>
+                <tr>
+                  <td align="right">
+                    <strong>Name: </strong>
+                  </td>
+                  <td align="center">{name}</td>
+                </tr>
+                <tr>
+                  <td align="right">
+                    <strong>Size: </strong>
+                  </td>
+                  <td align="center">{prettyBytes(size)}</td>
+                </tr>
+                <tr>
+                  <td align="right">
+                    <strong>Last modified: </strong>
+                  </td>
+                  <td align="center">
+                    {moment(mtime).format('DD/MM/YYYY HH:mm:ss')}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       ),
       onOk() {},

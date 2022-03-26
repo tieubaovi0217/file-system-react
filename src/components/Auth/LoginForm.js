@@ -27,21 +27,13 @@ const LoginForm = () => {
       })
       .catch((err) => {
         console.log(err.response);
-
         message.error(err.response.data.message);
       })
       .finally(() => mounted.current && setIsLoggingIn(false));
   };
 
   return (
-    <Form
-      name="normal_login"
-      className="login-form"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-    >
+    <Form name="normal_login" className="login-form" onFinish={onFinish}>
       <Form.Item>
         <LockOutlined className="lock-circle" />
       </Form.Item>

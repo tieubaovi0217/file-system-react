@@ -94,8 +94,18 @@
   user-select: none;
 }
 
-.file-info-modal__icon {
+.file-info-icon {
+  font-size: 48px;
+  display: flex;
+  justify-content: center;
 }
 
 .file-info-modal {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.file-info-modal td {
+  padding: 0 4px;
 }

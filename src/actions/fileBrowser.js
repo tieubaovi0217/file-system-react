@@ -2,51 +2,49 @@ import axios from 'axios';
 import { fileBrowserActions } from 'slices/fileBrowser';
 import { getUserFromLocalStorage } from 'common/localStorage';
 
-// TODO fix hardcoded username='admin'
-export const fetchFileBrowserDataAsync = (path) => {
+export const fetchFileBrowserDataThunk = (path) => {
   return async (dispatch) => {
-    const user = getUserFromLocalStorage();
-    const resp = await axios.get(
-      `${process.env.REACT_APP_WEB_SERVER_URL}/root/${user.username}${path}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${
-            localStorage.getItem('token') ? localStorage.getItem('token') : ''
-          }`,
+    try {
+      const { username } = getUserFromLocalStorage();
+      const resp = await axios.get(
+        `${process.env.REACT_APP_WEB_SERVER_URL}/roots/${username}${path}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
         },
-      },
-    );
-
-    const data = resp.data;
-    dispatch(fileBrowserActions.setData({ data, path }));
-    localStorage.setItem('currentPath', path);
-    return data;
+      );
+      const data = resp.data;
+      dispatch(fileBrowserActions.setData({ data, path }));
+      localStorage.setItem('currentPath', path);
+      return data;
+    } catch (err) {
+      console.log(err.response);
+      return Promise.reject(
+        err.response.data?.message || err.response.statusText,
+      );
+    }
   };
 };
 
-export const createNewFolderAsync = (relativePath, newFolderName) => {
-  return async (dispatch) => {
-    const sendCreateNewFolder = async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/root/mkdir`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${
-            localStorage.getItem('token') ? localStorage.getItem('token') : ''
-          }`,
-        },
-        body: JSON.stringify({ relativePath, newFolderName }),
-      });
+// export const createNewFolderThunk = (relativePath, newFolderName) => {
+//   return async (dispatch) => {
+//     const resp = await axios.post(
+//       `${process.env.REACT_APP_API_URL}/root/mkdir`,
+//       { relativePath, newFolderName },
+//       {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           Authorization: `Bearer ${
+//             localStorage.getItem('token') ? localStorage.getItem('token') : ''
+//           }`,
+//         },
+//       },
+//     );
+//     console.log(resp.data);
+//   };
+// };
 
-      if (!res.ok) {
-        const { error } = await res.json();
-        throw new Error(error);
-      }
-
-      return res.json();
-    };
-
-    await sendCreateNewFolder();
-  };
-};
+export const deleteResourceThunk = (relativePath, name) => {};

@@ -8,9 +8,7 @@ const UploadFile = ({ path, onSuccess }) => {
     showUploadList: false,
     action: `${process.env.REACT_APP_API_URL}/upload`,
     headers: {
-      Authorization: `Bearer ${
-        localStorage.getItem('token') ? localStorage.getItem('token') : ''
-      }`,
+      Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
     },
     data: {
       path,

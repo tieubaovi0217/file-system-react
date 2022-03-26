@@ -6,7 +6,15 @@ import { Col, Dropdown, Menu, Modal, Tooltip } from 'antd';
 
 import { FolderOpenFilled } from '@ant-design/icons';
 
-const Folder = ({ name, size, mtime, path, onDelete, onDoubleClick }) => {
+const Folder = ({
+  name,
+  size,
+  mtime,
+  path,
+  onDelete,
+  onDownload,
+  onDoubleClick,
+}) => {
   const handleDoubleClick = () => {
     onDoubleClick(name);
   };
@@ -17,34 +25,44 @@ const Folder = ({ name, size, mtime, path, onDelete, onDoubleClick }) => {
     // onDelete(relativePath, name);
   };
 
+  const handleDownload = () => {
+    // onDownload(name);
+  };
+
   const showInfoModal = () => {
     Modal.info({
-      title: 'File Info',
+      title: 'Detail Info',
       content: (
         <div>
-          <FolderOpenFilled className="info-modal__icon" />
-          <table className="info-modal">
-            <tbody>
-              <tr>
-                <td align="right">
-                  <strong>Name:</strong>
-                </td>
-                <td>{name}</td>
-              </tr>
-              <tr>
-                <td align="right">
-                  <strong>Size:</strong>
-                </td>
-                <td>{size}</td>
-              </tr>
-              <tr>
-                <td align="right">
-                  <strong>Last modified:</strong>
-                </td>
-                <td>{moment(mtime).format('DD/MM/YYYY HH:mm:ss')}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="file-info-icon">
+            <FolderOpenFilled />
+          </div>
+          <div className="file-info-modal">
+            <table>
+              <tbody>
+                <tr>
+                  <td align="right">
+                    <strong>Name:</strong>
+                  </td>
+                  <td align="center">{name}</td>
+                </tr>
+                <tr>
+                  <td align="right">
+                    <strong>Type: </strong>
+                  </td>
+                  <td align="center">Directory</td>
+                </tr>
+                <tr>
+                  <td align="right">
+                    <strong>Last modified:</strong>
+                  </td>
+                  <td align="center">
+                    {moment(mtime).format('DD/MM/YYYY HH:mm:ss')}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       ),
       onOk() {},
@@ -61,6 +79,10 @@ const Folder = ({ name, size, mtime, path, onDelete, onDoubleClick }) => {
       <Menu.Divider />
       <Menu.Item key="3" style={{ color: 'red' }} onClick={handleDeleteFolder}>
         Delete
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="4" style={{ color: 'blue' }} onClick={handleDownload}>
+        Download
       </Menu.Item>
     </Menu>
   );
