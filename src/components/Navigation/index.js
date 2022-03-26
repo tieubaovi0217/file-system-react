@@ -1,42 +1,26 @@
-import './Navigation.css';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useState } from 'react';
-import { Menu, Button, message } from 'antd';
+import { useEffect, useState } from 'react';
+import { Menu, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 
-import { useSelector, useDispatch } from 'react-redux';
-
-import { logoutUser } from 'actions/auth';
-
-const Navigation = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const user = useSelector((state) => state.auth.user);
-
+const Navigation = ({ onLogout }) => {
   // fix this
-  const [state, setState] = useState({
-    current: history.location.pathname,
-  });
+  const history = useHistory();
+  const [current, setCurrent] = useState(history.location.pathname);
 
+  useEffect(() => {
+    setCurrent(history.location.pathname);
+  }, [history.location.pathname]);
+
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   const handleClick = (e) => {
-    setState({ current: e.key });
-  };
-
-  const logoutHandler = () => {
-    dispatch(logoutUser()).then(() => {
-      history.replace('/');
-      message.success('Logout Successfully');
-    });
+    setCurrent(e.key);
   };
 
   return (
-    <Menu
-      onClick={handleClick}
-      selectedKeys={[state.current]}
-      mode="horizontal"
-    >
+    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Menu.Item key="/">
         <Link to="/">Administration</Link>
       </Menu.Item>
@@ -60,7 +44,7 @@ const Navigation = () => {
           <Menu.Item key="/profile">
             <Link to="/profile">
               <div>
-                <span>Profile, {user?.username} </span>
+                <span>Profile, {user.username} </span>
                 <span>
                   <UserOutlined />
                 </span>
@@ -68,7 +52,7 @@ const Navigation = () => {
             </Link>
           </Menu.Item>
           <Menu.Item key="/auth/logout">
-            <Button type="primary" onClick={logoutHandler}>
+            <Button type="primary" onClick={onLogout}>
               Logout
             </Button>
           </Menu.Item>

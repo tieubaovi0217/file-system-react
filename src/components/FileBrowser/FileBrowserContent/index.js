@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { fileBrowserActions } from 'slices/fileBrowser';
 import { fetchFileBrowserDataAsync } from 'actions/fileBrowser';
 
-import { normalizeRelativePath } from 'helpers';
+import { normalizeRelativePath } from 'common/helpers';
 
 const { Header, Content } = Layout;
 
@@ -69,10 +69,12 @@ const FileBrowserContent = ({ items, path }) => {
     )
     .map((file) => (
       <File
+        key={file.name}
         name={file.name}
         mtime={file.mtime}
         size={file.size}
         onDelete={handleDeleteFileOrFolder}
+        onDownload={handleDownload}
       />
     ));
 
@@ -84,11 +86,13 @@ const FileBrowserContent = ({ items, path }) => {
     .map((folder) => (
       <Folder
         path={path}
+        key={folder.name}
         mtime={folder.mtime}
         name={folder.name}
         size={folder.size}
         onDelete={handleDeleteFileOrFolder}
         onDoubleClick={handleFolderDoubleClick}
+        onDownload={handleDownload}
       />
     ));
 

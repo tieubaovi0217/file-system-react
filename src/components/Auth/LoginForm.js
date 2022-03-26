@@ -6,28 +6,31 @@ import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 import { useDispatch } from 'react-redux';
-import { loginUserAsync } from 'actions/auth';
+import { loginUserThunk } from 'actions/auth';
+import { useMounted } from 'hooks/useMounted';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const mounted = useMounted();
 
   const onFinish = (values) => {
     const { username, password } = values;
 
     setIsLoggingIn(true);
-    dispatch(loginUserAsync({ username, password }))
+    dispatch(loginUserThunk(username, password))
       .then(() => {
         message.success('Login Successfully');
         history.replace('/');
       })
       .catch((err) => {
-        console.log(err);
-        message.error(err.message);
+        console.log(err.response);
+
+        message.error(err.response.data.message);
       })
-      .finally(() => setIsLoggingIn(false));
+      .finally(() => mounted.current && setIsLoggingIn(false));
   };
 
   return (

@@ -5,7 +5,8 @@ import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
-import { signUpUserAsync } from 'actions/auth';
+import { signUpUserThunk } from 'actions/auth';
+import { useMounted } from 'hooks/useMounted';
 
 const formItemLayout = {
   labelCol: {
@@ -40,19 +41,21 @@ const SignUpForm = () => {
   const [form] = Form.useForm();
   const [isSigningUp, setIsSigningUp] = useState(false);
 
+  const mounted = useMounted();
+
   const onFinish = (values) => {
     const { username, password, email, confirmPassword } = values;
     setIsSigningUp(true);
-    dispatch(signUpUserAsync({ username, password, email, confirmPassword }))
+    dispatch(signUpUserThunk({ username, password, email, confirmPassword }))
       .then(() => {
         message.success('Signup Successfully');
         history.push('/');
       })
       .catch((err) => {
-        console.log(err);
-        message.error(err.message);
+        console.log(err.response);
+        message.error(err.response.data.message);
       })
-      .finally(() => setIsSigningUp(false));
+      .finally(() => mounted.current && setIsSigningUp(false));
   };
 
   return (
@@ -121,7 +124,7 @@ const SignUpForm = () => {
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
+                  return Promise.resolve(true);
                 }
 
                 return Promise.reject(

@@ -1,18 +1,18 @@
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import LoginForm from 'components/Auth/LoginForm';
 import SignUpForm from 'components/Auth/SignUpForm';
 
 const AuthPage = () => {
   return (
-    <>
-      <Route path="/auth/login" exact>
+    <Switch>
+      <Route exact path="/auth/login">
         <LoginForm />
       </Route>
-      <Route path="/auth/signup" exact>
+      <Route exact path="/auth/signup">
         <SignUpForm />
       </Route>
-    </>
+    </Switch>
   );
 };
 

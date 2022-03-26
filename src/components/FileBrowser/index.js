@@ -1,4 +1,4 @@
-import './index.css';
+import './styles.css';
 
 import FileBrowserContent from './FileBrowserContent';
 import FileBrowserActions from './FileBrowserActions';
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchFileBrowserDataAsync } from 'actions/fileBrowser';
 
 import { SyncOutlined } from '@ant-design/icons';
+import { useMounted } from 'hooks/useMounted';
 
 const { Header, Sider, Content } = Layout;
 
@@ -17,13 +18,11 @@ const FileBrowser = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const mounted = useMounted();
 
-  const data = useSelector((state) => state.fileBrowser.data);
-  const path = useSelector((state) => state.fileBrowser.path);
+  const { data, path } = useSelector((state) => state.fileBrowser);
 
   useEffect(() => {
-    let isMounted = true;
-
     setIsLoading(true);
 
     dispatch(fetchFileBrowserDataAsync(path))
@@ -32,12 +31,8 @@ const FileBrowser = () => {
         console.log(err);
         message.error(err.message);
       })
-      .finally(() => isMounted && setIsLoading(false));
-
-    return () => {
-      isMounted = false;
-    };
-  }, [dispatch, path, isRefreshing]);
+      .finally(() => mounted.current && setIsLoading(false));
+  }, [dispatch, path, isRefreshing, mounted]);
 
   const refreshHandler = () => {
     setIsRefreshing((prevState) => !prevState);

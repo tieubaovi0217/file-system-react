@@ -1,30 +1,25 @@
+import axios from 'axios';
 import { fileBrowserActions } from 'slices/fileBrowser';
+import { getUserFromLocalStorage } from 'common/localStorage';
 
 // TODO fix hardcoded username='admin'
-export const fetchFileBrowserDataAsync = (path, username = 'admin') => {
+export const fetchFileBrowserDataAsync = (path) => {
   return async (dispatch) => {
-    const getData = async () => {
-      const res = await fetch(
-        `${process.env.REACT_APP_WEB_SERVER_URL}/root/${username}${path}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${
-              localStorage.getItem('token') ? localStorage.getItem('token') : ''
-            }`,
-          },
+    const user = getUserFromLocalStorage();
+    const resp = await axios.get(
+      `${process.env.REACT_APP_WEB_SERVER_URL}/root/${user.username}${path}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${
+            localStorage.getItem('token') ? localStorage.getItem('token') : ''
+          }`,
         },
-      );
-      if (!res.ok) {
-        const { error } = await res.json();
-        throw new Error(error);
-      }
+      },
+    );
 
-      return res.json();
-    };
-
-    const data = await getData();
-    await dispatch(fileBrowserActions.setData({ data, path }));
+    const data = resp.data;
+    dispatch(fileBrowserActions.setData({ data, path }));
     localStorage.setItem('currentPath', path);
     return data;
   };

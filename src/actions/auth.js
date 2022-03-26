@@ -1,75 +1,45 @@
+import axios from 'axios';
 import { authActions } from 'slices/auth';
+import {
+  removeCredentialsFromLocalStorage,
+  saveCredentialsToLocalStorage,
+} from 'common/localStorage';
 
-export const loginUserAsync = (userData) => {
+export const loginUserThunk = (username, password) => {
   return async (dispatch) => {
-    const sendLogin = async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
+    const resp = await axios.post(
+      `${process.env.REACT_APP_API_URL}/auth/login`,
+      {
+        username,
+        password,
+      },
+    );
+    const { user, token } = resp.data;
+    dispatch(authActions.setCredentials(user));
 
-      if (!res.ok) {
-        const { error } = await res.json();
-        throw new Error(error);
-      }
+    saveCredentialsToLocalStorage({ user, token });
 
-      const data = await res.json();
-      return data;
-    };
-
-    try {
-      const { token, user } = await sendLogin();
-      dispatch(authActions.login({ token, user }));
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      return Promise.resolve({ token, user });
-    } catch (err) {
-      return Promise.reject(err);
-    }
+    return { user, token };
   };
 };
 
-export const logoutUser = () => {
+export const signUpUserThunk = (userData) => {
   return async (dispatch) => {
-    dispatch(authActions.logout());
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('currentPath');
-    return Promise.resolve(true);
+    const resp = await axios.post(
+      `${process.env.REACT_APP_API_URL}/auth/signup`,
+      userData,
+    );
+    const { token, user } = resp.data;
+    dispatch(authActions.setCredentials(user));
+
+    saveCredentialsToLocalStorage({ user, token });
+    return { user, token };
   };
 };
 
-export const signUpUserAsync = (userData) => {
-  return async (dispatch) => {
-    const sendSignUp = async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!res.ok) {
-        const { error } = await res.json();
-        throw new Error(error);
-      }
-
-      const { token, user } = await res.json();
-      return { token, user };
-    };
-
-    try {
-      const { token, user } = await sendSignUp();
-      dispatch(authActions.login({ token, user }));
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      return Promise.resolve({ token, user });
-    } catch (err) {
-      return Promise.reject(err);
-    }
+export const logoutUserThunk = () => {
+  return (dispatch) => {
+    dispatch(authActions.removeCredentials());
+    removeCredentialsFromLocalStorage();
   };
 };
