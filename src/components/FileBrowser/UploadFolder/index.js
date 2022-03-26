@@ -59,13 +59,11 @@ const UploadFolder = ({ path }) => {
         confirmLoading={confirmLoading}
         onCancel={handleFormCancel}
       >
-        <p>
-          <Input
-            placeholder="Folder name"
-            value={newFolderName}
-            onChange={(e) => setNewFolderName(e.target.value)}
-          />
-        </p>
+        <Input
+          placeholder="Folder name"
+          value={newFolderName}
+          onChange={(e) => setNewFolderName(e.target.value)}
+        />
       </Modal>
     </div>
   );

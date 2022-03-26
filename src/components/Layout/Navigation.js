@@ -1,3 +1,4 @@
+import './Navigation.css';
 import { Link, useHistory } from 'react-router-dom';
 
 import { useState } from 'react';
@@ -58,7 +59,12 @@ const Navigation = () => {
           </Menu.Item>
           <Menu.Item key="/profile">
             <Link to="/profile">
-              Profile, {user?.username} <UserOutlined />
+              <div>
+                <span>Profile, {user?.username} </span>
+                <span>
+                  <UserOutlined />
+                </span>
+              </div>
             </Link>
           </Menu.Item>
           <Menu.Item key="/auth/logout">

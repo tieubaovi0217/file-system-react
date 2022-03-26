@@ -1,4 +1,4 @@
-import './index.css';
+import './Layout.css';
 import Navigation from './Navigation';
 
 const Layout = (props) => {
