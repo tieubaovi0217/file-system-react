@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { signUpUserThunk } from 'actions/auth';
-import { useMounted } from 'hooks/useMounted';
+import { useIsMounted } from 'hooks/useIsMounted';
 
 const formItemLayout = {
   labelCol: {
@@ -41,7 +41,7 @@ const SignUpForm = () => {
   const [form] = Form.useForm();
   const [isSigningUp, setIsSigningUp] = useState(false);
 
-  const mounted = useMounted();
+  const isMounted = useIsMounted();
 
   const onFinish = (values) => {
     const { username, password, email, confirmPassword } = values;
@@ -55,7 +55,7 @@ const SignUpForm = () => {
         console.log(err.response);
         message.error(err.response.data.message);
       })
-      .finally(() => mounted.current && setIsSigningUp(false));
+      .finally(() => isMounted.current && setIsSigningUp(false));
   };
 
   return (

@@ -7,14 +7,14 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 import { useDispatch } from 'react-redux';
 import { loginUserThunk } from 'actions/auth';
-import { useMounted } from 'hooks/useMounted';
+import { useIsMounted } from 'hooks/useIsMounted';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const mounted = useMounted();
+  const isMounted = useIsMounted();
 
   const onFinish = (values) => {
     const { username, password } = values;
@@ -29,7 +29,7 @@ const LoginForm = () => {
         console.log(err.response);
         message.error(err.response.data.message);
       })
-      .finally(() => mounted.current && setIsLoggingIn(false));
+      .finally(() => isMounted.current && setIsLoggingIn(false));
   };
 
   return (

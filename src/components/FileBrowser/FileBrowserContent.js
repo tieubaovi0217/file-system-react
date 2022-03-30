@@ -1,23 +1,19 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 
-import { Row, Layout, message } from 'antd';
+import { Row, message } from 'antd';
 
-import File from '../File';
-import Folder from '../Folder';
+import File from './File';
+import Folder from './Folder';
 
-import FileBrowserHeader from '../FileBrowserHeader';
 import { useDispatch } from 'react-redux';
 
-import { fileBrowserActions } from 'slices/fileBrowser';
 import { fetchFileBrowserDataThunk } from 'actions/fileBrowser';
 
 import { normalizeRelativePath } from 'common/helpers';
 import { getUserFromLocalStorage } from 'common/localStorage';
 
-const { Header, Content } = Layout;
-
-const FileBrowserContent = ({ items, path }) => {
+const FileBrowserContent = ({ items, path, onFolderDoubleClick }) => {
   const dispatch = useDispatch();
 
   const [filterValue, setFilterValue] = useState('');
@@ -45,19 +41,8 @@ const FileBrowserContent = ({ items, path }) => {
       });
   };
 
-  const handleBackButtonClick = () => {
-    if (path.length <= 0) return;
-    dispatch(fileBrowserActions.popPath());
-  };
-
   const handleSearchChange = (value) => {
     setFilterValue(value);
-  };
-
-  const handleFolderDoubleClick = (name) => {
-    // const updatedPath = path === '' ? name : `${path}/${name}`;
-    // console.log(updatedPath);
-    dispatch(fetchFileBrowserDataThunk(`${path}/${name}`));
   };
 
   const handleDownload = async (name) => {
@@ -96,29 +81,18 @@ const FileBrowserContent = ({ items, path }) => {
         name={folder.name}
         size={folder.size}
         onDelete={handleDeleteFileOrFolder}
-        onDoubleClick={handleFolderDoubleClick}
+        onDoubleClick={() => onFolderDoubleClick(folder.name)}
         onDownload={handleDownload}
       />
     ));
 
   return (
-    <Layout>
-      <Header style={{ borderBottom: '0px' }}>
-        <FileBrowserHeader
-          currentPath={path}
-          onSearchChange={handleSearchChange}
-          onBackButtonClick={handleBackButtonClick}
-        />
-      </Header>
-      <Content>
-        <div className="file-browser__content">
-          <Row gutter={[8, 8]}>
-            {folders}
-            {files}
-          </Row>
-        </div>
-      </Content>
-    </Layout>
+    <div className="file-browser__content">
+      <Row gutter={[8, 8]}>
+        {folders}
+        {files}
+      </Row>
+    </div>
   );
 };
 

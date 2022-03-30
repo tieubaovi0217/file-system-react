@@ -4,10 +4,7 @@ import { FolderAddOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import {
-  createNewFolderThunk,
-  fetchFileBrowserDataThunk,
-} from 'actions/fileBrowser';
+import { fetchFileBrowserDataThunk } from 'actions/fileBrowser';
 
 const UploadFolder = ({ path }) => {
   const dispatch = useDispatch();

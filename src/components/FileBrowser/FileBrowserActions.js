@@ -1,7 +1,7 @@
 import React from 'react';
 
-import UploadFile from '../UploadFile';
-import UploadFolder from '../UploadFolder';
+import UploadFile from './UploadFile';
+import UploadFolder from './UploadFolder';
 
 import { Button } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
