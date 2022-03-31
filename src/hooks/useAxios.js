@@ -44,27 +44,24 @@ const axiosReducer = (state, action) => {
  * @param {} method lower case string
  * @returns
  */
-const useAxios = () => {
+const useAxios = (baseURL) => {
   const [state, dispatch] = useReducer(axiosReducer, initialState);
 
   const isMounted = useIsMounted();
 
   const fetchData = useCallback(
-    async ({ url, method, body = null, headers = null }) => {
+    async ({ path, headers = null }) => {
       dispatch({ type: ACTIONS.STARTED });
       try {
-        const resp = await axios[method](
-          url,
-          JSON.parse(headers),
-          JSON.parse(body),
-        );
+        const axiosInstance = axios.create({ baseURL, headers });
+        const resp = await axiosInstance.get(path);
         isMounted.current &&
           dispatch({ type: ACTIONS.SUCCESS, payload: resp.data });
       } catch (error) {
         isMounted.current && dispatch({ type: ACTIONS.ERROR, payload: error });
       }
     },
-    [dispatch, isMounted],
+    [dispatch, isMounted, baseURL],
   );
 
   return {

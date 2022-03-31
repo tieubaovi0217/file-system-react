@@ -53,7 +53,7 @@ const SignUpForm = () => {
       })
       .catch((err) => {
         console.log(err.response);
-        message.error(err.response.data.message);
+        message.error(err?.response?.data?.message);
       })
       .finally(() => isMounted.current && setIsSigningUp(false));
   };

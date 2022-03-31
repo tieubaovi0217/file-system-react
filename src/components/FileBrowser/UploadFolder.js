@@ -4,11 +4,7 @@ import { FolderAddOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { fetchFileBrowserDataThunk } from 'actions/fileBrowser';
-
 const UploadFolder = ({ path }) => {
-  const dispatch = useDispatch();
-
   const [showNewFolderForm, setShowNewFolderForm] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [newFolderName, setNewFolderName] = useState('');
@@ -22,30 +18,29 @@ const UploadFolder = ({ path }) => {
   };
 
   const handleOk = async () => {
-    if (newFolderName.trim().length === 0) return handleFormCancel();
-
-    setConfirmLoading(true);
-    try {
-      const resp = await axios.post(
-        `${process.env.REACT_APP_API_URL}/root/mkdir`,
-        { relativePath: path, newFolderName },
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-          },
-        },
-      );
-      console.log(resp.data);
-      dispatch(fetchFileBrowserDataThunk(path));
-    } catch (error) {
-      console.log(error.response);
-      message.error(error.message);
-    }
-    setConfirmLoading(false);
-    setShowNewFolderForm(false);
-    setNewFolderName('');
+    // if (newFolderName.trim().length === 0) return handleFormCancel();
+    // setConfirmLoading(true);
+    // try {
+    //   const resp = await axios.post(
+    //     `${process.env.REACT_APP_API_URL}/root/mkdir`,
+    //     { relativePath: path, newFolderName },
+    //     {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+    //       },
+    //     },
+    //   );
+    //   console.log(resp.data);
+    //   dispatch(fetchFileBrowserDataThunk(path));
+    // } catch (error) {
+    //   console.log(error.response);
+    //   message.error(error.message);
+    // }
+    // setConfirmLoading(false);
+    // setShowNewFolderForm(false);
+    // setNewFolderName('');
   };
 
   return (

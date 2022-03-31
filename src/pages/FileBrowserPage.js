@@ -1,4 +1,5 @@
 import './FileBrowserPage.css';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 import useAxios from 'hooks/useAxios';
@@ -9,11 +10,13 @@ import FileBrowserHeader from 'components/FileBrowser/FileBrowserHeader';
 import { Layout, message } from 'antd';
 
 import { SyncOutlined } from '@ant-design/icons';
+import { getUserFromLocalStorage } from 'common/localStorage';
+import { normalizeURL } from 'common/helpers';
 
 const { Header, Sider, Content } = Layout;
 
 const FileBrowserPage = () => {
-  const username = 'admin';
+  const { username } = getUserFromLocalStorage();
   const [path, setPath] = useState('');
   const [toggleRefresh, setIsToggleRefresh] = useState(false);
   const [filterValue, setFilterValue] = useState('');
@@ -24,17 +27,18 @@ const FileBrowserPage = () => {
     isResolved,
     isRejected,
     fetchData,
-  } = useAxios();
+  } = useAxios(process.env.REACT_APP_API_URL);
 
   useEffect(() => {
+    if (!username) return;
     fetchData({
-      url: `${process.env.REACT_APP_WEB_SERVER_URL}/root/${username}${path}`,
-      method: 'get',
-      headers: JSON.stringify({
+      path: normalizeURL(`/root/${username}/${path}`),
+      headers: {
         'Content-Type': 'application/json',
-      }),
+        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+      },
     });
-  }, [path, fetchData, toggleRefresh]);
+  }, [path, fetchData, toggleRefresh, username]);
 
   const handleRefresh = () => {
     setIsToggleRefresh((prevState) => !prevState);
@@ -55,11 +59,24 @@ const FileBrowserPage = () => {
     setPath((prevPath) => `${prevPath}/${name}`);
   };
 
-  if (isRejected) {
-  }
-
-  if (isResolved) {
-  }
+  const handleDownload = async (name) => {
+    const filePath = normalizeURL(`/root/${username}/${path}/${name}`);
+    axios({
+      url: `${process.env.REACT_APP_API_URL}${filePath}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+      },
+      responseType: 'blob', // important
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', name);
+      document.body.appendChild(link);
+      link.click();
+    });
+  };
 
   return (
     <Layout className="file-browser">
@@ -78,6 +95,7 @@ const FileBrowserPage = () => {
               />
             </Header>
             <Content>
+              {isRejected && <p>Loading failed...</p>}
               {isLoading && (
                 <div className="file-browser__spinner">
                   <SyncOutlined spin />
@@ -90,6 +108,7 @@ const FileBrowserPage = () => {
                     item.name.startsWith(filterValue),
                   )}
                   onFolderDoubleClick={handleFolderDoubleClick}
+                  onDownload={handleDownload}
                 />
               )}
             </Content>

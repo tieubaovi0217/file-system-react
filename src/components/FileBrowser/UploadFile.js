@@ -25,6 +25,7 @@ const UploadFile = ({ path, onSuccess }) => {
       }
     },
   };
+
   return (
     <Upload {...props}>
       <Button
