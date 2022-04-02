@@ -1,17 +1,17 @@
-import { Upload, Button, message } from 'antd';
+import { Upload, Button, message, notification } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 const UploadFile = ({ path, onSuccess }) => {
   const props = {
     name: 'file',
     multiple: true,
-    showUploadList: false,
+    // showUploadList: false,
     action: `${process.env.REACT_APP_API_URL}/upload`,
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
     },
     data: {
-      path,
+      destination: path,
     },
     onChange(info) {
       if (info.file.status !== 'uploading') {
@@ -21,13 +21,15 @@ const UploadFile = ({ path, onSuccess }) => {
         message.success(`${info.file.name} file uploaded successfully`);
         onSuccess();
       } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
+        message.error(
+          `${info.file.name} file upload failed: ${info.file.response.message}`,
+        );
       }
     },
   };
 
   return (
-    <Upload {...props}>
+    <Upload {...props} className="file-browser__upload">
       <Button
         type="text"
         icon={<UploadOutlined style={{ fontSize: '125%' }} />}

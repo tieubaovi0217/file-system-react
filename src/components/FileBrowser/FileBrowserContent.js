@@ -1,23 +1,16 @@
-import axios from 'axios';
 import React from 'react';
 
-import { Row, message } from 'antd';
+import { Row } from 'antd';
 
 import File from './File';
 import Folder from './Folder';
 
 const FileBrowserContent = ({
   items,
-  path,
   onFolderDoubleClick,
   onDownload,
+  onDelete,
 }) => {
-  const handleDeleteFileOrFolder = async (relativePath, name) => {};
-
-  const handleResourceDownload = (name) => {
-    onDownload(name);
-  };
-
   const files = items
     .filter((item) => item.type === 'file')
     .map((file) => (
@@ -26,8 +19,8 @@ const FileBrowserContent = ({
         name={file.name}
         mtime={file.mtime}
         size={file.size}
-        onDelete={handleDeleteFileOrFolder}
-        onDownload={handleResourceDownload}
+        onDelete={onDelete}
+        onDownload={onDownload}
       />
     ));
 
@@ -35,14 +28,12 @@ const FileBrowserContent = ({
     .filter((item) => item.type === 'directory')
     .map((folder) => (
       <Folder
-        path={path}
         key={folder.name}
         mtime={folder.mtime}
         name={folder.name}
-        size={folder.size}
-        onDelete={handleDeleteFileOrFolder}
+        onDelete={onDelete}
         onDoubleClick={() => onFolderDoubleClick(folder.name)}
-        onDownload={handleResourceDownload}
+        onDownload={onDownload}
       />
     ));
 

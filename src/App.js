@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { authActions } from 'slices/auth';
 
-message.config({ maxCount: 1, duration: 0.5 });
+message.config({ duration: 1 });
 
 const App = () => {
   const dispatch = useDispatch();

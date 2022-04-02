@@ -13,7 +13,7 @@ import { SyncOutlined } from '@ant-design/icons';
 import { getUserFromLocalStorage } from 'common/localStorage';
 import { normalizeURL } from 'common/helpers';
 
-const { Header, Sider, Content } = Layout;
+const { Header, Sider, Content, Footer } = Layout;
 
 const FileBrowserPage = () => {
   const { username } = getUserFromLocalStorage();
@@ -60,9 +60,11 @@ const FileBrowserPage = () => {
   };
 
   const handleDownload = async (name) => {
-    const filePath = normalizeURL(`/root/${username}/${path}/${name}`);
+    const url = normalizeURL(
+      `${process.env.REACT_APP_API_URL}/root/${username}/${path}/${name}`,
+    );
     axios({
-      url: `${process.env.REACT_APP_API_URL}${filePath}`,
+      url,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
@@ -78,11 +80,47 @@ const FileBrowserPage = () => {
     });
   };
 
+  const handleDelete = async (name) => {
+    try {
+      const resp = await axios.post(
+        `${process.env.REACT_APP_API_URL}/resources/delete`,
+        {
+          path: `${path}/${name}`,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        },
+      );
+      console.log(resp);
+      message.success(`Delete ${name} successfully`);
+      handleRefresh();
+    } catch (error) {
+      console.log(error);
+      message.error('Cannot delete file, server error');
+    }
+  };
+
+  const handleCreateNewFolder = async (name) => {
+    const resp = await axios.post(
+      `${process.env.REACT_APP_API_URL}/resources/mkdir`,
+      { destination: path, newFolderName: name },
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+        },
+      },
+    );
+    console.log(resp);
+    handleRefresh();
+  };
+
   return (
     <Layout className="file-browser">
-      <Header>
-        <FileBrowserActions onRefresh={handleRefresh} path={path} />
-      </Header>
       <Layout>
         <Sider style={{ borderRight: '1px solid #d7d7d7' }}>Tree view</Sider>
         <Content>
@@ -109,12 +147,20 @@ const FileBrowserPage = () => {
                   )}
                   onFolderDoubleClick={handleFolderDoubleClick}
                   onDownload={handleDownload}
+                  onDelete={handleDelete}
                 />
               )}
             </Content>
           </Layout>
         </Content>
       </Layout>
+      <Footer style={{ borderTop: '1px solid #d7d7d7' }}>
+        <FileBrowserActions
+          onCreateFolder={handleCreateNewFolder}
+          onRefresh={handleRefresh}
+          path={path}
+        />
+      </Footer>
     </Layout>
   );
 };

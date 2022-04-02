@@ -12,15 +12,7 @@ const File = ({ name, mtime, size, onDelete, onDownload }) => {
     console.log('file open');
   };
 
-  const handleDeleteFile = () => {
-    // onDelete(relativePath, name);
-  };
-
   const handleRename = () => {};
-
-  const handleDownload = () => {
-    onDownload(name);
-  };
 
   const showInfoModal = () => {
     Modal.info({
@@ -72,11 +64,19 @@ const File = ({ name, mtime, size, onDelete, onDownload }) => {
         Rename
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" style={{ color: 'red' }} onClick={handleDeleteFile}>
+      <Menu.Item
+        key="3"
+        style={{ color: 'red' }}
+        onClick={() => onDelete(name)}
+      >
         Delete
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="4" style={{ color: 'blue' }} onClick={handleDownload}>
+      <Menu.Item
+        key="4"
+        style={{ color: 'blue' }}
+        onClick={() => onDownload(name)}
+      >
         Download
       </Menu.Item>
     </Menu>

@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { Input, Button, message, Modal } from 'antd';
 import { FolderAddOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
 
-const UploadFolder = ({ path }) => {
+const UploadFolder = ({ onCreateFolder }) => {
   const [showNewFolderForm, setShowNewFolderForm] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [newFolderName, setNewFolderName] = useState('');
@@ -18,29 +16,17 @@ const UploadFolder = ({ path }) => {
   };
 
   const handleOk = async () => {
-    // if (newFolderName.trim().length === 0) return handleFormCancel();
-    // setConfirmLoading(true);
-    // try {
-    //   const resp = await axios.post(
-    //     `${process.env.REACT_APP_API_URL}/root/mkdir`,
-    //     { relativePath: path, newFolderName },
-    //     {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-    //       },
-    //     },
-    //   );
-    //   console.log(resp.data);
-    //   dispatch(fetchFileBrowserDataThunk(path));
-    // } catch (error) {
-    //   console.log(error.response);
-    //   message.error(error.message);
-    // }
-    // setConfirmLoading(false);
-    // setShowNewFolderForm(false);
-    // setNewFolderName('');
+    if (newFolderName.trim().length === 0) return handleFormCancel();
+    setConfirmLoading(true);
+    try {
+      await onCreateFolder(newFolderName);
+    } catch (error) {
+      console.log(error.response);
+      message.error(error.response?.data?.message);
+    }
+    setConfirmLoading(false);
+    setShowNewFolderForm(false);
+    setNewFolderName('');
   };
 
   return (

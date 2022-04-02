@@ -6,24 +6,8 @@ import { Col, Dropdown, Menu, Modal, Tooltip } from 'antd';
 
 import { FolderOpenFilled } from '@ant-design/icons';
 
-const Folder = ({
-  name,
-  size,
-  mtime,
-  path,
-  onDelete,
-  onDownload,
-  onDoubleClick,
-}) => {
-  const handleDoubleClick = () => {
-    onDoubleClick(name);
-  };
-
+const Folder = ({ name, mtime, onDelete, onDownload, onDoubleClick }) => {
   const handleRightClick = (e) => {};
-
-  const handleDeleteFolder = () => {
-    // onDelete(relativePath, name);
-  };
 
   const handleDownload = () => {
     // onDownload(name);
@@ -77,7 +61,11 @@ const Folder = ({
       </Menu.Item>
       <Menu.Item key="2">Rename</Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" style={{ color: 'red' }} onClick={handleDeleteFolder}>
+      <Menu.Item
+        key="3"
+        style={{ color: 'red' }}
+        onClick={() => onDelete(name)}
+      >
         Delete
       </Menu.Item>
       <Menu.Divider />
@@ -91,7 +79,7 @@ const Folder = ({
     <Dropdown overlay={menu} trigger={['contextMenu']}>
       <Col
         span={3}
-        onDoubleClick={handleDoubleClick}
+        onDoubleClick={() => onDoubleClick(name)}
         onContextMenu={handleRightClick}
       >
         <Tooltip title={name}>
