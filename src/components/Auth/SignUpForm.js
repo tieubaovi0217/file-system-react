@@ -52,8 +52,8 @@ const SignUpForm = () => {
         history.push('/');
       })
       .catch((err) => {
-        console.log(err.response);
-        message.error(err?.response?.data?.message);
+        console.log(err.response?.data);
+        message.error(err.response.data.message);
       })
       .finally(() => isMounted.current && setIsSigningUp(false));
   };

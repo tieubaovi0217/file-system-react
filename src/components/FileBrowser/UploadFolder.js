@@ -21,8 +21,8 @@ const UploadFolder = ({ onCreateFolder }) => {
     try {
       await onCreateFolder(newFolderName);
     } catch (error) {
-      console.log(error.response);
-      message.error(error.response?.data?.message);
+      console.log(error);
+      message.error('Create new folder failed');
     }
     setConfirmLoading(false);
     setShowNewFolderForm(false);

@@ -99,7 +99,7 @@ const FileBrowserPage = () => {
       handleRefresh();
     } catch (error) {
       console.log(error);
-      message.error('Cannot delete file, server error');
+      message.error('Cannot delete file or folder, server error');
     }
   };
 

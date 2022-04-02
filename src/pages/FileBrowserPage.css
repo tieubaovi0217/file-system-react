@@ -78,6 +78,7 @@
 
 .file-browser__content {
   padding: 8px;
+  min-height: 400px;
 }
 
 .file-browser__spinner {

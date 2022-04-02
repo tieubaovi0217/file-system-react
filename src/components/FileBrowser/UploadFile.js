@@ -1,4 +1,4 @@
-import { Upload, Button, message, notification } from 'antd';
+import { Upload, Button, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 const UploadFile = ({ path, onSuccess }) => {
@@ -21,8 +21,9 @@ const UploadFile = ({ path, onSuccess }) => {
         message.success(`${info.file.name} file uploaded successfully`);
         onSuccess();
       } else if (info.file.status === 'error') {
+        console.log(info.file.response);
         message.error(
-          `${info.file.name} file upload failed: ${info.file.response.message}`,
+          `${info.file.name} file upload failed! Please check your filename`,
         );
       }
     },

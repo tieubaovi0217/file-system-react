@@ -26,8 +26,8 @@ const LoginForm = () => {
         history.replace('/');
       })
       .catch((err) => {
-        console.log(err);
-        message.error(err?.response?.data?.message);
+        console.log(err.response.data);
+        message.error(err.response.data.message);
       })
       .finally(() => isMounted.current && setIsLoggingIn(false));
   };
