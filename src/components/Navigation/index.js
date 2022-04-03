@@ -51,7 +51,7 @@ const Navigation = ({ onLogout }) => {
           <Menu.Item key="/profile">
             <Link to="/profile">
               <div>
-                <span>Profile, {user.username} </span>
+                <span>Hello, {user.username} </span>
                 <span>
                   <UserOutlined />
                 </span>

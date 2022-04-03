@@ -1,11 +1,9 @@
 import React from 'react';
 
 import { Col, Dropdown, Menu, Modal, Tooltip } from 'antd';
-
 import { FileOutlined } from '@ant-design/icons';
 
-import prettyBytes from 'pretty-bytes';
-import * as moment from 'moment';
+import FileInfoModal from './FileInfoModal';
 
 const File = ({ name, mtime, size, onDelete, onDownload }) => {
   const handleOpenFile = () => {
@@ -18,37 +16,12 @@ const File = ({ name, mtime, size, onDelete, onDownload }) => {
     Modal.info({
       title: 'File Info',
       content: (
-        <div>
-          <div className="file-info-icon">
-            <FileOutlined />
-          </div>
-          <div className="file-info-modal">
-            <table>
-              <tbody>
-                <tr>
-                  <td align="right">
-                    <strong>Name: </strong>
-                  </td>
-                  <td align="center">{name}</td>
-                </tr>
-                <tr>
-                  <td align="right">
-                    <strong>Size: </strong>
-                  </td>
-                  <td align="center">{prettyBytes(size)}</td>
-                </tr>
-                <tr>
-                  <td align="right">
-                    <strong>Last modified: </strong>
-                  </td>
-                  <td align="center">
-                    {moment(mtime).format('DD/MM/YYYY HH:mm:ss')}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <FileInfoModal
+          name={name}
+          mtime={mtime}
+          size={size}
+          isDirectory={false}
+        />
       ),
       onOk() {},
     });

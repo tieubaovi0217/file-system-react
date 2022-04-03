@@ -17,7 +17,7 @@ const { Header, Sider, Content, Footer } = Layout;
 
 const FileBrowserPage = () => {
   const { username } = getUserFromLocalStorage();
-  const [path, setPath] = useState('');
+  const [path, setPath] = useState(sessionStorage.getItem('path') || '');
   const [toggleRefresh, setIsToggleRefresh] = useState(false);
   const [filterValue, setFilterValue] = useState('');
 
@@ -48,15 +48,20 @@ const FileBrowserPage = () => {
     setFilterValue(value);
   };
 
+  const handleSetPath = (newPath) => {
+    sessionStorage.setItem('path', newPath);
+    setPath(newPath);
+  };
+
   const handleBackButtonClick = () => {
     if (path.length > 0) {
       const updatedPath = path.substring(0, path.lastIndexOf('/'));
-      setPath(updatedPath);
+      handleSetPath(updatedPath);
     }
   };
 
   const handleFolderDoubleClick = (name) => {
-    setPath((prevPath) => `${prevPath}/${name}`);
+    handleSetPath(`${path}/${name}`);
   };
 
   const handleDownload = async (name) => {
@@ -122,7 +127,14 @@ const FileBrowserPage = () => {
   return (
     <Layout className="file-browser">
       <Layout>
-        <Sider style={{ borderRight: '1px solid #d7d7d7' }}>Tree view</Sider>
+        <Sider
+          width={320}
+          style={{
+            borderRight: '1px solid #d7d7d7',
+          }}
+        >
+          Tree view
+        </Sider>
         <Content>
           <Layout>
             <Header style={{ borderBottom: '0px' }}>

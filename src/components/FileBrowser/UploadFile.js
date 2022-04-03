@@ -4,6 +4,10 @@ import { UploadOutlined } from '@ant-design/icons';
 const UploadFile = ({ path, onSuccess }) => {
   const props = {
     name: 'file',
+    listType: 'text',
+    onDownload: () => {
+      console.log('downloading');
+    },
     multiple: true,
     // showUploadList: false,
     action: `${process.env.REACT_APP_API_URL}/upload`,
@@ -21,9 +25,12 @@ const UploadFile = ({ path, onSuccess }) => {
         message.success(`${info.file.name} file uploaded successfully`);
         onSuccess();
       } else if (info.file.status === 'error') {
-        console.log(info.file.response);
+        const status = info.file.error.status;
+        if (status === 413) {
+          return message.error(`File too large`); // file too large
+        }
         message.error(
-          `${info.file.name} file upload failed! Please check your filename`,
+          `${info.file.name} file upload failed: ${info.file.response.message}`,
         );
       }
     },

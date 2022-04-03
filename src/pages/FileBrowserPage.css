@@ -17,7 +17,7 @@
   border: 1px solid #d7d7d7;
   border-radius: 4px;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
-  max-width: 1000px;
+  max-width: 80%;
   min-height: 560px;
   /* padding: 8px; */
 }
@@ -109,3 +109,9 @@
 .file-info-modal td {
   padding: 0 4px;
 }
+/* 
+.file-info-modal__name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+} */
