@@ -12,9 +12,10 @@ COPY package*.json .
 RUN npm install
 COPY . .
 RUN npm run build
-EXPOSE 3000
 
 FROM nginx:1.15
+COPY proxy.conf /etc/nginx/
+COPY nginx.conf /etc/nginx/nginx.conf
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=builder /usr/src/app/build .
