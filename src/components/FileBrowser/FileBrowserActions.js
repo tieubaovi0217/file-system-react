@@ -1,10 +1,8 @@
-import React from 'react';
+import { Button } from 'antd';
+import { SyncOutlined } from '@ant-design/icons';
 
 import UploadFile from './UploadFile';
 import UploadFolder from './UploadFolder';
-
-import { Button } from 'antd';
-import { SyncOutlined } from '@ant-design/icons';
 
 const FileBrowserActions = ({ onRefresh, path, onCreateFolder }) => {
   return (

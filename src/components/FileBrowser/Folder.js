@@ -1,16 +1,21 @@
 import './styles.css';
-import React from 'react';
 
 import { Col, Dropdown, Menu, Modal, Tooltip } from 'antd';
 
 import { FolderOpenFilled } from '@ant-design/icons';
 import FileInfoModal from './FileInfoModal';
 
-const Folder = ({ name, mtime, onDelete, onDownload, onDoubleClick }) => {
-  const handleRightClick = (e) => {};
-
+const Folder = ({
+  name,
+  mtime,
+  onDelete,
+  onDownload,
+  onDoubleClick,
+  onRenameFormOpen,
+}) => {
   const handleDownload = () => {
     // onDownload(name);
+    // not implemented
   };
 
   const showInfoModal = () => {
@@ -27,7 +32,9 @@ const Folder = ({ name, mtime, onDelete, onDownload, onDoubleClick }) => {
       <Menu.Item key="1" onClick={showInfoModal}>
         Get Info
       </Menu.Item>
-      <Menu.Item key="2">Rename</Menu.Item>
+      <Menu.Item key="2" onClick={onRenameFormOpen}>
+        Rename
+      </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="3" className="red-text" onClick={() => onDelete(name)}>
         Delete
@@ -41,11 +48,7 @@ const Folder = ({ name, mtime, onDelete, onDownload, onDoubleClick }) => {
 
   return (
     <Dropdown overlay={menu} trigger={['contextMenu']}>
-      <Col
-        span={3}
-        onDoubleClick={() => onDoubleClick(name)}
-        onContextMenu={handleRightClick}
-      >
+      <Col span={3} onDoubleClick={() => onDoubleClick(name)}>
         <Tooltip title={name}>
           <div className="resource">
             <div className="resource__icon">

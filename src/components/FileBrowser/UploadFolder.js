@@ -1,33 +1,29 @@
 import './styles.css';
 import { useState } from 'react';
-import { Input, Button, message, Modal } from 'antd';
+import { Button, message } from 'antd';
 import { FolderAddOutlined } from '@ant-design/icons';
 
-const UploadFolder = ({ onCreateFolder }) => {
-  const [showNewFolderForm, setShowNewFolderForm] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [newFolderName, setNewFolderName] = useState('');
+import ModalForm from './ModalForm';
 
-  const newFolderFormClickHandler = () => {
-    setShowNewFolderForm(true);
+const UploadFolder = ({ onCreateFolder }) => {
+  const [isShowNewFolderForm, setIsShowNewFolderForm] = useState(false);
+
+  const handleNewFolderFormOpen = () => {
+    setIsShowNewFolderForm(true);
   };
 
   const handleFormCancel = () => {
-    setShowNewFolderForm(false);
+    setIsShowNewFolderForm(false);
   };
 
-  const handleOk = async () => {
-    if (newFolderName.trim().length === 0) return handleFormCancel();
-    setConfirmLoading(true);
+  const handleCreateFolder = async (folderName) => {
+    if (folderName.trim().length === 0) return handleFormCancel();
     try {
-      await onCreateFolder(newFolderName);
+      await onCreateFolder(folderName);
     } catch (error) {
       console.log(error);
       message.error('Create new folder failed');
     }
-    setConfirmLoading(false);
-    setShowNewFolderForm(false);
-    setNewFolderName('');
   };
 
   return (
@@ -35,24 +31,18 @@ const UploadFolder = ({ onCreateFolder }) => {
       <Button
         type="text"
         icon={<FolderAddOutlined className="font-125" />}
-        onClick={newFolderFormClickHandler}
+        onClick={handleNewFolderFormOpen}
       >
         New folder
       </Button>
-      <Modal
-        width={300}
-        title="Create a new folder"
-        visible={showNewFolderForm}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
+      <ModalForm
+        modalTitle="Create a new folder"
+        inputPlaceholder="Folder name"
+        defaultValue=""
+        onConfirm={handleCreateFolder}
+        isVisible={isShowNewFolderForm}
         onCancel={handleFormCancel}
-      >
-        <Input
-          placeholder="Folder name"
-          value={newFolderName}
-          onChange={(e) => setNewFolderName(e.target.value)}
-        />
-      </Modal>
+      />
     </div>
   );
 };

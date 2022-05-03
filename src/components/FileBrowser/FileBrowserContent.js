@@ -10,6 +10,7 @@ const FileBrowserContent = ({
   onFolderDoubleClick,
   onDownload,
   onDelete,
+  onRename,
 }) => {
   const files = items
     .filter((item) => item.type === 'file')
@@ -21,6 +22,7 @@ const FileBrowserContent = ({
         size={file.size}
         onDelete={onDelete}
         onDownload={onDownload}
+        onRename={onRename}
       />
     ));
 
@@ -34,6 +36,7 @@ const FileBrowserContent = ({
         onDelete={onDelete}
         onDoubleClick={() => onFolderDoubleClick(folder.name)}
         onDownload={onDownload}
+        onRename={onRename}
       />
     ));
 

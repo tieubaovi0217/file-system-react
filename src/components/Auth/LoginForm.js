@@ -1,5 +1,5 @@
 import './LoginForm.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 
 import { Form, Input, Button, message } from 'antd';

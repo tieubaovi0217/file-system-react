@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button, Breadcrumb, Input } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
 
@@ -10,10 +8,6 @@ const FileBrowserHeader = ({
   onSearchChange,
   onBackButtonClick,
 }) => {
-  const onSearch = (value) => {
-    console.log(value);
-  };
-
   const onChange = (e) => {
     onSearchChange(e.target.value);
   };
@@ -26,13 +20,15 @@ const FileBrowserHeader = ({
     );
   });
 
+  const isDisabledBackBtn = currentPath.length === 0 ? true : false;
+
   return (
     <div className="file-browser__header">
       <Button
         className="file-browser__backbutton"
         shape="circle"
         onClick={onBackButtonClick}
-        disabled={currentPath.length === 0 ? true : false}
+        disabled={isDisabledBackBtn}
       >
         <ArrowUpOutlined />
       </Button>
@@ -44,7 +40,6 @@ const FileBrowserHeader = ({
         placeholder="Search files"
         allowClear
         onChange={onChange}
-        onSearch={onSearch}
       />
     </div>
   );

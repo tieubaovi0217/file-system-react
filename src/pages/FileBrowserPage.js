@@ -1,6 +1,6 @@
 import './FileBrowserPage.css';
 import axios from 'axios';
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import useAxios from 'hooks/useAxios';
 import FileBrowserContent from 'components/FileBrowser/FileBrowserContent';
@@ -123,7 +123,6 @@ const FileBrowserPage = () => {
       `${process.env.REACT_APP_API_URL}/resources/mkdir`,
       { destination: path, newFolderName: name },
       {
-        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
@@ -131,6 +130,22 @@ const FileBrowserPage = () => {
       },
     );
     console.log(resp);
+    handleRefresh();
+  };
+
+  const handleRename = async (oldPath, newPath) => {
+    const resp = await axios.put(
+      `${process.env.REACT_APP_API_URL}/resources/rename`,
+      { oldPath, newPath },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+        },
+      },
+    );
+    console.log(resp);
+    message.success('Rename successfully');
     handleRefresh();
   };
 
@@ -214,6 +229,7 @@ const FileBrowserPage = () => {
                   onFolderDoubleClick={handleFolderDoubleClick}
                   onDownload={handleDownload}
                   onDelete={handleDelete}
+                  onRename={handleRename}
                 />
               )}
             </Content>
