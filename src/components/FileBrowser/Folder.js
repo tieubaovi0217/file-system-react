@@ -1,9 +1,12 @@
 import './styles.css';
 
+import { useState } from 'react';
+
 import { Col, Dropdown, Menu, Modal, Tooltip } from 'antd';
 
 import { FolderOpenFilled } from '@ant-design/icons';
 import FileInfoModal from './FileInfoModal';
+import ModalForm from './ModalForm';
 
 const Folder = ({
   name,
@@ -11,8 +14,14 @@ const Folder = ({
   onDelete,
   onDownload,
   onDoubleClick,
-  onRenameFormOpen,
+  onRename,
 }) => {
+  const [isShowRenameForm, setIsShowRenameForm] = useState(false);
+
+  const handleRenameFormOpen = () => setIsShowRenameForm(true);
+
+  const handleRenameFormCancel = () => setIsShowRenameForm(false);
+
   const handleDownload = () => {
     // onDownload(name);
     // not implemented
@@ -32,7 +41,7 @@ const Folder = ({
       <Menu.Item key="1" onClick={showInfoModal}>
         Get Info
       </Menu.Item>
-      <Menu.Item key="2" onClick={onRenameFormOpen}>
+      <Menu.Item key="2" onClick={handleRenameFormOpen}>
         Rename
       </Menu.Item>
       <Menu.Divider />
@@ -47,18 +56,30 @@ const Folder = ({
   );
 
   return (
-    <Dropdown overlay={menu} trigger={['contextMenu']}>
-      <Col span={3} onDoubleClick={() => onDoubleClick(name)}>
-        <Tooltip title={name}>
-          <div className="resource">
-            <div className="resource__icon">
-              <FolderOpenFilled />
+    <>
+      <Dropdown overlay={menu} trigger={['contextMenu']}>
+        <Col span={3} onDoubleClick={() => onDoubleClick(name)}>
+          <Tooltip title={name}>
+            <div className="resource">
+              <div className="resource__icon">
+                <FolderOpenFilled />
+              </div>
+              <div className="resource__name disable-text-selection">
+                {name}
+              </div>
             </div>
-            <div className="resource__name disable-text-selection">{name}</div>
-          </div>
-        </Tooltip>
-      </Col>
-    </Dropdown>
+          </Tooltip>
+        </Col>
+      </Dropdown>
+      <ModalForm
+        modalTitle="Rename folder"
+        inputPlaceholder="New folder name"
+        defaultValue={name}
+        onConfirm={onRename}
+        isVisible={isShowRenameForm}
+        onCancel={handleRenameFormCancel}
+      />
+    </>
   );
 };
 

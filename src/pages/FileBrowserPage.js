@@ -134,9 +134,10 @@ const FileBrowserPage = () => {
   };
 
   const handleRename = async (oldPath, newPath) => {
+    if (newPath.trim().length === 0) return;
     const resp = await axios.put(
       `${process.env.REACT_APP_API_URL}/resources/rename`,
-      { oldPath, newPath },
+      { oldPath, newPath: newPath.trim() },
       {
         headers: {
           'Content-Type': 'application/json',
