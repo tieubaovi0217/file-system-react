@@ -166,7 +166,15 @@ const FileBrowserPage = () => {
       return treeData;
     };
 
-    getTreeData().then((treeData) => {
+    getTreeData().then((data) => {
+      const treeData = [
+        {
+          title: 'Parent Directory',
+          key: '/',
+          type: 'directory',
+          children: data,
+        },
+      ];
       setTreeData(treeData);
     });
   }, [toggleRefresh, fetchTreeData]);
