@@ -18,11 +18,12 @@ const { Header, Sider, Content, Footer } = Layout;
 
 const FileBrowserPage = () => {
   const { username } = getUserFromLocalStorage();
-  const [path, setPath] = useState(sessionStorage.getItem('path') || '');
+  const [path, setPath] = useState('');
   const [toggleRefresh, setIsToggleRefresh] = useState(false);
   const [filterValue, setFilterValue] = useState('');
 
   const [treeData, setTreeData] = useState([]);
+  const [selectedKeys, setSelectedKeys] = useState([]);
 
   const {
     response: data,
@@ -56,10 +57,16 @@ const FileBrowserPage = () => {
     setPath(newPath);
   };
 
+  const handleSelectTree = (key) => {
+    handleSetPath(key);
+    setSelectedKeys([key]);
+  };
+
   const handleBackButtonClick = () => {
     if (path.length > 0) {
       const updatedPath = path.substring(0, path.lastIndexOf('/'));
       handleSetPath(updatedPath);
+      handleSelectTree(updatedPath);
     }
   };
 
@@ -127,28 +134,31 @@ const FileBrowserPage = () => {
     handleRefresh();
   };
 
-  const fetchTreeData = useCallback(async (path = '') => {
-    const result = [];
-    const axiosInstance = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-      },
-    });
-    const resp = await axiosInstance.get(getRemotePath(username, path));
-    for (const resource of resp.data) {
-      resource.isLeaf = true;
-      resource.title = truncateFileName(resource.name);
-      resource.key = normalizeURL(`${path}/${resource.name}`);
-      if (resource.type === 'directory') {
-        resource.isLeaf = false;
-        resource.children = await fetchTreeData(`${path}/${resource.name}`);
+  const fetchTreeData = useCallback(
+    async (path = '') => {
+      const result = [];
+      const axiosInstance = axios.create({
+        baseURL: process.env.REACT_APP_API_URL,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+        },
+      });
+      const resp = await axiosInstance.get(getRemotePath(username, path));
+      for (const resource of resp.data) {
+        resource.isLeaf = true;
+        resource.title = truncateFileName(resource.name);
+        resource.key = normalizeURL(`${path}/${resource.name}`);
+        if (resource.type === 'directory') {
+          resource.isLeaf = false;
+          resource.children = await fetchTreeData(`${path}/${resource.name}`);
+        }
+        result.push(resource);
       }
-      result.push(resource);
-    }
-    return result;
-  }, []);
+      return result;
+    },
+    [username],
+  );
 
   useEffect(() => {
     const getTreeData = async () => {
@@ -164,17 +174,16 @@ const FileBrowserPage = () => {
   return (
     <Layout className="file-browser">
       <Layout>
-        <Sider
-          width={400}
-          style={{
-            borderRight: '1px solid #d7d7d7',
-          }}
-        >
-          <TreeView treeData={treeData} onSelect={handleSetPath} path={path} />
+        <Sider width={360}>
+          <TreeView
+            treeData={treeData}
+            onSelect={handleSelectTree}
+            selectedKeys={selectedKeys}
+          />
         </Sider>
         <Content>
           <Layout>
-            <Header style={{ borderBottom: '0px' }}>
+            <Header id="file-browser__header">
               <FileBrowserHeader
                 currentPath={path}
                 onSearchChange={handleSearchChange}
@@ -203,7 +212,7 @@ const FileBrowserPage = () => {
           </Layout>
         </Content>
       </Layout>
-      <Footer style={{ borderTop: '1px solid #d7d7d7' }}>
+      <Footer>
         <FileBrowserActions
           onCreateFolder={handleCreateNewFolder}
           onRefresh={handleRefresh}

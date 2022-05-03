@@ -1,3 +1,4 @@
+import './styles.css';
 import React from 'react';
 
 import { Col, Dropdown, Menu, Modal, Tooltip } from 'antd';
@@ -37,19 +38,11 @@ const File = ({ name, mtime, size, onDelete, onDownload }) => {
         Rename
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item
-        key="3"
-        style={{ color: 'red' }}
-        onClick={() => onDelete(name)}
-      >
+      <Menu.Item key="3" className="red-text" onClick={() => onDelete(name)}>
         Delete
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item
-        key="4"
-        style={{ color: 'blue' }}
-        onClick={() => onDownload(name)}
-      >
+      <Menu.Item key="4" className="blue-text" onClick={() => onDownload(name)}>
         Download
       </Menu.Item>
     </Menu>

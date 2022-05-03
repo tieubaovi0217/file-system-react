@@ -120,3 +120,15 @@
 .directory-tree {
   overflow-x: auto;
 }
+
+.ant-layout-footer {
+  border-top: 1px solid #d7d7d7;
+}
+
+.ant-layout-sider {
+  border-right: 1px solid #d7d7d7;
+}
+
+#file-browser__header {
+  border-bottom: 0px;
+}

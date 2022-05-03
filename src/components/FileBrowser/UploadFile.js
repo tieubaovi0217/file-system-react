@@ -1,3 +1,4 @@
+import './styles.css';
 import { Upload, Button, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
@@ -38,10 +39,7 @@ const UploadFile = ({ path, onSuccess }) => {
 
   return (
     <Upload {...props} className="file-browser__upload">
-      <Button
-        type="text"
-        icon={<UploadOutlined style={{ fontSize: '125%' }} />}
-      >
+      <Button type="text" icon={<UploadOutlined className="font-125" />}>
         Upload
       </Button>
     </Upload>

@@ -1,3 +1,4 @@
+import './styles.css';
 import { Link, useHistory } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
@@ -29,12 +30,12 @@ const Navigation = ({ onLogout }) => {
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Menu.Item key="/">
-        <Link to="/">Administration</Link>
+        <Link to="/">Administration Management</Link>
       </Menu.Item>
 
       {!isAuthenticated && (
         <>
-          <Menu.Item key="/auth/login" style={{ marginLeft: 'auto' }}>
+          <Menu.Item key="/auth/login" className="margin-left-auto">
             <Link to="/auth/login">Login</Link>
           </Menu.Item>
           <Menu.Item key="/auth/signup">
@@ -45,7 +46,7 @@ const Navigation = ({ onLogout }) => {
 
       {isAuthenticated && (
         <>
-          <Menu.Item key="/root" style={{ marginLeft: 'auto' }}>
+          <Menu.Item key="/root" className="margin-left-auto">
             <Link to="/root">Resources</Link>
           </Menu.Item>
           <Menu.Item key="/profile">

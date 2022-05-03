@@ -1,3 +1,4 @@
+import './styles.css';
 import { useState } from 'react';
 import { Input, Button, message, Modal } from 'antd';
 import { FolderAddOutlined } from '@ant-design/icons';
@@ -33,7 +34,7 @@ const UploadFolder = ({ onCreateFolder }) => {
     <div>
       <Button
         type="text"
-        icon={<FolderAddOutlined style={{ fontSize: '125%' }} />}
+        icon={<FolderAddOutlined className="font-125" />}
         onClick={newFolderFormClickHandler}
       >
         New folder
