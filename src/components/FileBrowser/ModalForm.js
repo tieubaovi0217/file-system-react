@@ -11,7 +11,10 @@ const ModalForm = ({
   isVisible,
   onCancel,
 }) => {
-  const name = defaultValue.substring(0, defaultValue.lastIndexOf('.'));
+  const name =
+    defaultValue.lastIndexOf('.') !== -1
+      ? defaultValue.substring(0, defaultValue.lastIndexOf('.'))
+      : defaultValue;
   const extension =
     defaultValue.lastIndexOf('.') !== -1
       ? defaultValue.slice(defaultValue.lastIndexOf('.'))
@@ -30,7 +33,7 @@ const ModalForm = ({
     onCancel();
     if (isMounted.current) {
       setConfirmLoading(false);
-      setValue(defaultValue);
+      setValue(name);
     }
   };
 
@@ -43,7 +46,7 @@ const ModalForm = ({
 
   useEffect(() => {
     return () => {};
-  });
+  }, []);
 
   return (
     <Modal
