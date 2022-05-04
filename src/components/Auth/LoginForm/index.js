@@ -1,4 +1,4 @@
-import './LoginForm.css';
+import './styles.css';
 import { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 

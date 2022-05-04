@@ -1,39 +1,53 @@
-import './styles.css';
-
 import { useState } from 'react';
 
 import { Col, Dropdown, Menu, Modal, Tooltip } from 'antd';
-import { FileOutlined } from '@ant-design/icons';
+import { FileOutlined, FolderOpenFilled } from '@ant-design/icons';
 
 import FileInfoModal from './FileInfoModal';
 import ModalForm from './ModalForm';
 
-const File = ({ name, mtime, size, onDelete, onDownload, onRename }) => {
+const ResourceItem = ({
+  name,
+  isDirectory,
+  mtime,
+  onDelete,
+  onDownload,
+  onRename,
+  onFolderDoubleClick,
+  size,
+}) => {
   const [isShowRenameForm, setIsShowRenameForm] = useState(false);
 
   const handleRenameFormOpen = () => setIsShowRenameForm(true);
 
   const handleRenameFormCancel = () => setIsShowRenameForm(false);
 
-  const showInfoModal = () => {
+  const handleShowInfoModal = () => {
     Modal.info({
-      title: 'File Info',
+      title: 'Detail Info',
       content: (
         <FileInfoModal
           name={name}
           mtime={mtime}
           size={size}
-          isDirectory={false}
+          isDirectory={isDirectory}
         />
       ),
       onOk() {},
     });
   };
 
+  const handleRename = (newPath) => {
+    if (newPath.trim().length === 0 || newPath === name) return;
+    onRename(name, newPath.trim());
+  };
+
+  const resourceIcon = isDirectory ? <FolderOpenFilled /> : <FileOutlined />;
+
   const menu = (
     <Menu>
       <Menu.Item key="0">Open</Menu.Item>
-      <Menu.Item key="1" onClick={showInfoModal}>
+      <Menu.Item key="1" onClick={handleShowInfoModal}>
         Get Info
       </Menu.Item>
       <Menu.Item key="2" onClick={handleRenameFormOpen}>
@@ -53,12 +67,10 @@ const File = ({ name, mtime, size, onDelete, onDownload, onRename }) => {
   return (
     <>
       <Dropdown overlay={menu} trigger={['contextMenu']}>
-        <Col span={3}>
+        <Col span={3} onDoubleClick={() => onFolderDoubleClick(name)}>
           <Tooltip title={name}>
             <div className="resource">
-              <div className="resource__icon">
-                <FileOutlined />
-              </div>
+              <div className="resource__icon">{resourceIcon}</div>
 
               <div className="resource__name disable-text-selection">
                 {name}
@@ -68,15 +80,15 @@ const File = ({ name, mtime, size, onDelete, onDownload, onRename }) => {
         </Col>
       </Dropdown>
       <ModalForm
-        modalTitle="Rename file"
-        inputPlaceholder="New file name"
+        modalTitle="Rename"
+        inputPlaceholder="New name"
         defaultValue={name}
-        onConfirm={onRename}
         isVisible={isShowRenameForm}
+        onConfirm={handleRename}
         onCancel={handleRenameFormCancel}
       />
     </>
   );
 };
 
-export default File;
+export default ResourceItem;

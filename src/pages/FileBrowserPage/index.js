@@ -1,4 +1,4 @@
-import './FileBrowserPage.css';
+import './styles.css';
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 
@@ -134,10 +134,12 @@ const FileBrowserPage = () => {
   };
 
   const handleRename = async (oldPath, newPath) => {
-    if (newPath.trim().length === 0) return;
     const resp = await axios.put(
       `${process.env.REACT_APP_API_URL}/resources/rename`,
-      { oldPath, newPath: newPath.trim() },
+      {
+        oldPath: `${path}/${oldPath}`,
+        newPath: `${`${path}/${newPath}`}`,
+      },
       {
         headers: {
           'Content-Type': 'application/json',

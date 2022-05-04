@@ -15,7 +15,7 @@ const ModalForm = ({
 
   const handleOk = async () => {
     setConfirmLoading(true);
-    await onConfirm(defaultValue, value);
+    await onConfirm(value);
     onCancel();
     setConfirmLoading(false);
     setValue(defaultValue);

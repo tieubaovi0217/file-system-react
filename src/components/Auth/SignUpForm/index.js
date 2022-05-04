@@ -1,4 +1,4 @@
-import './SignUpForm.css';
+import './styles.css';
 import { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { useHistory } from 'react-router-dom';

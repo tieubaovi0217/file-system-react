@@ -1,9 +1,6 @@
-import React from 'react';
-
 import { Row } from 'antd';
 
-import File from './File';
-import Folder from './Folder';
+import ResourceItem from './ResourceItem';
 
 const FileBrowserContent = ({
   items,
@@ -12,40 +9,23 @@ const FileBrowserContent = ({
   onDelete,
   onRename,
 }) => {
-  const files = items
-    .filter((item) => item.type === 'file')
-    .map((file) => (
-      <File
-        key={file.name}
-        name={file.name}
-        mtime={file.mtime}
-        size={file.size}
-        onDelete={onDelete}
-        onDownload={onDownload}
-        onRename={onRename}
-      />
-    ));
-
-  const folders = items
-    .filter((item) => item.type === 'directory')
-    .map((folder) => (
-      <Folder
-        key={folder.name}
-        mtime={folder.mtime}
-        name={folder.name}
-        onDelete={onDelete}
-        onDoubleClick={() => onFolderDoubleClick(folder.name)}
-        onDownload={onDownload}
-        onRename={onRename}
-      />
-    ));
+  const resourceItems = items.map((item) => (
+    <ResourceItem
+      key={item.name}
+      mtime={item.mtime}
+      name={item.name}
+      onDelete={onDelete}
+      onDownload={onDownload}
+      onRename={onRename}
+      isDirectory={item.type === 'directory'}
+      size={item.size ? item.size : 0}
+      onFolderDoubleClick={() => onFolderDoubleClick(item.name)}
+    />
+  ));
 
   return (
     <div className="file-browser__content">
-      <Row gutter={[8, 8]}>
-        {folders}
-        {files}
-      </Row>
+      <Row gutter={[8, 8]}>{resourceItems}</Row>
     </div>
   );
 };
