@@ -9,6 +9,10 @@ const FileBrowserContent = ({
   onDelete,
   onRename,
 }) => {
+  const handleDoubleClick = (name, isDirectory = false) => {
+    if (isDirectory) return onFolderDoubleClick(name);
+  };
+
   const resourceItems = items.map((item) => (
     <ResourceItem
       key={item.name}
@@ -19,7 +23,7 @@ const FileBrowserContent = ({
       onRename={onRename}
       isDirectory={item.type === 'directory'}
       size={item.size ? item.size : 0}
-      onFolderDoubleClick={() => onFolderDoubleClick(item.name)}
+      onDoubleClick={handleDoubleClick}
     />
   ));
 

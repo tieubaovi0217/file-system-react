@@ -13,7 +13,7 @@ const ResourceItem = ({
   onDelete,
   onDownload,
   onRename,
-  onFolderDoubleClick,
+  onDoubleClick,
   size,
 }) => {
   const [isShowRenameForm, setIsShowRenameForm] = useState(false);
@@ -67,7 +67,7 @@ const ResourceItem = ({
   return (
     <>
       <Dropdown overlay={menu} trigger={['contextMenu']}>
-        <Col span={3} onDoubleClick={() => onFolderDoubleClick(name)}>
+        <Col span={3} onDoubleClick={() => onDoubleClick(name, isDirectory)}>
           <Tooltip title={name}>
             <div className="resource">
               <div className="resource__icon">{resourceIcon}</div>
