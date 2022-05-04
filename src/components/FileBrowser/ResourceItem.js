@@ -20,7 +20,9 @@ const ResourceItem = ({
 
   const handleRenameFormOpen = () => setIsShowRenameForm(true);
 
-  const handleRenameFormCancel = () => setIsShowRenameForm(false);
+  const handleRenameFormCancel = () => {
+    setIsShowRenameForm(false);
+  };
 
   const handleShowInfoModal = () => {
     Modal.info({

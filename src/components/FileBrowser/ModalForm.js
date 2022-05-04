@@ -21,6 +21,11 @@ const ModalForm = ({
     setValue(defaultValue);
   };
 
+  const handleCancel = () => {
+    onCancel();
+    setValue(defaultValue);
+  };
+
   return (
     <Modal
       width={300}
@@ -28,7 +33,7 @@ const ModalForm = ({
       visible={isVisible}
       onOk={handleOk}
       confirmLoading={confirmLoading}
-      onCancel={onCancel}
+      onCancel={handleCancel}
     >
       <Input
         placeholder={inputPlaceholder}

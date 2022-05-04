@@ -1,6 +1,6 @@
 import './styles.css';
 import { useState } from 'react';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { FolderAddOutlined } from '@ant-design/icons';
 
 import ModalForm from './ModalForm';
@@ -18,12 +18,7 @@ const UploadFolder = ({ onCreateFolder }) => {
 
   const handleCreateFolder = async (folderName) => {
     if (folderName.trim().length === 0) return handleFormCancel();
-    try {
-      await onCreateFolder(folderName);
-    } catch (error) {
-      console.log(error);
-      message.error('Create new folder failed');
-    }
+    onCreateFolder(folderName);
   };
 
   return (

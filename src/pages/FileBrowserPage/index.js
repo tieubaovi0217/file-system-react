@@ -119,37 +119,48 @@ const FileBrowserPage = () => {
   };
 
   const handleCreateNewFolder = async (name) => {
-    const resp = await axios.post(
-      `${process.env.REACT_APP_API_URL}/resources/mkdir`,
-      { destination: path, newFolderName: name },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+    try {
+      const resp = await axios.post(
+        `${process.env.REACT_APP_API_URL}/resources/mkdir`,
+        { destination: path, newFolderName: name },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
         },
-      },
-    );
-    console.log(resp);
-    handleRefresh();
+      );
+      console.log(resp);
+      handleRefresh();
+    } catch (err) {
+      console.log(err);
+      message.error('Create new folder failed');
+    }
   };
 
   const handleRename = async (oldPath, newPath) => {
-    const resp = await axios.put(
-      `${process.env.REACT_APP_API_URL}/resources/rename`,
-      {
-        oldPath: `${path}/${oldPath}`,
-        newPath: `${`${path}/${newPath}`}`,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+    try {
+      const resp = await axios.put(
+        `${process.env.REACT_APP_API_URL}/resources/rename`,
+        {
+          oldPath,
+          newPath,
+          currentPath: path,
         },
-      },
-    );
-    console.log(resp);
-    message.success('Rename successfully');
-    handleRefresh();
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        },
+      );
+      console.log(resp);
+      message.success('Rename successfully');
+      handleRefresh();
+    } catch (err) {
+      console.log(err);
+      message.error('Rename failed');
+    }
   };
 
   const fetchTreeData = useCallback(
