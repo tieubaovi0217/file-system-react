@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Input, Modal } from 'antd';
+import { useIsMounted } from 'hooks/useIsMounted';
 
 const ModalForm = ({
   onConfirm,
@@ -10,35 +11,55 @@ const ModalForm = ({
   isVisible,
   onCancel,
 }) => {
+  const name = defaultValue.substring(0, defaultValue.lastIndexOf('.'));
+  const extension =
+    defaultValue.lastIndexOf('.') !== -1
+      ? defaultValue.slice(defaultValue.lastIndexOf('.'))
+      : '';
+
+  const isMounted = useIsMounted();
+
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState(name);
 
   const handleOk = async () => {
-    setConfirmLoading(true);
-    await onConfirm(value);
+    if (isMounted.current) {
+      setConfirmLoading(true);
+    }
+    await onConfirm(`${value}${extension}`);
     onCancel();
-    setConfirmLoading(false);
-    setValue(defaultValue);
+    if (isMounted.current) {
+      setConfirmLoading(false);
+      setValue(defaultValue);
+    }
   };
 
   const handleCancel = () => {
     onCancel();
-    setValue(defaultValue);
+    if (isMounted.current) {
+      setValue(name);
+    }
   };
+
+  useEffect(() => {
+    return () => {};
+  });
 
   return (
     <Modal
-      width={300}
+      width={360}
       title={modalTitle}
       visible={isVisible}
       onOk={handleOk}
       confirmLoading={confirmLoading}
       onCancel={handleCancel}
+      destroyOnClose={true}
     >
       <Input
         placeholder={inputPlaceholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        addonAfter={`${extension}`}
       />
     </Modal>
   );
