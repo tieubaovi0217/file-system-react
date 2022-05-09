@@ -1,18 +1,19 @@
 import axios from 'axios';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { message } from 'antd';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import AuthPage from 'pages/AuthPage';
+import HomePage from 'pages/HomePage';
+import FileBrowserPage from 'pages/FileBrowserPage';
 
 import Navigation from 'components/Navigation';
 import UserProfile from 'components/Profile/UserProfile';
-import AuthPage from 'pages/AuthPage';
-import HomePage from 'pages/HomePage';
 import ProtectedRoute from 'components/ProtectedRoute';
-import FileBrowserPage from 'pages/FileBrowserPage';
 
-import { message } from 'antd';
-import { BrowserRouter } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { authActions } from 'slices/auth';
+import ConferencePage from 'pages/ConferencePage';
 
 message.config({ duration: 1 });
 
@@ -57,8 +58,9 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/auth" component={AuthPage} />
-          <ProtectedRoute exact path="/profile" component={UserProfile} />
           <Route exact path="/root" component={FileBrowserPage} />
+          <ProtectedRoute exact path="/profile" component={UserProfile} />
+          <ProtectedRoute exact path="/conference" component={ConferencePage} />
           <Redirect to="/" />
         </Switch>
       </main>
