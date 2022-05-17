@@ -5,6 +5,7 @@ import { FileOutlined, FolderOpenFilled } from '@ant-design/icons';
 
 import FileInfoModal from './FileInfoModal';
 import ModalForm from './ModalForm';
+import { useIsMounted } from 'hooks/useIsMounted';
 
 const ResourceItem = ({
   name,
@@ -17,12 +18,13 @@ const ResourceItem = ({
   onDoubleClick,
   onGetURL,
 }) => {
+  const isMounted = useIsMounted();
   const [isShowRenameForm, setIsShowRenameForm] = useState(false);
 
   const handleRenameFormOpen = () => setIsShowRenameForm(true);
 
   const handleRenameFormCancel = () => {
-    setIsShowRenameForm(false);
+    if (isMounted.current) setIsShowRenameForm(false);
   };
 
   const handleShowInfoModal = () => {

@@ -14,15 +14,17 @@ import { Layout, message } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import { getUserFromLocalStorage } from 'common/localStorage';
 import { getRemotePath, normalizeURL, truncateFileName } from 'common/helpers';
+import { useIsMounted } from 'hooks/useIsMounted';
 
 const { Header, Sider, Content, Footer } = Layout;
 
 const FileBrowserPage = () => {
   const { username } = getUserFromLocalStorage();
+
+  const isMounted = useIsMounted();
   const [path, setPath] = useState('');
   const [toggleRefresh, setIsToggleRefresh] = useState(false);
   const [filterValue, setFilterValue] = useState('');
-
   const [treeData, setTreeData] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
 
@@ -205,9 +207,9 @@ const FileBrowserPage = () => {
           children: data,
         },
       ];
-      setTreeData(treeData);
+      if (isMounted.current) setTreeData(treeData);
     });
-  }, [toggleRefresh, fetchTreeData]);
+  }, [isMounted, toggleRefresh, fetchTreeData]);
 
   const handleGetURL = (fileName) => {
     let url = normalizeURL(

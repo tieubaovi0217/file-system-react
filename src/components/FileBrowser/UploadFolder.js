@@ -4,16 +4,18 @@ import { Button } from 'antd';
 import { FolderAddOutlined } from '@ant-design/icons';
 
 import ModalForm from './ModalForm';
+import { useIsMounted } from 'hooks/useIsMounted';
 
 const UploadFolder = ({ onCreateFolder }) => {
+  const isMounted = useIsMounted();
   const [isShowNewFolderForm, setIsShowNewFolderForm] = useState(false);
 
   const handleNewFolderFormOpen = () => {
-    setIsShowNewFolderForm(true);
+    if (isMounted.current) setIsShowNewFolderForm(true);
   };
 
   const handleFormCancel = () => {
-    setIsShowNewFolderForm(false);
+    if (isMounted.current) setIsShowNewFolderForm(false);
   };
 
   const handleCreateFolder = async (folderName) => {

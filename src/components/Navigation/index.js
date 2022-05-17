@@ -7,7 +7,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUserThunk } from 'actions/auth';
 
-const Navigation = ({ onLogout }) => {
+const Navigation = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [current, setCurrent] = useState(history.location.pathname);
