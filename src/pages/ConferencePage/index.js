@@ -126,7 +126,7 @@ const ConferencePage = () => {
         <p id="avatarUrl">Avatar URL:</p>
         <iframe
           id="frame"
-          class="frame"
+          className="frame"
           allow="camera *; microphone *"
           title="ready_player_me"
         ></iframe>

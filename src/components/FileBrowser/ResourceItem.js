@@ -10,11 +10,12 @@ const ResourceItem = ({
   name,
   isDirectory,
   mtime,
+  size,
   onDelete,
   onDownload,
   onRename,
   onDoubleClick,
-  size,
+  onGetURL,
 }) => {
   const [isShowRenameForm, setIsShowRenameForm] = useState(false);
 
@@ -62,6 +63,10 @@ const ResourceItem = ({
       <Menu.Divider />
       <Menu.Item key="4" className="blue-text" onClick={() => onDownload(name)}>
         Download
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="5" onClick={() => onGetURL(name)}>
+        Get URL
       </Menu.Item>
     </Menu>
   );

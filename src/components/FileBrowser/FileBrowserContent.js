@@ -8,6 +8,7 @@ const FileBrowserContent = ({
   onDownload,
   onDelete,
   onRename,
+  onGetURL,
 }) => {
   const handleDoubleClick = (name, isDirectory = false) => {
     if (isDirectory) return onFolderDoubleClick(name);
@@ -18,11 +19,12 @@ const FileBrowserContent = ({
       key={item.name}
       mtime={item.mtime}
       name={item.name}
+      isDirectory={item.type === 'directory'}
+      size={item.size ? item.size : 0}
       onDelete={onDelete}
       onDownload={onDownload}
       onRename={onRename}
-      isDirectory={item.type === 'directory'}
-      size={item.size ? item.size : 0}
+      onGetURL={onGetURL}
       onDoubleClick={handleDoubleClick}
     />
   ));

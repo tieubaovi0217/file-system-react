@@ -1,5 +1,6 @@
 import './styles.css';
 import axios from 'axios';
+import * as mime from 'mime-types';
 import { useEffect, useState, useCallback } from 'react';
 
 import useAxios from 'hooks/useAxios';
@@ -208,6 +209,28 @@ const FileBrowserPage = () => {
     });
   }, [toggleRefresh, fetchTreeData]);
 
+  const handleGetURL = (fileName) => {
+    let url = normalizeURL(
+      `${process.env.REACT_APP_API_URL}/cloudconvert/${path}/${fileName}`,
+    );
+    // attach token
+    url += `?token=${localStorage.getItem('token') || ''}`;
+    // attach type "Video" | "Document" | "Picture"
+    const mimeType = mime.lookup(fileName);
+    if (mimeType.startsWith('image')) {
+      url += '&type=Picture';
+    } else if (mimeType.startsWith('video')) {
+      url += '&type=video';
+    } else {
+      // temporarily
+      url += '&type=Document';
+    }
+    console.log('url:', url);
+    message.info('Copied to clipboard');
+    navigator.clipboard.writeText(url);
+    return url;
+  };
+
   return (
     <Layout className="file-browser">
       <Layout>
@@ -244,6 +267,7 @@ const FileBrowserPage = () => {
                   onDownload={handleDownload}
                   onDelete={handleDelete}
                   onRename={handleRename}
+                  onGetURL={handleGetURL}
                 />
               )}
             </Content>
