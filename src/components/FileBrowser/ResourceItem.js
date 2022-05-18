@@ -66,10 +66,14 @@ const ResourceItem = ({
       <Menu.Item key="4" className="blue-text" onClick={() => onDownload(name)}>
         Download
       </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="5" onClick={() => onGetURL(name)}>
-        Get URL
-      </Menu.Item>
+      {!isDirectory && (
+        <>
+          <Menu.Divider />
+          <Menu.Item key="5" onClick={() => onGetURL(name)}>
+            Get URL
+          </Menu.Item>
+        </>
+      )}
     </Menu>
   );
 

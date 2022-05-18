@@ -212,21 +212,24 @@ const FileBrowserPage = () => {
   }, [isMounted, toggleRefresh, fetchTreeData]);
 
   const handleGetURL = (fileName) => {
-    let url = normalizeURL(
-      `${process.env.REACT_APP_API_URL}/cloudconvert/${path}/${fileName}`,
-    );
-    // attach token
-    url += `?token=${localStorage.getItem('token') || ''}`;
+    let url;
     // attach type "Video" | "Document" | "Picture"
     const mimeType = mime.lookup(fileName);
     if (mimeType.startsWith('image')) {
-      url += '&type=Picture';
+      url = getRemotePath(username, `${path}/${fileName}`) + '?type=Picture';
     } else if (mimeType.startsWith('video')) {
-      url += '&type=video';
+      url = getRemotePath(username, `${path}/${fileName}`) + '?type=Video';
     } else {
       // temporarily
-      url += '&type=Document';
+      url =
+        normalizeURL(
+          `${process.env.REACT_APP_API_URL}/cloudconvert/${path}/${fileName}`,
+        ) + '?type=Document';
     }
+
+    // attach token
+    url += `&token=${localStorage.getItem('token') || ''}`;
+
     console.log('url:', url);
     message.info('Copied to clipboard');
     navigator.clipboard.writeText(url);
