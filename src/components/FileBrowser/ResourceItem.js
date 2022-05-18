@@ -47,6 +47,12 @@ const ResourceItem = ({
     onRename(name, newPath.trim());
   };
 
+  const handleDownload = () => {
+    if (!isDirectory) {
+      onDownload(name);
+    }
+  };
+
   const resourceIcon = isDirectory ? <FolderOpenFilled /> : <FileOutlined />;
 
   const menu = (
@@ -63,7 +69,7 @@ const ResourceItem = ({
         Delete
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="4" className="blue-text" onClick={() => onDownload(name)}>
+      <Menu.Item key="4" className="blue-text" onClick={handleDownload}>
         Download
       </Menu.Item>
       {!isDirectory && (

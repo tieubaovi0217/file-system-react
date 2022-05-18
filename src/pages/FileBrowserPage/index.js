@@ -216,9 +216,17 @@ const FileBrowserPage = () => {
     // attach type "Video" | "Document" | "Picture"
     const mimeType = mime.lookup(fileName);
     if (mimeType.startsWith('image')) {
-      url = getRemotePath(username, `${path}/${fileName}`) + '?type=Picture';
+      url =
+        normalizeURL(
+          process.env.REACT_APP_API_URL +
+            getRemotePath(username, `${path}/${fileName}`),
+        ) + '?type=Picture';
     } else if (mimeType.startsWith('video')) {
-      url = getRemotePath(username, `${path}/${fileName}`) + '?type=Video';
+      url =
+        normalizeURL(
+          process.env.REACT_APP_API_URL +
+            getRemotePath(username, `${path}/${fileName}`),
+        ) + '?type=Video';
     } else {
       // temporarily
       url =
