@@ -1,11 +1,22 @@
 import { useState } from 'react';
 
 import { Col, Dropdown, Menu, Modal, Tooltip } from 'antd';
-import { FileOutlined, FolderOpenFilled } from '@ant-design/icons';
+import {
+  FileOutlined,
+  FolderOpenFilled,
+  FileImageOutlined,
+  FileTextOutlined,
+  FilePdfOutlined,
+  FileWordOutlined,
+  FileExcelOutlined,
+  FilePptOutlined,
+} from '@ant-design/icons';
 
 import FileInfoModal from './FileInfoModal';
 import ModalForm from './ModalForm';
 import { useIsMounted } from 'hooks/useIsMounted';
+
+import * as mime from 'mime-types';
 
 const ResourceItem = ({
   name,
@@ -53,7 +64,48 @@ const ResourceItem = ({
     }
   };
 
-  const resourceIcon = isDirectory ? <FolderOpenFilled /> : <FileOutlined />;
+  const icons = {
+    FOLDER: <FolderOpenFilled />,
+    IMAGE: <FileImageOutlined />,
+    TEXT: <FileTextOutlined />,
+    UNKNOWN: <FileOutlined />,
+    PDF: <FilePdfOutlined />,
+    WORD: <FileWordOutlined />,
+    EXCEL: <FileExcelOutlined />,
+    PPT: <FilePptOutlined />,
+  };
+
+  let icon;
+  const mimeType = mime.lookup(name);
+  if (isDirectory) {
+    icon = icons.FOLDER;
+  } else if (mimeType.startsWith('image')) {
+    icon = icons.IMAGE;
+  } else if (mimeType.startsWith('text')) {
+    icon = icons.TEXT;
+  } else if (mimeType === 'application/pdf') {
+    icon = icons.PDF;
+  } else if (
+    mimeType === 'application/msword' ||
+    mimeType ===
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  ) {
+    icon = icons.WORD;
+  } else if (
+    mimeType === 'application/vnd.ms-excel' ||
+    mimeType ===
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  ) {
+    icon = icons.EXCEL;
+  } else if (
+    mimeType === 'application/vnd.ms-powerpoint' ||
+    mimeType ===
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+  ) {
+    icon = icons.PPT;
+  } else {
+    icon = icons.UNKNOWN;
+  }
 
   const menu = (
     <Menu>
@@ -89,7 +141,7 @@ const ResourceItem = ({
         <Col span={3} onDoubleClick={() => onDoubleClick(name, isDirectory)}>
           <Tooltip title={name}>
             <div className="resource">
-              <div className="resource__icon">{resourceIcon}</div>
+              <div className="resource__icon">{icon}</div>
 
               <div className="resource__name disable-text-selection">
                 {name}

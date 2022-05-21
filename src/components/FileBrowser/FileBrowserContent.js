@@ -1,3 +1,4 @@
+import React from 'react';
 import { Row } from 'antd';
 
 import ResourceItem from './ResourceItem';
@@ -36,4 +37,4 @@ const FileBrowserContent = ({
   );
 };
 
-export default FileBrowserContent;
+export default React.memo(FileBrowserContent);
