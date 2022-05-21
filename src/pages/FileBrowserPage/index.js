@@ -26,7 +26,8 @@ const FileBrowserPage = () => {
   const [toggleRefresh, setIsToggleRefresh] = useState(false);
   const [filterValue, setFilterValue] = useState('');
   const [treeData, setTreeData] = useState([]);
-  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [selectedKeys, setSelectedKeys] = useState(['/']);
+  const [expandedKeys, setExpandedKeys] = useState(['/']);
 
   const {
     response: data,
@@ -61,20 +62,33 @@ const FileBrowserPage = () => {
   };
 
   const handleSelectTree = (key) => {
+    console.log('select');
     handleSetPath(key);
     setSelectedKeys([key]);
+    setExpandedKeys((prev) => {
+      return [...prev, key];
+    });
+  };
+
+  const handleExpandTree = (key) => {
+    setExpandedKeys(key);
   };
 
   const handleBackButtonClick = () => {
     if (path.length > 0) {
       const updatedPath = path.substring(0, path.lastIndexOf('/'));
       handleSetPath(updatedPath);
-      handleSelectTree(updatedPath);
+      setSelectedKeys([updatedPath]);
+      setExpandedKeys((prev) => {
+        prev.pop();
+        return prev;
+      });
     }
   };
 
   const handleFolderDoubleClick = (name) => {
-    handleSetPath(`${path}/${name}`);
+    const updatedPath = `${path}/${name}`;
+    handleSelectTree(updatedPath);
   };
 
   const handleDownload = async (name) => {
@@ -250,8 +264,10 @@ const FileBrowserPage = () => {
         <Sider width={360}>
           <TreeView
             treeData={treeData}
-            onSelect={handleSelectTree}
             selectedKeys={selectedKeys}
+            expandedKeys={expandedKeys}
+            onSelect={handleSelectTree}
+            onExpand={handleExpandTree}
           />
         </Sider>
         <Content>

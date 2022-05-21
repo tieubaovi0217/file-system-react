@@ -1,9 +1,15 @@
-// import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tree } from 'antd';
 
 const { DirectoryTree } = Tree;
 
-const TreeView = ({ treeData, onSelect, selectedKeys }) => {
+const TreeView = ({
+  treeData,
+  selectedKeys,
+  expandedKeys,
+  onSelect,
+  onExpand,
+}) => {
   // const initialExpandedKeys = path
   //   .split('/')
   //   .slice(1)
@@ -15,9 +21,7 @@ const TreeView = ({ treeData, onSelect, selectedKeys }) => {
   //     result.push(key);
   //     return result;
   //   }, []);
-  // const [expandedKeys, setExpandedKeys] = useState(initialExpandedKeys);
-
-  // const [autoExpandParent, setAutoExpandParent] = useState(true);
+  // const [expandedKeys, setExpandedKeys] = useState([]);
 
   // const handleSelect = (selectedKeys, e) => {
   //   console.log(selectedKeys);
@@ -30,10 +34,13 @@ const TreeView = ({ treeData, onSelect, selectedKeys }) => {
 
   // console.log(expandedKeys);
 
-  // const handleExpand = (expandedKeysValue) => {
-  //   setAutoExpandParent(false);
-  //   setExpandedKeys(expandedKeysValue);
-  // };
+  useEffect(() => {
+    onExpand(['/']);
+  }, []);
+
+  const handleExpand = (expandedKeysValue) => {
+    onExpand(expandedKeysValue);
+  };
 
   const handleSelect = (selectedKeysValue, info) => {
     if (info.node.type === 'directory') {
@@ -47,7 +54,9 @@ const TreeView = ({ treeData, onSelect, selectedKeys }) => {
       className="directory-tree"
       treeData={treeData}
       selectedKeys={selectedKeys}
+      expandedKeys={expandedKeys}
       onSelect={handleSelect}
+      onExpand={handleExpand}
     />
   );
 };

@@ -20,7 +20,8 @@ const FileBrowserHeader = ({
     );
   });
 
-  const isDisabledBackBtn = currentPath.length === 0 ? true : false;
+  const isDisabledBackBtn =
+    currentPath.length === 0 || currentPath === '/' ? true : false;
 
   return (
     <div className="file-browser__header">
