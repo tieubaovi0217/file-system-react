@@ -35,11 +35,6 @@ const TreeView = ({
 
   // console.log(expandedKeys);
 
-  useEffect(() => {
-    onExpand(['/']);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleExpand = (expandedKeysValue) => {
     onExpand(expandedKeysValue);
   };

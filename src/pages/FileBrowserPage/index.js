@@ -191,8 +191,9 @@ const FileBrowserPage = () => {
       const treeData = await fetchTreeData();
       return treeData;
     };
-
+    console.log('here');
     getTreeData().then((data) => {
+      console.log(data);
       const treeData = [
         {
           title: 'Parent Directory',
