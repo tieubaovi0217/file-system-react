@@ -39,6 +39,12 @@ const ResourceItem = ({
     if (isMounted.current) setIsShowRenameForm(false);
   };
 
+  let isDriveFile = true;
+  if (!mimeType) {
+    mimeType = mime.lookup(name);
+    isDriveFile = false;
+  }
+
   const handleShowInfoModal = () => {
     Modal.info({
       title: 'Detail Info',
@@ -81,9 +87,6 @@ const ResourceItem = ({
   };
 
   let icon;
-  if (!mimeType) {
-    mimeType = mime.lookup(name);
-  }
   if (isDirectory) {
     icon = icons.FOLDER;
   } else if (mimeType.startsWith('image')) {
@@ -122,22 +125,30 @@ const ResourceItem = ({
       <Menu.Item key="1" onClick={handleShowInfoModal}>
         Get Info
       </Menu.Item>
-      <Menu.Item key="2" onClick={handleRenameFormOpen}>
-        Rename
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="3" className="red-text" onClick={() => onDelete(name)}>
-        Delete
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="4" className="blue-text" onClick={handleDownload}>
-        Download
-      </Menu.Item>
+      {!isDriveFile && (
+        <>
+          <Menu.Item key="2" onClick={handleRenameFormOpen}>
+            Rename
+          </Menu.Item>
+          <Menu.Divider />
+          <Menu.Item
+            key="3"
+            className="red-text"
+            onClick={() => onDelete(name)}
+          >
+            Delete
+          </Menu.Item>
+          <Menu.Divider />
+        </>
+      )}
       {!isDirectory && (
         <>
+          <Menu.Item key="4" className="blue-text" onClick={handleDownload}>
+            Download
+          </Menu.Item>
           <Menu.Divider />
           <Menu.Item key="5" onClick={() => onGetURL(name)}>
-            Get URL
+            Get Content URL
           </Menu.Item>
         </>
       )}

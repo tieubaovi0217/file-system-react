@@ -39,17 +39,21 @@ const FileInfoModal = ({ name, mtime, size, isDirectory }) => {
                 <td align="right">
                   <strong>Size: </strong>
                 </td>
-                <td align="center">{prettyBytes(size)}</td>
+                <td align="center">
+                  {prettyBytes(typeof size === 'string' ? Number(size) : size)}
+                </td>
               </tr>
             )}
-            <tr>
-              <td align="right">
-                <strong>Last modified:</strong>
-              </td>
-              <td align="center">
-                {mtime && moment(mtime).format('DD/MM/YYYY HH:mm:ss')}
-              </td>
-            </tr>
+            {mtime && (
+              <tr>
+                <td align="right">
+                  <strong>Last modified:</strong>
+                </td>
+                <td align="center">
+                  {moment(mtime).format('DD/MM/YYYY HH:mm:ss')}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

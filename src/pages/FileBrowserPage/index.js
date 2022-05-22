@@ -67,21 +67,25 @@ const FileBrowserPage = () => {
   };
 
   const handleSelectTree = (key) => {
-    console.log('select');
-    handleSetPath(key);
-    setSelectedKeys([key]);
-    setExpandedKeys((prev) => {
-      return [...prev, key];
-    });
+    if (isMounted.current) {
+      handleSetPath(key);
+      setSelectedKeys([key]);
+      setExpandedKeys((prev) => {
+        return [...prev, key];
+      });
+    }
   };
 
   const handleExpandTree = (key) => {
-    setExpandedKeys(key);
+    if (isMounted.current) {
+      setExpandedKeys(key);
+    }
   };
 
   const handleBackButtonClick = () => {
     if (path.length > 0) {
       const updatedPath = path.substring(0, path.lastIndexOf('/'));
+
       handleSetPath(updatedPath);
       setSelectedKeys([updatedPath]);
       setExpandedKeys((prev) => {
@@ -213,6 +217,7 @@ const FileBrowserPage = () => {
 
   const handleSelectDrive = async () => {
     const key = 'google:drive';
+
     handleSetPath(key);
     setSelectedKeys([key]);
   };
