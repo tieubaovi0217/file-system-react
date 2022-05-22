@@ -15,6 +15,7 @@ import { SyncOutlined } from '@ant-design/icons';
 import { getUserFromLocalStorage } from 'common/localStorage';
 import { getRemotePath, normalizeURL, truncateFileName } from 'common/helpers';
 import { useIsMounted } from 'hooks/useIsMounted';
+import { axiosInstance } from 'common/axios';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -39,8 +40,12 @@ const FileBrowserPage = () => {
 
   useEffect(() => {
     if (!username) return;
+    const remotePath =
+      path === 'google:drive'
+        ? normalizeURL(`${process.env.REACT_APP_API_URL}/google/files`)
+        : getRemotePath(username, path);
     fetchData({
-      path: getRemotePath(username, path),
+      path: remotePath,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
@@ -114,16 +119,10 @@ const FileBrowserPage = () => {
 
   const handleDelete = async (name) => {
     try {
-      const resp = await axios.post(
+      const resp = await axiosInstance.post(
         `${process.env.REACT_APP_API_URL}/resources/delete`,
         {
           path: `${path}/${name}`,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-          },
         },
       );
       console.log(resp);
@@ -137,15 +136,9 @@ const FileBrowserPage = () => {
 
   const handleCreateNewFolder = async (name) => {
     try {
-      const resp = await axios.post(
+      const resp = await axiosInstance.post(
         `${process.env.REACT_APP_API_URL}/resources/mkdir`,
         { destination: path, newFolderName: name },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-          },
-        },
       );
       console.log(resp);
       handleRefresh();
@@ -157,18 +150,12 @@ const FileBrowserPage = () => {
 
   const handleRename = async (oldPath, newPath) => {
     try {
-      const resp = await axios.put(
+      const resp = await axiosInstance.put(
         `${process.env.REACT_APP_API_URL}/resources/rename`,
         {
           oldPath,
           newPath,
           currentPath: path,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-          },
         },
       );
       console.log(resp);
@@ -183,13 +170,6 @@ const FileBrowserPage = () => {
   const fetchTreeData = useCallback(
     async (path = '') => {
       const result = [];
-      const axiosInstance = axios.create({
-        baseURL: process.env.REACT_APP_API_URL,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-        },
-      });
       const resp = await axiosInstance.get(getRemotePath(username, path));
       for (const resource of resp.data) {
         resource.isLeaf = true;
@@ -220,10 +200,21 @@ const FileBrowserPage = () => {
           type: 'directory',
           children: data,
         },
+        {
+          title: 'My Drive',
+          key: 'google:drive',
+          type: 'directory',
+          children: [],
+        },
       ];
       if (isMounted.current) setTreeData(treeData);
+      return data;
     });
   }, [isMounted, toggleRefresh, fetchTreeData]);
+
+  const handleSelectDrive = async () => {
+    handleSelectTree('google:drive');
+  };
 
   const handleGetURL = (fileName) => {
     let url;
@@ -261,13 +252,14 @@ const FileBrowserPage = () => {
   return (
     <Layout className="file-browser">
       <Layout>
-        <Sider width={360}>
+        <Sider width={320}>
           <TreeView
             treeData={treeData}
             selectedKeys={selectedKeys}
             expandedKeys={expandedKeys}
             onSelect={handleSelectTree}
             onExpand={handleExpandTree}
+            onSelectDrive={handleSelectDrive}
           />
         </Sider>
         <Content>

@@ -20,6 +20,7 @@ import * as mime from 'mime-types';
 
 const ResourceItem = ({
   name,
+  mimeType,
   isDirectory,
   mtime,
   size,
@@ -64,6 +65,10 @@ const ResourceItem = ({
     }
   };
 
+  const handleFolderOpen = () => {
+    onDoubleClick(name, isDirectory);
+  };
+
   const icons = {
     FOLDER: <FolderOpenFilled />,
     IMAGE: <FileImageOutlined />,
@@ -76,7 +81,9 @@ const ResourceItem = ({
   };
 
   let icon;
-  const mimeType = mime.lookup(name);
+  if (!mimeType) {
+    mimeType = mime.lookup(name);
+  }
   if (isDirectory) {
     icon = icons.FOLDER;
   } else if (mimeType.startsWith('image')) {
@@ -109,7 +116,9 @@ const ResourceItem = ({
 
   const menu = (
     <Menu>
-      <Menu.Item key="0">Open</Menu.Item>
+      <Menu.Item key="0" onClick={handleFolderOpen}>
+        Open
+      </Menu.Item>
       <Menu.Item key="1" onClick={handleShowInfoModal}>
         Get Info
       </Menu.Item>
@@ -138,7 +147,7 @@ const ResourceItem = ({
   return (
     <>
       <Dropdown overlay={menu} trigger={['contextMenu']}>
-        <Col span={3} onDoubleClick={() => onDoubleClick(name, isDirectory)}>
+        <Col span={3} onDoubleClick={handleFolderOpen}>
           <Tooltip title={name}>
             <div className="resource">
               <div className="resource__icon">{icon}</div>

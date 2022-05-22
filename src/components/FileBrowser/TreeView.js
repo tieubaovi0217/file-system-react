@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Tree } from 'antd';
 
 const { DirectoryTree } = Tree;
@@ -9,6 +9,7 @@ const TreeView = ({
   expandedKeys,
   onSelect,
   onExpand,
+  onSelectDrive,
 }) => {
   // const initialExpandedKeys = path
   //   .split('/')
@@ -36,6 +37,7 @@ const TreeView = ({
 
   useEffect(() => {
     onExpand(['/']);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleExpand = (expandedKeysValue) => {
@@ -43,7 +45,9 @@ const TreeView = ({
   };
 
   const handleSelect = (selectedKeysValue, info) => {
-    if (info.node.type === 'directory') {
+    if (selectedKeysValue[0] === 'google:drive') {
+      onSelectDrive();
+    } else if (info.node.type === 'directory') {
       onSelect(selectedKeysValue[0]);
     }
   };

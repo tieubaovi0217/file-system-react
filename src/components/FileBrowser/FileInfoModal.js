@@ -47,7 +47,7 @@ const FileInfoModal = ({ name, mtime, size, isDirectory }) => {
                 <strong>Last modified:</strong>
               </td>
               <td align="center">
-                {moment(mtime).format('DD/MM/YYYY HH:mm:ss')}
+                {mtime && moment(mtime).format('DD/MM/YYYY HH:mm:ss')}
               </td>
             </tr>
           </tbody>

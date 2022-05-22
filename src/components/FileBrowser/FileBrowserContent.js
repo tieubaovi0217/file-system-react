@@ -20,6 +20,7 @@ const FileBrowserContent = ({
       key={item.name}
       mtime={item.mtime}
       name={item.name}
+      mimeType={item.mimeType}
       isDirectory={item.type === 'directory'}
       size={item.size ? item.size : 0}
       onDelete={onDelete}
@@ -32,7 +33,7 @@ const FileBrowserContent = ({
 
   return (
     <div className="file-browser__content">
-      <Row gutter={[8, 8]}>{resourceItems}</Row>
+      <Row gutter={[8, 12]}>{resourceItems}</Row>
     </div>
   );
 };
