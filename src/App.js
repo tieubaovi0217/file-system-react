@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import AuthPage from 'pages/AuthPage';
 import HomePage from 'pages/HomePage';
 import FileBrowserPage from 'pages/FileBrowserPage';
+import EditorPage from 'pages/EditorPage';
 
 import Navigation from 'components/Navigation';
 import UserProfile from 'components/Profile/UserProfile';
@@ -58,7 +59,8 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/auth" component={AuthPage} />
-          <Route exact path="/root" component={FileBrowserPage} />
+          <ProtectedRoute exact path="/editor" component={EditorPage} />
+          <ProtectedRoute exact path="/root" component={FileBrowserPage} />
           <ProtectedRoute exact path="/profile" component={UserProfile} />
           <ProtectedRoute exact path="/conference" component={ConferencePage} />
           <Redirect to="/" />

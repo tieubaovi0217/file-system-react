@@ -1,9 +1,9 @@
-.conference {
+.editor {
   margin: 3rem auto;
   text-align: center;
 }
 
-.conference h1 {
+.editor h1 {
   font-size: 5rem;
 }
 
@@ -22,8 +22,4 @@
   padding: 3px;
   border-radius: 5px;
   color: white;
-}
-
-#pick-avatar {
-  margin-top: 16px;
 }

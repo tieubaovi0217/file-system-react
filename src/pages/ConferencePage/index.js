@@ -89,14 +89,13 @@ const ConferencePage = () => {
   return (
     <section className="conference">
       <h1>Conference Page</h1>
-      <Button type="primary" size={'large'}>
-        <a
-          href="https://localhost:8443/test1"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Go to the conference
-        </a>
+      <Button
+        type="primary"
+        size={'large'}
+        href={process.env.REACT_APP_CONFERENCE_PAGE_URL}
+        target={'_blank'}
+      >
+        Go to the conference
       </Button>
       {/* <h2>Ready Player Me iframe example</h2>
       <ul>
@@ -118,7 +117,7 @@ const ConferencePage = () => {
         the iframe source url with your partner subdomain.
       </p> */}
 
-      <div>
+      <div id="pick-avatar">
         <Button type="primary" size={'large'} onClick={displayIframe}>
           Open Ready Player Me
         </Button>
