@@ -9,7 +9,7 @@ import FileBrowserActions from 'components/FileBrowser/FileBrowserActions';
 import FileBrowserHeader from 'components/FileBrowser/FileBrowserHeader';
 import TreeView from 'components/FileBrowser/TreeView';
 
-import { Layout, message } from 'antd';
+import { Layout, message, Modal, Button } from 'antd';
 
 import { SyncOutlined, GoogleOutlined } from '@ant-design/icons';
 import { getUserFromLocalStorage } from 'common/localStorage';
@@ -263,61 +263,91 @@ const FileBrowserPage = () => {
     return url;
   };
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   return (
-    <Layout className="file-browser">
-      <Layout>
-        <Sider width={320}>
-          <TreeView
-            treeData={treeData}
-            selectedKeys={selectedKeys}
-            expandedKeys={expandedKeys}
-            onSelect={handleSelectTree}
-            onExpand={handleExpandTree}
-            onSelectDrive={handleSelectDrive}
-          />
-        </Sider>
-        <Content>
+    <>
+      <Button type="primary" onClick={showModal}>
+        Open File Browser
+      </Button>
+      <Modal
+        title="File Browser"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={'1200px'}
+        bodyStyle={{
+          padding: 0,
+        }}
+      >
+        <Layout className="file-browser">
           <Layout>
-            <Header id="file-browser__header">
-              <FileBrowserHeader
-                currentPath={path}
-                onSearchChange={handleSearchChange}
-                onBackButtonClick={handleBackButtonClick}
+            <Sider width={320}>
+              <TreeView
+                treeData={treeData}
+                selectedKeys={selectedKeys}
+                expandedKeys={expandedKeys}
+                onSelect={handleSelectTree}
+                onExpand={handleExpandTree}
+                onSelectDrive={handleSelectDrive}
               />
-            </Header>
+            </Sider>
             <Content>
-              {isRejected && <p>Loading failed...</p>}
-              {isLoading && (
-                <div className="file-browser__spinner">
-                  <SyncOutlined spin />
-                </div>
-              )}
-              {isResolved && (
-                <FileBrowserContent
-                  path={path}
-                  items={data.filter((item) =>
-                    item.name.startsWith(filterValue),
+              <Layout>
+                <Header id="file-browser__header">
+                  <FileBrowserHeader
+                    currentPath={path}
+                    onSearchChange={handleSearchChange}
+                    onBackButtonClick={handleBackButtonClick}
+                  />
+                </Header>
+                <Content>
+                  {isRejected && <p>Loading failed...</p>}
+                  {isLoading && (
+                    <div className="file-browser__spinner">
+                      <SyncOutlined spin />
+                    </div>
                   )}
-                  onFolderDoubleClick={handleFolderDoubleClick}
-                  onDownload={handleDownload}
-                  onSyncDriveFile={handleSyncDriveFile}
-                  onDelete={handleDelete}
-                  onRename={handleRename}
-                  onGetURL={handleGetURL}
-                />
-              )}
+                  {isResolved && (
+                    <FileBrowserContent
+                      path={path}
+                      items={data.filter((item) =>
+                        item.name.startsWith(filterValue),
+                      )}
+                      onFolderDoubleClick={handleFolderDoubleClick}
+                      onDownload={handleDownload}
+                      onSyncDriveFile={handleSyncDriveFile}
+                      onDelete={handleDelete}
+                      onRename={handleRename}
+                      onGetURL={handleGetURL}
+                    />
+                  )}
+                </Content>
+              </Layout>
             </Content>
           </Layout>
-        </Content>
-      </Layout>
-      <Footer>
-        <FileBrowserActions
-          onCreateFolder={handleCreateNewFolder}
-          onRefresh={handleRefresh}
-          path={path}
-        />
-      </Footer>
-    </Layout>
+          <Footer>
+            <FileBrowserActions
+              onCreateFolder={handleCreateNewFolder}
+              onRefresh={handleRefresh}
+              path={path}
+            />
+          </Footer>
+        </Layout>
+      </Modal>
+    </>
   );
 };
 
