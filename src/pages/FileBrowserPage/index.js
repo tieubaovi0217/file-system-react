@@ -11,7 +11,7 @@ import TreeView from 'components/FileBrowser/TreeView';
 
 import { Layout, message } from 'antd';
 
-import { SyncOutlined } from '@ant-design/icons';
+import { SyncOutlined, GoogleOutlined } from '@ant-design/icons';
 import { getUserFromLocalStorage } from 'common/localStorage';
 import { getRemotePath, normalizeURL, truncateFileName } from 'common/helpers';
 import { useIsMounted } from 'hooks/useIsMounted';
@@ -215,6 +215,7 @@ const FileBrowserPage = () => {
           key: 'google:drive',
           type: 'directory',
           children: [],
+          icon: <GoogleOutlined />,
         },
       ];
       if (isMounted.current) setTreeData(treeData);
