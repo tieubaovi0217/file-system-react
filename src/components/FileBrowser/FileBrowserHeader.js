@@ -21,7 +21,11 @@ const FileBrowserHeader = ({
   });
 
   const isDisabledBackBtn =
-    currentPath.length === 0 || currentPath === '/' ? true : false;
+    currentPath.length === 0 ||
+    currentPath === '/' ||
+    currentPath === 'google:drive'
+      ? true
+      : false;
 
   return (
     <div className="file-browser__header">

@@ -20,7 +20,6 @@ import * as mime from 'mime-types';
 
 const ResourceItem = ({
   name,
-  mimeType,
   isDirectory,
   mtime,
   size,
@@ -31,6 +30,7 @@ const ResourceItem = ({
   onGetURL,
   onSyncDriveFile,
   driveFileId,
+  mimeType,
 }) => {
   const isMounted = useIsMounted();
   const [isShowRenameForm, setIsShowRenameForm] = useState(false);
@@ -93,35 +93,35 @@ const ResourceItem = ({
     PPT: <FilePptOutlined />,
   };
 
-  let icon;
+  let icon = icons.UNKNOWN;
   if (isDirectory) {
     icon = icons.FOLDER;
-  } else if (mimeType.startsWith('image')) {
-    icon = icons.IMAGE;
-  } else if (mimeType.startsWith('text')) {
-    icon = icons.TEXT;
-  } else if (mimeType === 'application/pdf') {
-    icon = icons.PDF;
-  } else if (
-    mimeType === 'application/msword' ||
-    mimeType ===
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-  ) {
-    icon = icons.WORD;
-  } else if (
-    mimeType === 'application/vnd.ms-excel' ||
-    mimeType ===
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-  ) {
-    icon = icons.EXCEL;
-  } else if (
-    mimeType === 'application/vnd.ms-powerpoint' ||
-    mimeType ===
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-  ) {
-    icon = icons.PPT;
-  } else {
-    icon = icons.UNKNOWN;
+  } else if (typeof mimeType === 'string') {
+    if (mimeType.startsWith('image')) {
+      icon = icons.IMAGE;
+    } else if (mimeType.startsWith('text')) {
+      icon = icons.TEXT;
+    } else if (mimeType === 'application/pdf') {
+      icon = icons.PDF;
+    } else if (
+      mimeType === 'application/msword' ||
+      mimeType ===
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ) {
+      icon = icons.WORD;
+    } else if (
+      mimeType === 'application/vnd.ms-excel' ||
+      mimeType ===
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ) {
+      icon = icons.EXCEL;
+    } else if (
+      mimeType === 'application/vnd.ms-powerpoint' ||
+      mimeType ===
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+    ) {
+      icon = icons.PPT;
+    }
   }
 
   const menu = (
@@ -145,11 +145,12 @@ const ResourceItem = ({
           >
             Delete
           </Menu.Item>
-          <Menu.Divider />
         </>
       )}
       {!isDirectory && (
         <>
+          <Menu.Divider />
+
           {isDriveFile ? (
             <Menu.Item
               key="4"
@@ -163,14 +164,18 @@ const ResourceItem = ({
               Download
             </Menu.Item>
           )}
-          <Menu.Divider />
-          <Menu.Item
-            key="5"
-            className="blue-text"
-            onClick={() => onGetURL(name)}
-          >
-            Get Content URL
-          </Menu.Item>
+          {!isDriveFile && (
+            <>
+              <Menu.Divider />
+              <Menu.Item
+                key="5"
+                className="blue-text"
+                onClick={() => onGetURL(name)}
+              >
+                Get Content URL
+              </Menu.Item>
+            </>
+          )}
         </>
       )}
     </Menu>

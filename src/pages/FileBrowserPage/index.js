@@ -122,10 +122,10 @@ const FileBrowserPage = () => {
   };
 
   const handleSyncDriveFile = async (fileId) => {
-    const resp = await axiosInstance.get(
-      `${process.env.REACT_APP_API_URL}/google/${fileId}/download`,
+    await axiosInstance.get(
+      `${process.env.REACT_APP_API_URL}/google/${fileId}`,
     );
-    console.log(resp);
+    message.success(`Downloaded`);
   };
 
   const handleDelete = async (name) => {
@@ -198,11 +198,11 @@ const FileBrowserPage = () => {
   );
 
   useEffect(() => {
-    const getTreeData = async () => {
-      const treeData = await fetchTreeData();
-      return treeData;
-    };
-    getTreeData().then((data) => {
+    // const getTreeData = async () => {
+    //   const treeData = await fetchTreeData();
+    //   return treeData;
+    // };
+    fetchTreeData().then((data) => {
       const treeData = [
         {
           title: 'Parent Directory',
@@ -218,7 +218,9 @@ const FileBrowserPage = () => {
           icon: <GoogleOutlined />,
         },
       ];
-      if (isMounted.current) setTreeData(treeData);
+      if (isMounted.current) {
+        setTreeData(treeData);
+      }
       return data;
     });
   }, [isMounted, toggleRefresh, fetchTreeData]);
