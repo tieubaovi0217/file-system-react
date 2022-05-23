@@ -121,6 +121,13 @@ const FileBrowserPage = () => {
     });
   };
 
+  const handleSyncDriveFile = async (fileId) => {
+    const resp = await axiosInstance.get(
+      `${process.env.REACT_APP_API_URL}/google/${fileId}/download`,
+    );
+    console.log(resp);
+  };
+
   const handleDelete = async (name) => {
     try {
       const resp = await axiosInstance.post(
@@ -292,6 +299,7 @@ const FileBrowserPage = () => {
                   )}
                   onFolderDoubleClick={handleFolderDoubleClick}
                   onDownload={handleDownload}
+                  onSyncDriveFile={handleSyncDriveFile}
                   onDelete={handleDelete}
                   onRename={handleRename}
                   onGetURL={handleGetURL}

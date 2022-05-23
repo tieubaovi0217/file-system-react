@@ -10,6 +10,7 @@ const FileBrowserContent = ({
   onDelete,
   onRename,
   onGetURL,
+  onSyncDriveFile,
 }) => {
   const handleDoubleClick = (name, isDirectory = false) => {
     if (isDirectory) return onFolderDoubleClick(name);
@@ -17,6 +18,7 @@ const FileBrowserContent = ({
 
   const resourceItems = items.map((item) => (
     <ResourceItem
+      driveFileId={item.id}
       key={item.name}
       mtime={item.mtime}
       name={item.name}
@@ -28,6 +30,7 @@ const FileBrowserContent = ({
       onRename={onRename}
       onGetURL={onGetURL}
       onDoubleClick={handleDoubleClick}
+      onSyncDriveFile={onSyncDriveFile}
     />
   ));
 

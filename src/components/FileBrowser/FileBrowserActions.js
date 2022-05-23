@@ -28,7 +28,7 @@ const FileBrowserActions = ({ onRefresh, path, onCreateFolder }) => {
   return (
     <div className="file-browser__actions">
       <Button type="text" icon={<GoogleOutlined />} href={oauth2URL}>
-        Sync with Google
+        Mirror from your Google
       </Button>
       <UploadFolder onCreateFolder={onCreateFolder} onSuccess={onRefresh} />
       <UploadFile path={path} onSuccess={onRefresh} />

@@ -29,6 +29,8 @@ const ResourceItem = ({
   onRename,
   onDoubleClick,
   onGetURL,
+  onSyncDriveFile,
+  driveFileId,
 }) => {
   const isMounted = useIsMounted();
   const [isShowRenameForm, setIsShowRenameForm] = useState(false);
@@ -73,6 +75,11 @@ const ResourceItem = ({
 
   const handleFolderOpen = () => {
     onDoubleClick(name, isDirectory);
+  };
+
+  const handleSyncDriveFile = () => {
+    console.log('drive fileId:', driveFileId);
+    onSyncDriveFile(driveFileId);
   };
 
   const icons = {
@@ -143,11 +150,25 @@ const ResourceItem = ({
       )}
       {!isDirectory && (
         <>
-          <Menu.Item key="4" className="blue-text" onClick={handleDownload}>
-            Download
-          </Menu.Item>
+          {isDriveFile ? (
+            <Menu.Item
+              key="4"
+              className="blue-text"
+              onClick={handleSyncDriveFile}
+            >
+              Download to server
+            </Menu.Item>
+          ) : (
+            <Menu.Item key="4" className="blue-text" onClick={handleDownload}>
+              Download
+            </Menu.Item>
+          )}
           <Menu.Divider />
-          <Menu.Item key="5" onClick={() => onGetURL(name)}>
+          <Menu.Item
+            key="5"
+            className="blue-text"
+            onClick={() => onGetURL(name)}
+          >
             Get Content URL
           </Menu.Item>
         </>
