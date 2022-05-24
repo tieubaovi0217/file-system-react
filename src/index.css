@@ -25,3 +25,16 @@ h6 {
 .heading {
   font-size: 3rem;
 }
+
+.flex-column {
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center;
+}

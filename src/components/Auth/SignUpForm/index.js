@@ -137,7 +137,7 @@ const SignUpForm = () => {
           <Input.Password />
         </Form.Item>
         <Divider />
-        <Form.Item {...tailFormItemLayout}>
+        <div className="flex justify-content-center">
           <Button
             size="large"
             type="primary"
@@ -146,7 +146,7 @@ const SignUpForm = () => {
           >
             Register
           </Button>
-        </Form.Item>
+        </div>
       </Form>
     </div>
   );

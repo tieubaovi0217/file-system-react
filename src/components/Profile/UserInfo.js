@@ -108,7 +108,7 @@ const UserInfo = ({ username, email }) => {
   return (
     <Layout>
       <Sider width={240}>
-        <div className="flex">
+        <div className="flex flex-column justify-content-center">
           <Avatar size={80} icon={<UserOutlined />} />
 
           <div className="update-avatar-btn">

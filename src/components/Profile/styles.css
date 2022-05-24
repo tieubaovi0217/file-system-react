@@ -15,13 +15,6 @@
   /* padding: 8px; */
 }
 
-.flex {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .user-info {
   padding: 8px 0;
 }
