@@ -49,20 +49,18 @@ const useAxios = (baseURL) => {
 
   const isMounted = useIsMounted();
 
-  const fetchData = useCallback(
-    async ({ path, headers = null }) => {
-      dispatch({ type: ACTIONS.STARTED });
-      try {
-        const axiosInstance = axios.create({ baseURL, headers });
-        const resp = await axiosInstance.get(path);
-        isMounted.current &&
-          dispatch({ type: ACTIONS.SUCCESS, payload: resp.data });
-      } catch (error) {
-        isMounted.current && dispatch({ type: ACTIONS.ERROR, payload: error });
-      }
-    },
-    [dispatch, isMounted, baseURL],
-  );
+  const fetchData = useCallback(async ({ path, headers = null }) => {
+    dispatch({ type: ACTIONS.STARTED });
+    try {
+      const axiosInstance = axios.create({ baseURL, headers });
+      const resp = await axiosInstance.get(path);
+      isMounted.current &&
+        dispatch({ type: ACTIONS.SUCCESS, payload: resp.data });
+    } catch (error) {
+      isMounted.current && dispatch({ type: ACTIONS.ERROR, payload: error });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     ...state,

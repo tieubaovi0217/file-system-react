@@ -3,7 +3,7 @@ export const normalizeURL = (url) => {
 };
 
 export const getRemotePath = (username, path) => {
-  return normalizeURL(`/root/${username}/${path}`);
+  return normalizeURL(`/root/${username}/${path}/`);
 };
 
 export const truncateFileName = (name) => {

@@ -43,7 +43,6 @@ const FileBrowserPage = () => {
   } = useAxios(process.env.REACT_APP_API_URL);
 
   useEffect(() => {
-    if (!username) return;
     const remotePath =
       path === 'google:drive'
         ? normalizeURL(`/google/files`)
@@ -55,7 +54,8 @@ const FileBrowserPage = () => {
         Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
       },
     });
-  }, [path, fetchData, toggleRefresh, username]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path, toggleRefresh]);
 
   const handleRefresh = () => {
     setIsToggleRefresh((prevState) => !prevState);
@@ -228,10 +228,6 @@ const FileBrowserPage = () => {
   );
 
   useEffect(() => {
-    // const getTreeData = async () => {
-    //   const treeData = await fetchTreeData();
-    //   return treeData;
-    // };
     fetchTreeData().then((data) => {
       const treeData = [
         {
