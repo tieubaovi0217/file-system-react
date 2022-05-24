@@ -10,7 +10,7 @@ import FileBrowserPage from 'pages/FileBrowserPage';
 import EditorPage from 'pages/EditorPage';
 
 import Navigation from 'components/Navigation';
-import UserProfile from 'components/Profile/UserProfile';
+import UserProfile from 'components/Profile';
 import ProtectedRoute from 'components/ProtectedRoute';
 
 import { authActions } from 'slices/auth';
