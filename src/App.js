@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { message } from 'antd';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -15,6 +14,7 @@ import ProtectedRoute from 'components/ProtectedRoute';
 
 import { authActions } from 'slices/auth';
 import ConferencePage from 'pages/ConferencePage';
+import { axiosInstance } from 'common/axios';
 
 message.config({ duration: 1 });
 
@@ -23,16 +23,9 @@ const App = () => {
 
   useEffect(() => {
     const checkTokenIsValid = async () => {
-      const token = localStorage.getItem('token') || '';
-
       try {
-        const resp = await axios.get(
+        const resp = await axiosInstance.get(
           `${process.env.REACT_APP_API_URL}/auth/is_auth`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
         );
         dispatch(authActions.setCredentials(resp.data));
       } catch (err) {

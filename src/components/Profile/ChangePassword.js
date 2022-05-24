@@ -1,4 +1,5 @@
-import { Form, Input, Button, Divider } from 'antd';
+import { Form, Input, Button, Divider, message } from 'antd';
+import { axiosInstance } from 'common/axios';
 
 const layout = {
   labelCol: {
@@ -15,8 +16,19 @@ const validateMessages = {
 };
 
 const ChangePassword = () => {
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log(values);
+    try {
+      const resp = await axiosInstance.post('/user/changepassword', {
+        oldPassword: values.oldPassword,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+      });
+      console.log(resp);
+      message.success('Update password successfully');
+    } catch (error) {
+      message.error(error.response?.data?.error || 'Server Error');
+    }
   };
 
   return (
@@ -36,7 +48,7 @@ const ChangePassword = () => {
             },
           ]}
         >
-          <Input />
+          <Input.Password />
         </Form.Item>
         <Form.Item
           name="password"

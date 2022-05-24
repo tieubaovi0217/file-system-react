@@ -40,7 +40,7 @@ const SignUpForm = () => {
       })
       .catch((err) => {
         console.log(err.response?.data);
-        message.error(err.response.data.message);
+        message.error(err.response?.data?.error || 'Server Error');
       })
       .finally(() => isMounted.current && setIsSigningUp(false));
   };
