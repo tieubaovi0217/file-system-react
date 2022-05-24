@@ -14,7 +14,9 @@ import ProtectedRoute from 'components/ProtectedRoute';
 
 import { authActions } from 'slices/auth';
 import ConferencePage from 'pages/ConferencePage';
-import { axiosInstance } from 'common/axios';
+import axios from 'axios';
+
+import { buildPath } from 'common/helpers';
 
 message.config({ duration: 1 });
 
@@ -24,9 +26,12 @@ const App = () => {
   useEffect(() => {
     const checkTokenIsValid = async () => {
       try {
-        const resp = await axiosInstance.get(
-          `${process.env.REACT_APP_API_URL}/auth/is_auth`,
-        );
+        const resp = await axios.get(buildPath('/auth/is_auth'), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        });
         dispatch(authActions.setCredentials(resp.data));
       } catch (err) {
         console.log(err);

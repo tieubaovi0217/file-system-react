@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Layout, Input, Row, Col, Avatar, Modal, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { axiosInstance } from 'common/axios';
+import axios from 'axios';
+import { buildPath } from 'common/helpers';
 
 const { Sider, Content } = Layout;
 
@@ -65,9 +66,17 @@ const UserInfo = ({ username, email }) => {
       ).innerHTML = `Avatar URL: ${json.data.url}`;
 
       // send avatar url to save
-      axiosInstance.post(
-        `${process.env.REACT_APP_API_URL}/user/save-avatar-url`,
-        { avatarUrl: json.data.url },
+      axios.post(
+        buildPath('/user/save-avatar-url'),
+        {
+          avatarUrl: json.data.url,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        },
       );
 
       document.getElementById('frame').hidden = true;

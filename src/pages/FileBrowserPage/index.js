@@ -13,9 +13,13 @@ import { Layout, message } from 'antd';
 
 import { SyncOutlined, GoogleOutlined } from '@ant-design/icons';
 import { getUserFromLocalStorage } from 'common/localStorage';
-import { getRemotePath, normalizeURL, truncateFileName } from 'common/helpers';
+import {
+  buildPath,
+  getRemotePath,
+  normalizeURL,
+  truncateFileName,
+} from 'common/helpers';
 import { useIsMounted } from 'hooks/useIsMounted';
-import { axiosInstance } from 'common/axios';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -42,7 +46,7 @@ const FileBrowserPage = () => {
     if (!username) return;
     const remotePath =
       path === 'google:drive'
-        ? normalizeURL(`${process.env.REACT_APP_API_URL}/google/files`)
+        ? normalizeURL(`/google/files`)
         : getRemotePath(username, path);
     fetchData({
       path: remotePath,
@@ -122,18 +126,27 @@ const FileBrowserPage = () => {
   };
 
   const handleSyncDriveFile = async (fileId) => {
-    await axiosInstance.get(
-      `${process.env.REACT_APP_API_URL}/google/${fileId}`,
-    );
+    await axios.get(buildPath(`/google/${fileId}`), {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+      },
+    });
     message.success(`Downloaded`);
   };
 
   const handleDelete = async (name) => {
     try {
-      const resp = await axiosInstance.post(
-        `${process.env.REACT_APP_API_URL}/resources/delete`,
+      const resp = await axios.post(
+        buildPath('/resources/delete'),
         {
           path: `${path}/${name}`,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
         },
       );
       console.log(resp);
@@ -147,9 +160,15 @@ const FileBrowserPage = () => {
 
   const handleCreateNewFolder = async (name) => {
     try {
-      const resp = await axiosInstance.post(
-        `${process.env.REACT_APP_API_URL}/resources/mkdir`,
+      const resp = await axios.post(
+        buildPath('/resources/mkdir'),
         { destination: path, newFolderName: name },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        },
       );
       console.log(resp);
       handleRefresh();
@@ -161,12 +180,18 @@ const FileBrowserPage = () => {
 
   const handleRename = async (oldPath, newPath) => {
     try {
-      const resp = await axiosInstance.put(
-        `${process.env.REACT_APP_API_URL}/resources/rename`,
+      const resp = await axios.put(
+        buildPath('/resources/rename'),
         {
           oldPath,
           newPath,
           currentPath: path,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
         },
       );
       console.log(resp);
@@ -181,7 +206,12 @@ const FileBrowserPage = () => {
   const fetchTreeData = useCallback(
     async (path = '') => {
       const result = [];
-      const resp = await axiosInstance.get(getRemotePath(username, path));
+      const resp = await axios.get(buildPath(getRemotePath(username, path)), {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+        },
+      });
       for (const resource of resp.data) {
         resource.isLeaf = true;
         resource.title = truncateFileName(resource.name);
@@ -265,6 +295,8 @@ const FileBrowserPage = () => {
     return url;
   };
 
+  const isOnDrive = path === 'google:drive';
+
   return (
     <Layout className="file-browser">
       <Layout>
@@ -317,6 +349,7 @@ const FileBrowserPage = () => {
           onCreateFolder={handleCreateNewFolder}
           onRefresh={handleRefresh}
           path={path}
+          isOnDrive={isOnDrive}
         />
       </Footer>
     </Layout>

@@ -1,5 +1,6 @@
 import { Form, Input, Button, Divider, message } from 'antd';
-import { axiosInstance } from 'common/axios';
+import axios from 'axios';
+import { buildPath } from 'common/helpers';
 
 const layout = {
   labelCol: {
@@ -19,11 +20,20 @@ const ChangePassword = () => {
   const onFinish = async (values) => {
     console.log(values);
     try {
-      const resp = await axiosInstance.post('/user/changepassword', {
-        oldPassword: values.oldPassword,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
-      });
+      const resp = await axios.post(
+        buildPath('/user/changepassword'),
+        {
+          oldPassword: values.oldPassword,
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        },
+      );
       console.log(resp);
       message.success('Update password successfully');
     } catch (error) {

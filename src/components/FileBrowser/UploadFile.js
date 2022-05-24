@@ -2,7 +2,7 @@ import './styles.css';
 import { Upload, Button, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
-const UploadFile = ({ path, onSuccess }) => {
+const UploadFile = ({ path, onSuccess, isOnDrive }) => {
   const props = {
     name: 'file',
     listType: 'text',
@@ -37,9 +37,17 @@ const UploadFile = ({ path, onSuccess }) => {
     },
   };
 
+  const config = {
+    disabled: isOnDrive,
+  };
+
   return (
     <Upload {...props} className="file-browser__upload">
-      <Button type="text" icon={<UploadOutlined className="font-125" />}>
+      <Button
+        type="text"
+        icon={<UploadOutlined className="font-125" />}
+        {...config}
+      >
         Upload
       </Button>
     </Upload>

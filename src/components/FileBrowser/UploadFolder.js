@@ -6,7 +6,7 @@ import { FolderAddOutlined } from '@ant-design/icons';
 import ModalForm from './ModalForm';
 import { useIsMounted } from 'hooks/useIsMounted';
 
-const UploadFolder = ({ onCreateFolder }) => {
+const UploadFolder = ({ onCreateFolder, isOnDrive }) => {
   const isMounted = useIsMounted();
   const [isShowNewFolderForm, setIsShowNewFolderForm] = useState(false);
 
@@ -23,12 +23,17 @@ const UploadFolder = ({ onCreateFolder }) => {
     onCreateFolder(folderName);
   };
 
+  const config = {
+    disabled: isOnDrive,
+  };
+
   return (
     <div>
       <Button
         type="text"
         icon={<FolderAddOutlined className="font-125" />}
         onClick={handleNewFolderFormOpen}
+        {...config}
       >
         New folder
       </Button>
