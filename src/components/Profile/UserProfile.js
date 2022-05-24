@@ -3,7 +3,7 @@ import './styles.css';
 const UserProfile = () => {
   return (
     <section className="profile">
-      <h1>Your User Profile</h1>
+      <h1 className="heading">User Profile</h1>
     </section>
   );
 };

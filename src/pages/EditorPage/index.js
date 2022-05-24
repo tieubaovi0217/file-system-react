@@ -4,7 +4,7 @@ import { Button } from 'antd';
 const EditorPage = () => {
   return (
     <section className="editor">
-      <h1>Editor Page</h1>
+      <h1 className="heading">Editor Page</h1>
 
       <Button
         type="primary"

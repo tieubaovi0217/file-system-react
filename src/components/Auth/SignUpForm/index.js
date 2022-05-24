@@ -1,6 +1,6 @@
 import './styles.css';
 import { useState } from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button, message, Divider } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
@@ -136,9 +136,14 @@ const SignUpForm = () => {
         >
           <Input.Password />
         </Form.Item>
-
+        <Divider />
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit" loading={isSigningUp}>
+          <Button
+            size="large"
+            type="primary"
+            htmlType="submit"
+            loading={isSigningUp}
+          >
             Register
           </Button>
         </Form.Item>

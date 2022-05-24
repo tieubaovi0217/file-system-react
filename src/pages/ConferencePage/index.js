@@ -88,7 +88,7 @@ const ConferencePage = () => {
 
   return (
     <section className="conference">
-      <h1>Conference Page</h1>
+      <h1 className="heading">Conference Page</h1>
       <Button
         type="primary"
         size={'large'}

@@ -2,7 +2,7 @@ import './styles.css';
 import { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button, message, Divider } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 import { useDispatch } from 'react-redux';
@@ -77,6 +77,7 @@ const LoginForm = () => {
           >
             Log In
           </Button>
+          <Divider />
           Or <Link to="/auth/signup">Register now!</Link>
         </div>
       </Form.Item>
