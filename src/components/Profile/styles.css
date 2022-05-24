@@ -17,13 +17,15 @@
 
 .flex {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-}
-
-.user-avatar {
-  display: inline-block;
+  align-items: center;
 }
 
 .user-info {
   padding: 8px 0;
+}
+
+.update-avatar-btn {
+  margin-top: 16px;
 }

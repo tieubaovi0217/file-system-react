@@ -3,6 +3,8 @@ import './styles.css';
 import { Tabs } from 'antd';
 import { getUserFromLocalStorage } from 'common/localStorage';
 import UserInfo from './UserInfo';
+import ChangePassword from './ChangePassword';
+import UpdateEmail from './UpdateEmail';
 
 const { TabPane } = Tabs;
 
@@ -17,10 +19,10 @@ const UserProfile = () => {
           <UserInfo username={user.username} email={user.email} />
         </TabPane>
         <TabPane tab="Change Password" key="2">
-          Content of card tab 2
+          <ChangePassword />
         </TabPane>
         <TabPane tab="Update Email" key="3">
-          Content of card tab 3
+          <UpdateEmail />
         </TabPane>
       </Tabs>
     </section>
