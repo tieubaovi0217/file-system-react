@@ -10,8 +10,8 @@ const layout = {
     span: 12,
   },
 };
-/* eslint-disable no-template-curly-in-string */
 
+/* eslint-disable no-template-curly-in-string */
 const validateMessages = {
   required: '${label} is required!',
 };

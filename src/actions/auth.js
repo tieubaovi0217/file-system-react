@@ -8,10 +8,16 @@ import { buildPath } from 'common/helpers';
 
 export const loginUserThunk = (username, password) => {
   return async (dispatch) => {
-    const resp = await axios.post(buildPath('/auth/login'), {
-      username,
-      password,
-    });
+    const resp = await axios.post(
+      buildPath('/auth/login'),
+      {
+        username,
+        password,
+      },
+      {
+        'Content-Type': 'application/json',
+      },
+    );
     const { user, token } = resp.data;
     dispatch(authActions.setCredentials(user));
 
@@ -23,7 +29,9 @@ export const loginUserThunk = (username, password) => {
 
 export const signUpUserThunk = (userData) => {
   return async (dispatch) => {
-    const resp = await axios.post(buildPath('/auth/signup'), userData);
+    const resp = await axios.post(buildPath('/auth/signup'), userData, {
+      'Content-Type': 'application/json',
+    });
     const { token, user } = resp.data;
     dispatch(authActions.setCredentials(user));
 

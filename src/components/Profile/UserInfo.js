@@ -45,7 +45,7 @@ const UserInfo = ({ username, email }) => {
       return;
     }
 
-    // Susbribe to all events sent from Ready Player Me once frame is ready
+    // Subscribe to all events sent from Ready Player Me once frame is ready
     if (json.eventName === 'v1.frame.ready') {
       // eslint-disable-next-line no-undef
       frame.contentWindow.postMessage(
@@ -90,10 +90,9 @@ const UserInfo = ({ username, email }) => {
 
   useEffect(() => {
     if (isModalVisible) {
-      const subdomain = process.env.REACT_APP_API_READY_PLAYER_ME_SUB_DOMAIN; // Replace with your custom subdomain
-
       const frame = document.getElementById('frame');
       if (!frame.src) {
+        const subdomain = process.env.REACT_APP_API_READY_PLAYER_ME_SUB_DOMAIN; // Replace with your custom subdomain
         frame.src = `https://${subdomain}.readyplayer.me/avatar?frameApi`;
 
         window.addEventListener('message', subscribe);
