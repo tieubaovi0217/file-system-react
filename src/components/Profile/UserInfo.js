@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Input, Row, Col, Avatar, Modal, Button } from 'antd';
+import { Layout, Input, Row, Col, Avatar, Modal, Button, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { buildPath } from 'common/helpers';
@@ -61,9 +61,6 @@ const UserInfo = ({ username, email }) => {
     // Get avatar GLB URL
     if (json.eventName === 'v1.avatar.exported') {
       console.log(`Avatar URL: ${json.data.url}`);
-      document.getElementById(
-        'avatarUrl',
-      ).innerHTML = `Avatar URL: ${json.data.url}`;
 
       // send avatar url to save
       axios.post(
@@ -78,8 +75,10 @@ const UserInfo = ({ username, email }) => {
           },
         },
       );
+      message.success('Save your avatar successfully!');
 
       document.getElementById('frame').hidden = true;
+      setIsModalVisible(false);
     }
 
     // Get user id
