@@ -1,5 +1,6 @@
 import { Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
+import { getUserFromLocalStorage } from 'common/localStorage';
 
 export const ProtectedRoute = ({
   path,
@@ -7,7 +8,7 @@ export const ProtectedRoute = ({
   render,
   ...rest
 }) => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = Object.keys(getUserFromLocalStorage()).length > 0;
 
   return (
     <Route
