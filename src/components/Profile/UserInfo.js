@@ -77,7 +77,7 @@ const UserInfo = ({ username, email }) => {
       );
       message.success('Save your avatar successfully!');
 
-      document.getElementById('frame').hidden = true;
+      // document.getElementById('frame').hidden = true;
       setIsModalVisible(false);
     }
 
