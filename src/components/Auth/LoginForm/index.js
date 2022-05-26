@@ -33,7 +33,14 @@ const LoginForm = () => {
   };
 
   return (
-    <Form name="normal_login" className="login-form" onFinish={onFinish}>
+    <Form
+      name="normal_login"
+      className="login-form"
+      onFinish={onFinish}
+      style={{
+        boxShadow: 'rgba(0, 0, 0, 0.4) 0px 30px 90px',
+      }}
+    >
       <Form.Item>
         <LockOutlined className="lock-circle" />
       </Form.Item>

@@ -57,7 +57,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/auth" component={AuthPage} />
-          <ProtectedRoute exact path="/editor" component={EditorPage} />
+          {/* <ProtectedRoute exact path="/editor" component={EditorPage} /> */}
           <ProtectedRoute exact path="/root" component={FileBrowserPage} />
           <ProtectedRoute exact path="/profile" component={UserProfile} />
           <ProtectedRoute exact path="/conference" component={ConferencePage} />

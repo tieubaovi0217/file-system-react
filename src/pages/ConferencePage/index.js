@@ -1,6 +1,6 @@
 import './styles.css';
 
-import { Button, Card, Col, Row } from 'antd';
+import { Col, Row } from 'antd';
 
 import ConferenceCard from './ConferenceCard';
 
@@ -14,7 +14,9 @@ const thumbnailURLs = [
 const ConferencePage = () => {
   return (
     <div className="conferences">
-      <h1 className="heading">Conference Page</h1>
+      <h1 className="conference-heading">
+        <span>CONFERENCES</span>
+      </h1>
       {/* <Button
         type="primary"
         size={'large'}
@@ -24,7 +26,7 @@ const ConferencePage = () => {
         Go to the conference
       </Button> */}
       <div className="conferences__list">
-        <Row gutter={[16, 16]} style={{ width: '70%' }}>
+        <Row gutter={[24, 24]} style={{ width: '70%' }}>
           <Col span={8}>
             <ConferenceCard
               name="Testing Conference 1"
@@ -32,13 +34,22 @@ const ConferencePage = () => {
             />
           </Col>
           <Col span={8}>
-            <ConferenceCard name="Testing Conference 2" />
+            <ConferenceCard
+              name="Testing Conference 2"
+              thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
+            />
           </Col>
           <Col span={8}>
-            <ConferenceCard name="Testing Conference 3" />
+            <ConferenceCard
+              name="Testing Conference 3"
+              thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
+            />
           </Col>
           <Col span={8}>
-            <ConferenceCard name="Testing Conference 4" />
+            <ConferenceCard
+              name="Testing Conference 4"
+              thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
+            />
           </Col>
         </Row>
       </div>

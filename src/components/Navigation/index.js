@@ -54,9 +54,9 @@ const Navigation = () => {
           <Menu.Item key="/root" className="margin-left-auto">
             <Link to="/root">Resources</Link>
           </Menu.Item>
-          <Menu.Item key="/editor">
+          {/* <Menu.Item key="/editor">
             <Link to="/editor">Edit Conference</Link>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item key="/conference">
             <Link to="/conference">Conferences</Link>
           </Menu.Item>

@@ -1,9 +1,10 @@
 .signup-form {
   border: 1px solid #ccc;
-  box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.1);
   padding: 16px;
   max-width: 440px;
   margin: 100px auto;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
 }
 
 .signup-form-forgot {

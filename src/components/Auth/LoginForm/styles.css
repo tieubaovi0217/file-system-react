@@ -4,6 +4,7 @@
   padding: 16px;
   max-width: 300px;
   margin: 100px auto;
+  border-radius: 8px;
 }
 
 .login-form__forgot {
