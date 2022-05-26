@@ -2,7 +2,7 @@ import './styles.css';
 import { Link, useHistory } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
-import { Menu, Button, message } from 'antd';
+import { Menu, Button, message, Divider } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUserThunk } from 'actions/auth';
@@ -28,7 +28,12 @@ const Navigation = () => {
   };
 
   return (
-    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+    <Menu
+      onClick={handleClick}
+      selectedKeys={[current]}
+      mode="horizontal"
+      style={{ fontSize: '110%' }}
+    >
       <Menu.Item key="/">
         <Link to="/">Administration Management</Link>
       </Menu.Item>

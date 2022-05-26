@@ -136,13 +136,21 @@ const UserInfo = ({ username, email }) => {
       <Content>
         <Row gutter={[16, 24]} style={{ paddingLeft: 16 }}>
           <Col className="gutter-row" span={6}>
-            <Input defaultValue="Username:" disabled />
+            <Input
+              style={{ color: '#264d59' }}
+              defaultValue="Username:"
+              disabled
+            />
           </Col>
           <Col className="gutter-row" span={18}>
             <div className="user-info">{username}</div>
           </Col>
           <Col className="gutter-row" span={6}>
-            <Input defaultValue="Email Address:" disabled />
+            <Input
+              style={{ color: '#264d59' }}
+              defaultValue="Email Address:"
+              disabled
+            />
           </Col>
           <Col className="gutter-row" span={18}>
             <div className="user-info">{email}</div>

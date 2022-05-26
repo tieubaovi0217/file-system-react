@@ -1,8 +1,3 @@
-.conference {
-  margin: 3rem auto;
-  text-align: center;
-}
-
 .frame {
   width: 1080px;
   height: 800px;
@@ -22,4 +17,15 @@
 
 #pick-avatar {
   margin-top: 16px;
+}
+
+.conferences {
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.conferences__list {
+  margin: 16px auto;
+  display: flex;
+  justify-content: center;
 }

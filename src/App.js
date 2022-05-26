@@ -47,7 +47,7 @@ const App = () => {
       <Route
         path="/"
         render={() => (
-          <header>
+          <header id="navigation">
             <Navigation />
           </header>
         )}
