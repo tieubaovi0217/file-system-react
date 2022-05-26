@@ -280,7 +280,7 @@ const FileBrowserPage = () => {
     }
 
     // attach token
-    url += `&token=${localStorage.getItem('token') || ''}`;
+    // url += `&token=${localStorage.getItem('token') || ''}`;
 
     console.log('url:', url);
     message.info('Copied to clipboard');

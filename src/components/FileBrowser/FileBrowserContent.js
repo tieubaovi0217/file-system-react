@@ -1,7 +1,14 @@
-import React from 'react';
+import * as mime from 'mime-types';
 import { Row } from 'antd';
 
 import ResourceItem from './ResourceItem';
+
+const excludedMimeTypes = ['application/zip'];
+
+const filterItems = (item) => {
+  const mimeType = mime.lookup(item.name);
+  return !excludedMimeTypes.includes(mimeType);
+};
 
 const FileBrowserContent = ({
   items,
@@ -16,7 +23,9 @@ const FileBrowserContent = ({
     if (isDirectory) return onFolderDoubleClick(name);
   };
 
-  const resourceItems = items.map((item) => (
+  const filteredItems = items.filter(filterItems);
+
+  const resourceItems = filteredItems.map((item) => (
     <ResourceItem
       driveFileId={item.id}
       key={item.name}
@@ -41,4 +50,4 @@ const FileBrowserContent = ({
   );
 };
 
-export default React.memo(FileBrowserContent);
+export default FileBrowserContent;
