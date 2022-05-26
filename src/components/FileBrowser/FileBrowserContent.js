@@ -1,5 +1,5 @@
 import * as mime from 'mime-types';
-import { Row } from 'antd';
+import { Row, Empty } from 'antd';
 
 import ResourceItem from './ResourceItem';
 
@@ -25,29 +25,31 @@ const FileBrowserContent = ({
 
   const filteredItems = items.filter(filterItems);
 
-  const resourceItems = filteredItems.map((item) => (
-    <ResourceItem
-      driveFileId={item.id}
-      key={item.name}
-      mtime={item.mtime}
-      name={item.name}
-      mimeType={item.mimeType}
-      isDirectory={item.type === 'directory'}
-      size={item.size ? item.size : 0}
-      onDelete={onDelete}
-      onDownload={onDownload}
-      onRename={onRename}
-      onGetURL={onGetURL}
-      onDoubleClick={handleDoubleClick}
-      onSyncDriveFile={onSyncDriveFile}
-    />
-  ));
+  let content;
+  if (filteredItems.length === 0) {
+    content = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+  } else {
+    const resourceItems = filteredItems.map((item) => (
+      <ResourceItem
+        driveFileId={item.id}
+        key={item.name}
+        mtime={item.mtime}
+        name={item.name}
+        mimeType={item.mimeType}
+        isDirectory={item.type === 'directory'}
+        size={item.size ? item.size : 0}
+        onDelete={onDelete}
+        onDownload={onDownload}
+        onRename={onRename}
+        onGetURL={onGetURL}
+        onDoubleClick={handleDoubleClick}
+        onSyncDriveFile={onSyncDriveFile}
+      />
+    ));
+    content = <Row gutter={[8, 12]}>{resourceItems}</Row>;
+  }
 
-  return (
-    <div className="file-browser__content">
-      <Row gutter={[8, 12]}>{resourceItems}</Row>
-    </div>
-  );
+  return <div className="file-browser__content">{content}</div>;
 };
 
 export default FileBrowserContent;

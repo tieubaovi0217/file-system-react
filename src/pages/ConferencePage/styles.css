@@ -23,6 +23,7 @@
 .conferences {
   margin: 3rem auto;
   text-align: center;
+  padding-bottom: 100px;
 }
 
 .conferences__list {
@@ -35,11 +36,11 @@
   margin: 4px;
 }
 
-.conference-heading {
+.conference__heading {
   margin-bottom: 48px;
 }
 
-.conference-heading {
+.conference__heading {
   /* margin: 20px; */
   font-family: 'Paytone One';
   color: #f1ebe5;
@@ -48,7 +49,7 @@
   letter-spacing: -2px;
 }
 
-.conference-heading span {
+.conference__heading span {
   font-family: 'Paytone One';
 
   display: block;

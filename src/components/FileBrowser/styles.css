@@ -9,3 +9,9 @@
 .font-125 {
   font-size: 125%;
 }
+
+.empty-data {
+  display: inline-block;
+  border: 1px solid black;
+  margin: 16px auto;
+}

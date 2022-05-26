@@ -1,7 +1,6 @@
 import './styles.css';
 
-import { Col, Row } from 'antd';
-
+import { Col, Row, Button } from 'antd';
 import ConferenceCard from './ConferenceCard';
 
 const thumbnailURLs = [
@@ -14,9 +13,14 @@ const thumbnailURLs = [
 const ConferencePage = () => {
   return (
     <div className="conferences">
-      <h1 className="conference-heading">
+      <h1 className="conference__heading">
         <span>CONFERENCES</span>
       </h1>
+      <div className="conferences__actions">
+        <Button>Create new conference</Button>
+        <Button>Create new conference</Button>
+        <Button>Create new conference</Button>
+      </div>
       {/* <Button
         type="primary"
         size={'large'}
