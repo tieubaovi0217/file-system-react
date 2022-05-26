@@ -26,7 +26,7 @@ const ConferencePage = () => {
         Go to the conference
       </Button> */}
       <div className="conferences__list">
-        <Row gutter={[24, 24]} style={{ width: '70%' }}>
+        <Row gutter={[24, 24]} style={{ width: '75%' }}>
           <Col span={8}>
             <ConferenceCard
               name="Testing Conference 1"

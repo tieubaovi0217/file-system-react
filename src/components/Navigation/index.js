@@ -2,7 +2,7 @@ import './styles.css';
 import { Link, useHistory } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
-import { Menu, Button, message, Divider } from 'antd';
+import { Menu, Button, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUserThunk } from 'actions/auth';
@@ -32,7 +32,12 @@ const Navigation = () => {
       onClick={handleClick}
       selectedKeys={[current]}
       mode="horizontal"
-      style={{ fontSize: '110%' }}
+      style={{
+        padding: '4px',
+        fontSize: '110%',
+        boxShadow:
+          'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
+      }}
     >
       <Menu.Item key="/">
         <Link to="/">VIRTUAL CONFERENCE</Link>

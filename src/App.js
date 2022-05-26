@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import AuthPage from 'pages/AuthPage';
 import HomePage from 'pages/HomePage';
 import FileBrowserPage from 'pages/FileBrowserPage';
-import EditorPage from 'pages/EditorPage';
+// import EditorPage from 'pages/EditorPage';
 
 import Navigation from 'components/Navigation';
 import UserProfile from 'components/Profile';
@@ -44,6 +44,9 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <div class="bg"></div>
+      <div class="bg bg2"></div>
+      <div class="bg bg3"></div>
       <Route
         path="/"
         render={() => (

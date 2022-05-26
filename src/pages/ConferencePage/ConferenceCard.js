@@ -8,7 +8,7 @@ const ConferenceCard = ({ name, thumbnailUrl }) => {
         style={{
           height: '360px',
           border: '1px solid #c7c7c7',
-          borderRadius: '24px',
+          borderRadius: '16px',
           boxShadow:
             'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
         }}

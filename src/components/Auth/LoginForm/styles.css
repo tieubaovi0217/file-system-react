@@ -5,6 +5,7 @@
   max-width: 300px;
   margin: 100px auto;
   border-radius: 8px;
+  background-color: #fff;
 }
 
 .login-form__forgot {
