@@ -107,13 +107,19 @@ const UserInfo = ({ username, email }) => {
   }, [isModalVisible]);
 
   return (
-    <Layout>
+    <Layout style={{ height: '240px' }}>
       <Sider width={240}>
         <div className="flex flex-column justify-content-center">
           <Avatar size={80} icon={<UserOutlined />} />
 
           <div className="update-avatar-btn">
-            <Button type="primary" onClick={showModal}>
+            <Button
+              type="primary"
+              onClick={showModal}
+              style={{
+                boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
+              }}
+            >
               Update Virtual Avatar
             </Button>
             <Modal

@@ -74,6 +74,9 @@ const LoginForm = () => {
             htmlType="submit"
             className="login-form__button"
             loading={isLoggingIn}
+            style={{
+              boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
+            }}
           >
             Log In
           </Button>

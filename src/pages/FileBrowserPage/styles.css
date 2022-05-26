@@ -20,7 +20,7 @@
   max-width: 75%;
   min-height: 560px;
   max-height: 560px;
-  /* padding: 8px; */
+  padding: 8px;
 }
 
 .file-browser__actions {

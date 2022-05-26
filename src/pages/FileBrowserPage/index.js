@@ -291,7 +291,10 @@ const FileBrowserPage = () => {
   const isOnDrive = path === 'google:drive';
 
   return (
-    <Layout className="file-browser">
+    <Layout
+      className="file-browser"
+      style={{ boxShadow: 'rgba(0, 0, 0, 0.56) 0px 22px 70px 4px' }}
+    >
       <Layout>
         <Sider width={320}>
           <TreeView

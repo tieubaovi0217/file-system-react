@@ -35,7 +35,7 @@ const Navigation = () => {
       style={{ fontSize: '110%' }}
     >
       <Menu.Item key="/">
-        <Link to="/">Administration Management</Link>
+        <Link to="/">VIRTUAL CONFERENCE</Link>
       </Menu.Item>
 
       {!isAuthenticated && (
@@ -71,7 +71,13 @@ const Navigation = () => {
             </Link>
           </Menu.Item>
           <Menu.Item key="/auth/logout">
-            <Button type="primary" onClick={handleLogout}>
+            <Button
+              type="primary"
+              onClick={handleLogout}
+              style={{
+                boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
+              }}
+            >
               Logout
             </Button>
           </Menu.Item>
