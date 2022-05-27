@@ -23,14 +23,14 @@ const ConferenceCard = ({ name, thumbnailUrl }) => {
           alt="Conference Preview"
         />
         <Divider />
-        <div className="flex justify-content-center conference__actions">
+        <div className="flex justify-content-center">
           <Button
             type="primary"
             href={process.env.REACT_APP_EDITOR_PAGE_URL}
             target={'_blank'}
             style={{
               marginRight: '24px',
-              boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
+              boxShadow: '2px 2px #0072b5',
             }}
             size={'large'}
           >
@@ -41,7 +41,7 @@ const ConferenceCard = ({ name, thumbnailUrl }) => {
             href={process.env.REACT_APP_CONFERENCE_PAGE_URL}
             target={'_blank'}
             style={{
-              boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
+              boxShadow: '2px 2px #0072b5',
             }}
             size={'large'}
           >

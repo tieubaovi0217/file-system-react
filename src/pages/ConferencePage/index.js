@@ -37,6 +37,7 @@ const ConferencePage = () => {
           size={'large'}
           style={{
             width: 280,
+            boxShadow: '3px 3px #363945',
           }}
           onChange={handleChange}
         >
