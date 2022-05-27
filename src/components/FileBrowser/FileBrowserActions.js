@@ -33,7 +33,7 @@ const FileBrowserActions = ({ onRefresh, path, onCreateFolder, isOnDrive }) => {
   return (
     <div className="file-browser__actions">
       <Button type="text" icon={<GoogleOutlined />} href={oauth2URL}>
-        Mirror from your Google
+        Mirror from Google account
       </Button>
       <UploadFolder
         isOnDrive={isOnDrive}

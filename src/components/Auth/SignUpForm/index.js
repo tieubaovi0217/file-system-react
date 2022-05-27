@@ -130,6 +130,9 @@ const SignUpForm = () => {
             type="primary"
             htmlType="submit"
             loading={isSigningUp}
+            style={{
+              boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
+            }}
           >
             Register
           </Button>

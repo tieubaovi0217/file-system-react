@@ -16,6 +16,8 @@
     "mime-types": "^2.1.35",
     "moment": "^2.29.1",
     "pretty-bytes": "^6.0.0",
+    "rc-banner-anim": "^2.4.5",
+    "rc-texty": "^0.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.3.1",

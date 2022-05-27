@@ -33,7 +33,6 @@
 }
 
 .conference__actions {
-  margin: 4px;
 }
 
 .conference__heading {
@@ -62,3 +61,9 @@
 }
 
 /* ... */
+
+.conferences__actions {
+  display: flex;
+  padding-left: 224px;
+  margin-bottom: 32px;
+}

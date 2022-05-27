@@ -76,13 +76,7 @@ const Navigation = () => {
             </Link>
           </Menu.Item>
           <Menu.Item key="/auth/logout">
-            <Button
-              type="primary"
-              onClick={handleLogout}
-              style={{
-                boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
-              }}
-            >
+            <Button type="primary" onClick={handleLogout}>
               Logout
             </Button>
           </Menu.Item>

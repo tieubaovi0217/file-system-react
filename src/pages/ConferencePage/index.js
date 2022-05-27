@@ -1,7 +1,16 @@
 import './styles.css';
 
-import { Col, Row, Button } from 'antd';
+import { Col, Row, Select, Divider } from 'antd';
+
+import Texty from 'rc-texty';
+import 'rc-texty/assets/index.css';
+
 import ConferenceCard from './ConferenceCard';
+import CreateConferenceButton from './CreateConferenceButton';
+
+import TimeLine from './TimeLine';
+
+const { Option } = Select;
 
 const thumbnailURLs = [
   'https://mootup.com/wp-content/uploads/2020/07/Zoom-webinar-3d-8.8-screens.png',
@@ -11,49 +20,51 @@ const thumbnailURLs = [
 ];
 
 const ConferencePage = () => {
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
+
   return (
     <div className="conferences">
-      <h1 className="conference__heading">
-        <span>CONFERENCES</span>
+      <h1 className="heading">
+        <span>
+          <Texty>CONFERENCES</Texty>
+        </span>
       </h1>
       <div className="conferences__actions">
-        <Button>Create new conference</Button>
-        <Button>Create new conference</Button>
-        <Button>Create new conference</Button>
+        <Select
+          defaultValue="OPTIONS"
+          size={'large'}
+          style={{
+            width: 280,
+          }}
+          onChange={handleChange}
+        >
+          <Option value="jack">Show active conferences</Option>
+          <Option value="lucy">Show your own conferences</Option>
+        </Select>
+        <CreateConferenceButton />
       </div>
-      {/* <Button
-        type="primary"
-        size={'large'}
-        href={process.env.REACT_APP_CONFERENCE_PAGE_URL}
-        target={'_blank'}
-      >
-        Go to the conference
-      </Button> */}
+      <Divider dashed></Divider>
       <div className="conferences__list">
-        <Row gutter={[24, 24]} style={{ width: '75%' }}>
-          <Col span={8}>
+        <Row gutter={[24, 48]} style={{ width: '75%' }}>
+          <Col span={12}>
             <ConferenceCard
               name="Testing Conference 1"
               thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
             />
           </Col>
-          <Col span={8}>
-            <ConferenceCard
-              name="Testing Conference 2"
-              thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
-            />
+          <Col span={12}>
+            <TimeLine />
           </Col>
-          <Col span={8}>
-            <ConferenceCard
-              name="Testing Conference 3"
-              thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
-            />
-          </Col>
-          <Col span={8}>
+          <Col span={12}>
             <ConferenceCard
               name="Testing Conference 4"
               thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
             />
+          </Col>
+          <Col span={12}>
+            <TimeLine />
           </Col>
         </Row>
       </div>

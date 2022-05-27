@@ -87,3 +87,28 @@ h1 {
     transform: translateX(25%);
   }
 }
+
+.heading {
+  margin-bottom: 48px;
+}
+
+.heading {
+  /* margin: 20px; */
+  font-family: 'Paytone One';
+  color: #f1ebe5;
+  color: #202020;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+
+.heading span {
+  font-family: 'Paytone One';
+
+  display: block;
+  margin: 11px 0 17px 0;
+  font-size: 80px;
+  line-height: 80px;
+  color: #e8e5e3;
+  text-shadow: 0 13.36px 8.896px #c4b59d, 0 -2px 1px #fff;
+  letter-spacing: -4px;
+}
