@@ -49,7 +49,8 @@ const CreateConferenceButton = () => {
         style={{
           marginLeft: '16px',
           borderRadius: '24px',
-          boxShadow: '3px 3px #363945',
+          boxShadow:
+            'rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px',
         }}
       >
         Create your own conference
