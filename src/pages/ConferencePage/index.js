@@ -1,74 +1,42 @@
 import './styles.css';
 
-import { Col, Row, Select, Divider } from 'antd';
+import { useState, useEffect } from 'react';
+import { Divider } from 'antd';
 
-import Texty from 'rc-texty';
-import 'rc-texty/assets/index.css';
-
-import ConferenceCard from './ConferenceCard';
-import CreateConferenceButton from './CreateConferenceButton';
-
-import TimeLine from './TimeLine';
-
-const { Option } = Select;
-
-const thumbnailURLs = [
-  'https://mootup.com/wp-content/uploads/2020/07/Zoom-webinar-3d-8.8-screens.png',
-  'https://i.ytimg.com/vi/COEgicWT9XM/maxresdefault.jpg',
-  'https://venturebeat.com/wp-content/uploads/2020/07/vFairs.jpg?resize=1024%2C590&strip=all',
-  'https://eventsolutions.com/wp-content/uploads/2020/07/Screen-Shot-2020-07-16-at-3.40.48-PM1-845x321.png',
-];
+import ConferenceList from './ConferenceList';
+import axios from 'axios';
+import { buildPath } from 'common/helpers';
+import ConferenceHeading from './ConferenceHeading';
+import ConferenceActions from './ConferenceActions';
 
 const ConferencePage = () => {
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+  const [conferences, setConferences] = useState([]);
+
+  useEffect(() => {
+    const getConferences = async () => {
+      try {
+        const resp = await axios.get(buildPath('/user/conferences'), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        });
+        console.log(resp);
+        setConferences(resp.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getConferences();
+  }, []);
 
   return (
     <div className="conferences">
-      <h1 className="heading">
-        <span>
-          <Texty>CONFERENCES</Texty>
-        </span>
-      </h1>
-      <div className="conferences__actions">
-        <Select
-          defaultValue="OPTIONS"
-          size={'large'}
-          style={{
-            width: 280,
-            boxShadow: '3px 3px #363945',
-          }}
-          onChange={handleChange}
-        >
-          <Option value="jack">Show active conferences</Option>
-          <Option value="lucy">Show your own conferences</Option>
-        </Select>
-        <CreateConferenceButton />
-      </div>
+      <ConferenceHeading />
+      <ConferenceActions />
       <Divider dashed></Divider>
-      <div className="conferences__list">
-        <Row gutter={[24, 48]} style={{ width: '75%' }}>
-          <Col span={12}>
-            <ConferenceCard
-              name="Testing Conference 1"
-              thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
-            />
-          </Col>
-          <Col span={12}>
-            <TimeLine />
-          </Col>
-          <Col span={12}>
-            <ConferenceCard
-              name="Testing Conference 4"
-              thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
-            />
-          </Col>
-          <Col span={12}>
-            <TimeLine />
-          </Col>
-        </Row>
-      </div>
+      <ConferenceList conferences={conferences} />
     </div>
   );
 };
