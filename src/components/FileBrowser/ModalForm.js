@@ -59,6 +59,8 @@ const ModalForm = ({
       destroyOnClose={true}
     >
       <Input
+        allowClear
+        autoFocus
         placeholder={inputPlaceholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}

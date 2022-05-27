@@ -54,6 +54,8 @@ const LoginForm = () => {
         ]}
       >
         <Input
+          allowClear
+          autoFocus
           prefix={<UserOutlined className="site-form-item-icon" />}
           placeholder="Username"
         />
@@ -68,6 +70,7 @@ const LoginForm = () => {
         ]}
       >
         <Input
+          allowClear
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           placeholder="Password"

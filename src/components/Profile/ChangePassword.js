@@ -58,7 +58,7 @@ const ChangePassword = () => {
             },
           ]}
         >
-          <Input.Password />
+          <Input.Password autoFocus allowClear />
         </Form.Item>
         <Form.Item
           name="password"
@@ -71,7 +71,7 @@ const ChangePassword = () => {
           ]}
           hasFeedback
         >
-          <Input.Password />
+          <Input.Password allowClear />
         </Form.Item>
         <Form.Item
           name="confirmPassword"
@@ -96,7 +96,7 @@ const ChangePassword = () => {
             }),
           ]}
         >
-          <Input.Password />
+          <Input.Password allowClear />
         </Form.Item>
         <Divider />
         <div className="flex justify-content-center">

@@ -65,7 +65,7 @@ const SignUpForm = () => {
             },
           ]}
         >
-          <Input />
+          <Input autoFocus allowClear />
         </Form.Item>
         <Form.Item
           name="email"
@@ -81,7 +81,7 @@ const SignUpForm = () => {
             },
           ]}
         >
-          <Input />
+          <Input allowClear />
         </Form.Item>
 
         <Form.Item
@@ -95,7 +95,7 @@ const SignUpForm = () => {
           ]}
           hasFeedback
         >
-          <Input.Password />
+          <Input.Password allowClear />
         </Form.Item>
 
         <Form.Item
@@ -121,7 +121,7 @@ const SignUpForm = () => {
             }),
           ]}
         >
-          <Input.Password />
+          <Input.Password allowClear />
         </Form.Item>
         <Divider />
         <div className="flex justify-content-center">
