@@ -1,32 +1,42 @@
 import { useState } from 'react';
 
-import { Button, Divider, Modal, Form, Input, Space, DatePicker } from 'antd';
+import axios from 'axios';
+import * as moment from 'moment';
+
+import {
+  Button,
+  Divider,
+  Modal,
+  Form,
+  Input,
+  message,
+  Space,
+  DatePicker,
+} from 'antd';
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 
-import * as moment from 'moment';
+import { buildPath } from 'common/helpers';
 
 const { RangePicker } = DatePicker;
 
 const CreateConferenceButton = () => {
   const [visible, setVisible] = useState(false);
 
-  const onChange = (dates, dateStrings) => {
-    if (dates) {
-      console.log('From: ', dates[0], ', to: ', dates[1]);
-      console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-    } else {
-      console.log('Clear');
+  const onFinish = async (values) => {
+    try {
+      console.log(values);
+      const resp = await axios.post(buildPath('/conference'), values, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+        },
+      });
+      console.log(resp);
+      message.success('Create conference successfully!');
+    } catch (error) {
+      console.log(error.response?.data);
+      message.error(error.response?.data?.error || 'Server Error');
     }
-  };
-
-  const onFinish = (values) => {
-    console.log(values);
-    console.log(values.name);
-    const start = new Date(values.date[0]._d);
-    const end = new Date(values.date[1]._d);
-    console.log(start.getTime());
-    console.log(end.getTime());
-    console.log(values.users);
   };
 
   return (
@@ -94,11 +104,10 @@ const CreateConferenceButton = () => {
               }}
               showTime
               format="YYYY/MM/DD HH:mm:ss"
-              onChange={onChange}
             />
           </Form.Item>
           <div style={{ marginLeft: '124px' }}>
-            <Form.List name="users">
+            <Form.List name="editors">
               {(fields, { add, remove }) => (
                 <>
                   {fields.map(({ key, name, ...restField }) => (
