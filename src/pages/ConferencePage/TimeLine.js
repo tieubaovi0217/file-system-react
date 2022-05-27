@@ -6,7 +6,7 @@ const TimeLine = () => {
       <Divider
         type="horizontal"
         dashed
-        style={{ letterSpacing: '4px', color: '#f6f6f6' }}
+        style={{ letterSpacing: '4px', color: '#f6f6f6', fontSize: '24px' }}
       >
         Timeline
       </Divider>

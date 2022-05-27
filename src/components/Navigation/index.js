@@ -33,6 +33,7 @@ const Navigation = () => {
       selectedKeys={[current]}
       mode="horizontal"
       style={{
+        letterSpacing: '1.5px',
         padding: '4px',
         fontSize: '110%',
         boxShadow:

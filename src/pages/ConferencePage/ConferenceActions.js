@@ -14,16 +14,23 @@ const ConferenceActions = () => {
 
   const menu = (
     <Menu>
-      <Menu.Item key="0">abc</Menu.Item>
-      <Menu.Item key="1">abc</Menu.Item>
-      <Menu.Item key="2">abc</Menu.Item>
+      <Menu.Item key="0">Show Your Conferences</Menu.Item>
     </Menu>
   );
 
   return (
     <div className="conferences__actions">
       <Dropdown overlay={menu}>
-        <Button size={'large'}>Options</Button>
+        <Button
+          size={'large'}
+          style={{
+            padding: '0 100px',
+            boxShadow:
+              'rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px',
+          }}
+        >
+          Options
+        </Button>
       </Dropdown>
       {/* <Select
         defaultValue={value}
