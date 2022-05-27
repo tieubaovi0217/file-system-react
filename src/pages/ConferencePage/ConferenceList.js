@@ -11,12 +11,13 @@ const thumbnailURLs = [
 ];
 
 const ConferenceList = ({ conferences }) => {
-  const cards = conferences.map(({ name }) => {
+  const cards = conferences.map(({ name, _id }) => {
     return (
       <>
         <Col span={12}>
           <ConferenceCard
             name={name}
+            id={_id}
             thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
           />
         </Col>

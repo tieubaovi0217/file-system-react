@@ -283,7 +283,7 @@ const FileBrowserPage = () => {
     // url += `&token=${localStorage.getItem('token') || ''}`;
 
     console.log('url:', url);
-    message.info('Copied to clipboard');
+    message.info('Copied Content URL to clipboard');
     navigator.clipboard.writeText(url);
     return url;
   };

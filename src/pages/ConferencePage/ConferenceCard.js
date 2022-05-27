@@ -1,8 +1,29 @@
-import { Card, Image, Button, Divider } from 'antd';
+import { useState } from 'react';
+import { Card, Image, Button, Divider, Modal, message } from 'antd';
 
-const ConferenceCard = ({ name, thumbnailUrl }) => {
+const ConferenceCard = ({ id, name, thumbnailUrl }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleGetConferenceID = () => {
+    console.log(id);
+    message.info('Copied Conference ID to clipboard');
+    navigator.clipboard.writeText(id);
+  };
+
   return (
-    <div className="">
+    <div>
       <Card
         title={name}
         style={{
@@ -38,8 +59,7 @@ const ConferenceCard = ({ name, thumbnailUrl }) => {
           </Button>
           <Button
             type="primary"
-            href={process.env.REACT_APP_CONFERENCE_PAGE_URL}
-            target={'_blank'}
+            onClick={showModal}
             style={{
               boxShadow: '2px 2px #0072b5',
             }}
@@ -49,6 +69,30 @@ const ConferenceCard = ({ name, thumbnailUrl }) => {
           </Button>
         </div>
       </Card>
+      <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <Divider>Instruction</Divider>
+        <p>
+          Click the following buttons to get Conference ID and paste it into
+          your login conference page.
+        </p>
+        <div className="flex justify-content-center">
+          <Button
+            style={{ marginRight: '16px', boxShadow: '1px 1px #0072b5' }}
+            onClick={handleGetConferenceID}
+          >
+            Get Conference ID
+          </Button>
+          <Button
+            href={process.env.REACT_APP_EDITOR_PAGE_URL}
+            target={'_blank'}
+            style={{
+              boxShadow: '1px 1px #0072b5',
+            }}
+          >
+            Join conference
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
