@@ -1,11 +1,11 @@
-FROM node:16-alpine AS builder
+FROM node:14-alpine AS builder
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . ./
 RUN npm run build
 
-FROM nginx:1.15
+FROM nginx
 COPY proxy.conf /etc/nginx/
 COPY nginx.conf /etc/nginx/nginx.conf
 WORKDIR /usr/share/nginx/html
