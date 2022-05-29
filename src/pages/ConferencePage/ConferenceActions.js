@@ -1,10 +1,18 @@
 import { Dropdown, Menu, Button } from 'antd';
-import CreateConferenceButton from './CreateConferenceButton';
+import CreateConference from './CreateConference';
 
-const ConferenceActions = () => {
+const ConferenceActions = ({
+  onShowOwnConferences,
+  onShowOnlineConferences,
+}) => {
   const menu = (
     <Menu>
-      <Menu.Item key="0">Show Your Conferences</Menu.Item>
+      <Menu.Item key="0" onClick={onShowOwnConferences}>
+        Show Your Conferences
+      </Menu.Item>
+      <Menu.Item key="1" onClick={onShowOnlineConferences}>
+        Show Online Conferences
+      </Menu.Item>
     </Menu>
   );
 
@@ -20,7 +28,7 @@ const ConferenceActions = () => {
           Options
         </Button>
       </Dropdown>
-      <CreateConferenceButton />
+      <CreateConference />
     </div>
   );
 };

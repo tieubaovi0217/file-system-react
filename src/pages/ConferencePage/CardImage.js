@@ -1,6 +1,8 @@
 import * as moment from 'moment';
 import { Image, DatePicker } from 'antd';
 
+import { DATE_FORMAT } from 'common/constants';
+
 const { RangePicker } = DatePicker;
 
 const CardImage = ({ thumbnailUrl, startTime, endTime }) => {
@@ -21,7 +23,7 @@ const CardImage = ({ thumbnailUrl, startTime, endTime }) => {
         }}
         defaultValue={[moment(startTime), moment(endTime)]}
         showTime
-        format="YYYY/MM/DD HH:mm:ss"
+        format={DATE_FORMAT}
         style={{
           marginTop: '16px',
         }}

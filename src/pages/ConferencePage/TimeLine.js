@@ -14,6 +14,7 @@ const TimeLine = () => {
         <Timeline
           style={{
             marginTop: '24px',
+            marginLeft: '24px',
             textShadow: '2px 2px #ccc',
           }}
         >

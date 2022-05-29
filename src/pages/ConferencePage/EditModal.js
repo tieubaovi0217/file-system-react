@@ -1,12 +1,23 @@
+import * as moment from 'moment';
 import { Modal, Form, Input, Space, Divider, DatePicker, Button } from 'antd';
 
-import * as moment from 'moment';
-
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { DATE_FORMAT } from 'common/constants';
 
 const { RangePicker } = DatePicker;
 
-const EditModal = ({ visible, setVisible, onFinish }) => {
+const EditModal = ({
+  visible,
+  setVisible,
+  name,
+  startTime,
+  endTime,
+  editors = [],
+}) => {
+  const handleUpdateConference = (values) => {
+    console.log('here', values);
+  };
+
   return (
     <Modal
       title={
@@ -28,7 +39,12 @@ const EditModal = ({ visible, setVisible, onFinish }) => {
           span: 14,
         }}
         layout="horizontal"
-        onFinish={onFinish}
+        onFinish={handleUpdateConference}
+        initialValues={{
+          name: name,
+          date: [moment(startTime), moment(endTime)],
+          editors: editors.map((editor) => ({ username: editor.username })),
+        }}
       >
         <Form.Item
           label="Name"
@@ -57,7 +73,7 @@ const EditModal = ({ visible, setVisible, onFinish }) => {
               ],
             }}
             showTime
-            format="YYYY/MM/DD HH:mm:ss"
+            format={DATE_FORMAT}
           />
         </Form.Item>
         <div style={{ marginLeft: '124px' }}>

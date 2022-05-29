@@ -16,10 +16,12 @@ import {
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 
 import { buildPath } from 'common/helpers';
+import { DATE_FORMAT } from 'common/constants';
 
 const { RangePicker } = DatePicker;
+const { TextArea } = Input;
 
-const CreateConferenceButton = () => {
+const CreateConference = () => {
   const [visible, setVisible] = useState(false);
 
   const onFinish = async (values) => {
@@ -70,7 +72,7 @@ const CreateConferenceButton = () => {
             span: 4,
           }}
           wrapperCol={{
-            span: 14,
+            span: 20,
           }}
           layout="horizontal"
           onFinish={onFinish}
@@ -102,10 +104,59 @@ const CreateConferenceButton = () => {
                 ],
               }}
               showTime
-              format="YYYY/MM/DD HH:mm:ss"
+              format={DATE_FORMAT}
             />
           </Form.Item>
-          <div style={{ marginLeft: '124px' }}>
+
+          <div style={{ marginLeft: '80px' }}>
+            <Form.List name="timeline">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{
+                        display: 'flex',
+                      }}
+                      align="start"
+                    >
+                      <Form.Item label="Time" name={[name, 'time']}>
+                        <DatePicker showTime />
+                      </Form.Item>
+                      <Form.Item
+                        name={[name, 'content']}
+                        rules={[
+                          {
+                            required: true,
+                            message: 'Content required',
+                          },
+                        ]}
+                      >
+                        <TextArea
+                          showCount
+                          allowClear
+                          maxLength={100}
+                          placeholder="Content...."
+                        />
+                      </Form.Item>
+
+                      <MinusCircleOutlined onClick={() => remove(name)} />
+                    </Space>
+                  ))}
+                  <Form.Item>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      block
+                      icon={<PlusOutlined />}
+                    >
+                      Add Timeline
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+            <Divider />
             <Form.List name="editors">
               {(fields, { add, remove }) => (
                 <>
@@ -158,4 +209,4 @@ const CreateConferenceButton = () => {
   );
 };
 
-export default CreateConferenceButton;
+export default CreateConference;

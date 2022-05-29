@@ -3,7 +3,14 @@ import { Card, Divider, message } from 'antd';
 import CardImage from './CardImage';
 import CardActions from './CardActions';
 
-const ConferenceCard = ({ id, name, thumbnailUrl, startTime, endTime }) => {
+const ConferenceCard = ({
+  id,
+  name,
+  thumbnailUrl,
+  startTime,
+  endTime,
+  editors,
+}) => {
   const handleGetConferenceID = () => {
     console.log(id);
     message.info('Copied Conference ID to clipboard');
@@ -30,7 +37,10 @@ const ConferenceCard = ({ id, name, thumbnailUrl, startTime, endTime }) => {
         />
 
         <Divider />
-        <CardActions onGetConferenceID={handleGetConferenceID} />
+        <CardActions
+          onGetConferenceID={handleGetConferenceID}
+          conference={{ id, name, thumbnailUrl, startTime, endTime, editors }}
+        />
       </Card>
     </div>
   );

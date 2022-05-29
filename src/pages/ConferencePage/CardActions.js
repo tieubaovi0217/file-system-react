@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Modal, Divider } from 'antd';
 import EditModal from './EditModal';
 
-const CardActions = ({ onGetConferenceID }) => {
+const CardActions = ({ onGetConferenceID, conference }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
@@ -26,8 +26,6 @@ const CardActions = ({ onGetConferenceID }) => {
     <div className="flex justify-content-center">
       <Button
         type="primary"
-        // href={process.env.REACT_APP_EDITOR_PAGE_URL}
-        // target={'_blank'}
         style={{
           marginRight: '16px',
         }}
@@ -61,6 +59,7 @@ const CardActions = ({ onGetConferenceID }) => {
       <EditModal
         visible={isEditModalVisible}
         setVisible={setIsEditModalVisible}
+        {...conference}
       />
     </div>
   );
