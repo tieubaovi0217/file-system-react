@@ -31,7 +31,7 @@ const UploadFile = ({ path, onSuccess, isOnDrive }) => {
           return message.error(`File too large`); // file too large
         }
         message.error(
-          `${info.file.name} file upload failed: ${info.file.response.message}`,
+          `${info.file.name} file upload failed: ${info.file.response.error}`,
         );
       }
     },

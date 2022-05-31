@@ -10,6 +10,7 @@ import {
   FileWordOutlined,
   FileExcelOutlined,
   FilePptOutlined,
+  VideoCameraOutlined,
 } from '@ant-design/icons';
 
 import FileInfoModal from './FileInfoModal';
@@ -91,6 +92,7 @@ const ResourceItem = ({
     WORD: <FileWordOutlined />,
     EXCEL: <FileExcelOutlined />,
     PPT: <FilePptOutlined />,
+    VIDEO: <VideoCameraOutlined />,
   };
 
   let icon = icons.UNKNOWN;
@@ -121,6 +123,8 @@ const ResourceItem = ({
         'application/vnd.openxmlformats-officedocument.presentationml.presentation'
     ) {
       icon = icons.PPT;
+    } else if (mimeType.startsWith('video')) {
+      icon = icons.VIDEO;
     }
   }
 
