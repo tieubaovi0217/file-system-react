@@ -32,7 +32,7 @@ const ConferenceList = ({ conferences }) => {
 
   return (
     <div className="conferences__list">
-      <Row gutter={[24]} style={{ width: '75%' }}>
+      <Row gutter={[24, 24]} style={{ width: '75%' }}>
         {cards}
       </Row>
     </div>
