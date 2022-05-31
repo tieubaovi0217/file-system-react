@@ -17,6 +17,7 @@ import ConferencePage from 'pages/ConferencePage';
 import axios from 'axios';
 
 import { buildPath } from 'common/helpers';
+import { logoutUserThunk } from 'actions/auth';
 
 message.config({ duration: 1 });
 
@@ -35,7 +36,7 @@ const App = () => {
         dispatch(authActions.setCredentials(resp.data));
       } catch (err) {
         console.log(err);
-        dispatch(authActions.removeCredentials());
+        dispatch(logoutUserThunk());
       }
     };
 
