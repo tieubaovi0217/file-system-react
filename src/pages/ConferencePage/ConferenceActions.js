@@ -4,7 +4,7 @@ import CreateConference from './CreateConference';
 const ConferenceActions = ({
   onShowOwnConferences,
   onShowOnlineConferences,
-  onCreateSuccess,
+  onRefresh,
 }) => {
   const menu = (
     <Menu>
@@ -29,7 +29,7 @@ const ConferenceActions = ({
           Options
         </Button>
       </Dropdown>
-      <CreateConference onCreateSuccess={onCreateSuccess} />
+      <CreateConference onRefresh={onRefresh} />
     </div>
   );
 };

@@ -4,7 +4,9 @@ import { Button, Modal, Divider, message } from 'antd';
 import EditModal from './EditModal';
 import { buildPath } from 'common/helpers';
 
-const CardActions = ({ onGetConferenceID, conference }) => {
+import { DeleteOutlined } from '@ant-design/icons';
+
+const CardActions = ({ onGetConferenceID, conference, onRefresh }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
@@ -22,6 +24,26 @@ const CardActions = ({ onGetConferenceID, conference }) => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const resp = await axios.delete(
+        buildPath(`/conference/${conference.id}`),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        },
+      );
+      console.log(resp);
+      message.success('Delete conference successfully!');
+      onRefresh();
+    } catch (error) {
+      console.log(error.response?.data);
+      message.error(error.response?.data?.error || 'Server Error');
+    }
   };
 
   const handleUpdateConference = async (values) => {
@@ -65,8 +87,23 @@ const CardActions = ({ onGetConferenceID, conference }) => {
         Edit Conference
       </Button>
 
-      <Button type="primary" onClick={showModal} size={'large'}>
+      <Button
+        type="primary"
+        onClick={showModal}
+        size={'large'}
+        style={{
+          marginRight: '16px',
+        }}
+      >
         Click to join!
+      </Button>
+      <Button
+        type="danger"
+        icon={<DeleteOutlined />}
+        onClick={handleDelete}
+        size={'large'}
+      >
+        Delete
       </Button>
       <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <Divider>Instruction</Divider>

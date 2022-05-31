@@ -15,7 +15,7 @@ const TimeLine = ({ timeline }) => {
   });
 
   return (
-    <div style={{ width: '50%' }}>
+    <div style={{ width: '40%' }}>
       <Divider
         type="horizontal"
         dashed

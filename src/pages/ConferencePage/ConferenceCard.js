@@ -11,6 +11,7 @@ const ConferenceCard = ({
   endTime,
   editors,
   timeline,
+  onRefresh,
 }) => {
   const handleGetConferenceID = () => {
     console.log(id);
@@ -22,7 +23,7 @@ const ConferenceCard = ({
     <Card
       title={name}
       style={{
-        width: '50%',
+        width: '60%',
         height: '420px',
         border: '1px solid #c7c7c7',
         borderRadius: '16px',
@@ -40,6 +41,7 @@ const ConferenceCard = ({
       <Divider />
       <CardActions
         onGetConferenceID={handleGetConferenceID}
+        onRefresh={onRefresh}
         conference={{
           id,
           name,

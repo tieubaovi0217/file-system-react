@@ -9,7 +9,7 @@ import { buildPath } from 'common/helpers';
 
 import EditModal from './EditModal';
 
-const CreateConference = ({ onCreateSuccess }) => {
+const CreateConference = ({ onRefresh }) => {
   const [visible, setVisible] = useState(false);
 
   const onFinish = async (values) => {
@@ -35,7 +35,7 @@ const CreateConference = ({ onCreateSuccess }) => {
       console.log(resp);
       message.success('Create conference successfully!');
       setVisible(false);
-      onCreateSuccess();
+      onRefresh();
     } catch (error) {
       console.log(error.response?.data);
       message.error(error.response?.data?.error || 'Server Error');

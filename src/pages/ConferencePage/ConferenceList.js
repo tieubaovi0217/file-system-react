@@ -10,12 +10,13 @@ const thumbnailURLs = [
   'https://eventsolutions.com/wp-content/uploads/2020/07/Screen-Shot-2020-07-16-at-3.40.48-PM1-845x321.png',
 ];
 
-const ConferenceList = ({ conferences }) => {
+const ConferenceList = ({ conferences, onRefresh }) => {
   const cards = conferences.map(
     ({ name, _id, startTime, endTime, editors, timeline }) => {
       return (
         <Col key={_id} span={24} style={{ display: 'flex' }}>
           <ConferenceCard
+            onRefresh={onRefresh}
             key={_id}
             name={name}
             id={_id}
