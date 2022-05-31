@@ -22,6 +22,7 @@ const ConferenceList = ({ conferences }) => {
             startTime={startTime}
             endTime={endTime}
             editors={editors}
+            timeline={timeline}
             thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
           />
           <TimeLine timeline={timeline} />

@@ -10,6 +10,7 @@ const ConferenceCard = ({
   startTime,
   endTime,
   editors,
+  timeline,
 }) => {
   const handleGetConferenceID = () => {
     console.log(id);
@@ -39,7 +40,15 @@ const ConferenceCard = ({
       <Divider />
       <CardActions
         onGetConferenceID={handleGetConferenceID}
-        conference={{ id, name, thumbnailUrl, startTime, endTime, editors }}
+        conference={{
+          id,
+          name,
+          thumbnailUrl,
+          startTime,
+          endTime,
+          editors,
+          timeline,
+        }}
       />
     </Card>
   );

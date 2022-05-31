@@ -60,6 +60,7 @@ const ConferencePage = () => {
       <ConferenceActions
         onShowOwnConferences={handleGetOwnConferences}
         onShowOnlineConferences={handleGetOnlineConferences}
+        onCreateSuccess={getConferences}
       />
       <Divider dashed></Divider>
       <ConferenceList conferences={conferences} />

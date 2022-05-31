@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { Button, Modal, Divider } from 'antd';
+import axios from 'axios';
+import { Button, Modal, Divider, message } from 'antd';
 import EditModal from './EditModal';
+import { buildPath } from 'common/helpers';
 
 const CardActions = ({ onGetConferenceID, conference }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -20,6 +22,34 @@ const CardActions = ({ onGetConferenceID, conference }) => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+
+  const handleUpdateConference = async (values) => {
+    console.log(values);
+    const startTime = values.date[0];
+    const endTime = values.date[1];
+    try {
+      const resp = await axios.put(
+        buildPath(`/conference/${values.id}`),
+        {
+          ...values,
+          startTime,
+          endTime,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        },
+      );
+      console.log(resp);
+      message.success('Update conference successfully!');
+      setIsEditModalVisible(false);
+    } catch (error) {
+      console.log(error.response?.data);
+      message.error(error.response?.data?.error || 'Server Error');
+    }
   };
 
   return (
@@ -59,6 +89,9 @@ const CardActions = ({ onGetConferenceID, conference }) => {
       <EditModal
         visible={isEditModalVisible}
         setVisible={setIsEditModalVisible}
+        title="Update conference"
+        onFinish={handleUpdateConference}
+        update
         {...conference}
       />
     </div>

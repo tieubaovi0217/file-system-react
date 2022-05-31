@@ -6,23 +6,28 @@ import { DATE_FORMAT } from 'common/constants';
 
 const { RangePicker } = DatePicker;
 
+const { TextArea } = Input;
+
 const EditModal = ({
+  id,
   visible,
   setVisible,
   name,
   startTime,
   endTime,
+  title,
+  onFinish,
+  update = false,
   editors = [],
+  timeline = [],
 }) => {
-  const handleUpdateConference = (values) => {
-    console.log('here', values);
-  };
+  console.log(timeline);
 
   return (
     <Modal
       title={
         <Divider>
-          <h1>Update conference</h1>
+          <h1>{title}</h1>
         </Divider>
       }
       centered
@@ -33,19 +38,31 @@ const EditModal = ({
     >
       <Form
         labelCol={{
-          span: 4,
+          span: 2,
         }}
         wrapperCol={{
-          span: 14,
+          span: 22,
         }}
         layout="horizontal"
-        onFinish={handleUpdateConference}
+        onFinish={onFinish}
         initialValues={{
+          id: id,
           name: name,
           date: [moment(startTime), moment(endTime)],
           editors: editors.map((editor) => ({ username: editor.username })),
+          timeline: timeline.map((t) => {
+            return {
+              content: t.content,
+              time: moment(t.time),
+            };
+          }),
         }}
       >
+        {update && (
+          <Form.Item name="id" label="id">
+            <Input disabled />
+          </Form.Item>
+        )}
         <Form.Item
           label="Name"
           name="name"
@@ -76,7 +93,62 @@ const EditModal = ({
             format={DATE_FORMAT}
           />
         </Form.Item>
-        <div style={{ marginLeft: '124px' }}>
+        <div style={{ marginLeft: '64px' }}>
+          <Form.List name="timeline">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Space
+                    key={key}
+                    style={{
+                      display: 'flex',
+                    }}
+                    align="start"
+                  >
+                    <Form.Item
+                      name={[name, 'time']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Date required',
+                        },
+                      ]}
+                    >
+                      <DatePicker showTime format={DATE_FORMAT} />
+                    </Form.Item>
+                    <Form.Item
+                      name={[name, 'content']}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Content required',
+                        },
+                      ]}
+                    >
+                      <TextArea
+                        showCount
+                        allowClear
+                        maxLength={100}
+                        placeholder="Content...."
+                      />
+                    </Form.Item>
+
+                    <MinusCircleOutlined onClick={() => remove(name)} />
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                  >
+                    Add Timeline
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
           <Form.List name="editors">
             {(fields, { add, remove }) => (
               <>
