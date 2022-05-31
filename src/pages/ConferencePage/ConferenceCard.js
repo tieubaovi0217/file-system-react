@@ -18,31 +18,30 @@ const ConferenceCard = ({
   };
 
   return (
-    <div>
-      <Card
-        title={name}
-        style={{
-          height: '420px',
-          border: '1px solid #c7c7c7',
-          borderRadius: '16px',
-          opacity: '0.8',
-          boxShadow:
-            'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
-        }}
-      >
-        <CardImage
-          thumbnailUrl={thumbnailUrl}
-          startTime={startTime}
-          endTime={endTime}
-        />
+    <Card
+      title={name}
+      style={{
+        width: '50%',
+        height: '420px',
+        border: '1px solid #c7c7c7',
+        borderRadius: '16px',
+        opacity: '0.8',
+        boxShadow:
+          'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
+      }}
+    >
+      <CardImage
+        thumbnailUrl={thumbnailUrl}
+        startTime={startTime}
+        endTime={endTime}
+      />
 
-        <Divider />
-        <CardActions
-          onGetConferenceID={handleGetConferenceID}
-          conference={{ id, name, thumbnailUrl, startTime, endTime, editors }}
-        />
-      </Card>
-    </div>
+      <Divider />
+      <CardActions
+        onGetConferenceID={handleGetConferenceID}
+        conference={{ id, name, thumbnailUrl, startTime, endTime, editors }}
+      />
+    </Card>
   );
 };
 

@@ -12,30 +12,27 @@ const thumbnailURLs = [
 
 const ConferenceList = ({ conferences }) => {
   const cards = conferences.map(
-    ({ name, _id, startTime, endTime, editors }) => {
+    ({ name, _id, startTime, endTime, editors, timeline }) => {
       return (
-        <>
-          <Col span={12}>
-            <ConferenceCard
-              name={name}
-              id={_id}
-              startTime={startTime}
-              endTime={endTime}
-              editors={editors}
-              thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
-            />
-          </Col>
-          <Col span={12}>
-            <TimeLine />
-          </Col>
-        </>
+        <Col key={_id} span={24} style={{ display: 'flex' }}>
+          <ConferenceCard
+            key={_id}
+            name={name}
+            id={_id}
+            startTime={startTime}
+            endTime={endTime}
+            editors={editors}
+            thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
+          />
+          <TimeLine timeline={timeline} />
+        </Col>
       );
     },
   );
 
   return (
     <div className="conferences__list">
-      <Row gutter={[24, 48]} style={{ width: '75%' }}>
+      <Row gutter={[24]} style={{ width: '75%' }}>
         {cards}
       </Row>
     </div>

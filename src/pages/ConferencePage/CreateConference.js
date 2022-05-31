@@ -69,10 +69,10 @@ const CreateConference = () => {
       >
         <Form
           labelCol={{
-            span: 4,
+            span: 2,
           }}
           wrapperCol={{
-            span: 20,
+            span: 24,
           }}
           layout="horizontal"
           onFinish={onFinish}
@@ -108,7 +108,7 @@ const CreateConference = () => {
             />
           </Form.Item>
 
-          <div style={{ marginLeft: '80px' }}>
+          <div style={{ marginLeft: '64px' }}>
             <Form.List name="timeline">
               {(fields, { add, remove }) => (
                 <>
@@ -120,8 +120,16 @@ const CreateConference = () => {
                       }}
                       align="start"
                     >
-                      <Form.Item label="Time" name={[name, 'time']}>
-                        <DatePicker showTime />
+                      <Form.Item
+                        name={[name, 'time']}
+                        rules={[
+                          {
+                            required: true,
+                            message: 'Date required',
+                          },
+                        ]}
+                      >
+                        <DatePicker showTime format={DATE_FORMAT} />
                       </Form.Item>
                       <Form.Item
                         name={[name, 'content']}
@@ -200,6 +208,7 @@ const CreateConference = () => {
               )}
             </Form.List>
           </div>
+
           <div className="flex justify-content-center">
             <Button htmlType="submit">Submit</Button>
           </div>

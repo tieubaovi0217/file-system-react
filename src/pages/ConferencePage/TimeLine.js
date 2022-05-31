@@ -1,8 +1,18 @@
 import { Divider, Timeline } from 'antd';
 
-const TimeLine = () => {
+import * as moment from 'moment';
+
+const TimeLine = ({ timeline }) => {
+  const timelineItems = timeline.map(({ content, time }, idx) => {
+    return (
+      <Timeline.Item key={idx} color={idx % 2 === 0 ? 'red' : 'blue'}>
+        {moment(time).format('HH:mm - DD/MM/YYYY')}: {content}
+      </Timeline.Item>
+    );
+  });
+
   return (
-    <div>
+    <div style={{ width: '50%' }}>
       <Divider
         type="horizontal"
         dashed
@@ -18,18 +28,7 @@ const TimeLine = () => {
             textShadow: '2px 2px #ccc',
           }}
         >
-          <Timeline.Item color="red">
-            Create a services site 2015-09-01
-          </Timeline.Item>
-          <Timeline.Item>
-            Solve initial network problems 2015-09-01
-          </Timeline.Item>
-          <Timeline.Item color="red">
-            Technical testing 2015-09-01
-          </Timeline.Item>
-          <Timeline.Item>
-            Network problems being solved 2015-09-01
-          </Timeline.Item>
+          {timelineItems}
         </Timeline>
       </div>
     </div>
