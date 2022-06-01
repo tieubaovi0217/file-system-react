@@ -20,6 +20,7 @@ import {
   truncateFileName,
 } from 'common/helpers';
 import { useIsMounted } from 'hooks/useIsMounted';
+import { ALLOWED_MIME_TYPES } from 'common/constants';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -219,6 +220,17 @@ const FileBrowserPage = () => {
         if (resource.type === 'directory') {
           resource.isLeaf = false;
           resource.children = await fetchTreeData(`${path}/${resource.name}`);
+        } else {
+          const mimeType = mime.lookup(resource.name);
+          if (
+            !(
+              mimeType.startsWith('image') ||
+              mimeType.startsWith('video') ||
+              ALLOWED_MIME_TYPES.includes(mimeType)
+            )
+          ) {
+            continue;
+          }
         }
         result.push(resource);
       }
