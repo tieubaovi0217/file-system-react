@@ -9,7 +9,6 @@ const ConferenceCard = ({
   thumbnailUrl,
   startTime,
   endTime,
-  editors,
   timeline,
   onRefresh,
 }) => {
@@ -23,7 +22,7 @@ const ConferenceCard = ({
     <Card
       title={name}
       style={{
-        width: '60%',
+        width: '50%',
         height: '420px',
         border: '1px solid #c7c7c7',
         borderRadius: '16px',
@@ -48,7 +47,6 @@ const ConferenceCard = ({
           thumbnailUrl,
           startTime,
           endTime,
-          editors,
           timeline,
         }}
       />

@@ -18,11 +18,8 @@ const EditModal = ({
   title,
   onFinish,
   update = false,
-  editors = [],
   timeline = [],
 }) => {
-  console.log(timeline);
-
   return (
     <Modal
       title={
@@ -49,7 +46,6 @@ const EditModal = ({
           id: id,
           name: name,
           date: [moment(startTime), moment(endTime)],
-          editors: editors.map((editor) => ({ username: editor.username })),
           timeline: timeline.map((t) => {
             return {
               content: t.content,
@@ -144,48 +140,6 @@ const EditModal = ({
                     icon={<PlusOutlined />}
                   >
                     Add Timeline
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
-          <Form.List name="editors">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space
-                    key={key}
-                    style={{
-                      display: 'flex',
-                    }}
-                    align="baseline"
-                  >
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'username']}
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Missing username',
-                        },
-                      ]}
-                    >
-                      <Input
-                        style={{ width: '200px' }}
-                        placeholder="Username of editor"
-                      />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button
-                    type="dashed"
-                    onClick={() => add()}
-                    block
-                    icon={<PlusOutlined />}
-                  >
-                    Add editor
                   </Button>
                 </Form.Item>
               </>

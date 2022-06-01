@@ -12,7 +12,7 @@ const thumbnailURLs = [
 
 const ConferenceList = ({ conferences, onRefresh }) => {
   const cards = conferences.map(
-    ({ name, _id, startTime, endTime, editors, timeline }) => {
+    ({ name, _id, startTime, endTime, timeline }) => {
       return (
         <Col key={_id} span={24} style={{ display: 'flex' }}>
           <ConferenceCard
@@ -22,7 +22,6 @@ const ConferenceList = ({ conferences, onRefresh }) => {
             id={_id}
             startTime={startTime}
             endTime={endTime}
-            editors={editors}
             timeline={timeline}
             thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
           />

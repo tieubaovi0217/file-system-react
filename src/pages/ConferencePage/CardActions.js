@@ -68,6 +68,7 @@ const CardActions = ({ onGetConferenceID, conference, onRefresh }) => {
       console.log(resp);
       message.success('Update conference successfully!');
       setIsEditModalVisible(false);
+      onRefresh();
     } catch (error) {
       console.log(error.response?.data);
       message.error(error.response?.data?.error || 'Server Error');
