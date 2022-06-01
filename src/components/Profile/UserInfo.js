@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { Layout, Input, Row, Col, Avatar, Modal, Button, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import axios from 'axios';
+
+import ReadyPlayerMe from './ReadyPlayerMe';
 import { buildPath } from 'common/helpers';
+import axios from 'axios';
 
 const { Sider, Content } = Layout;
 
@@ -13,98 +15,33 @@ const UserInfo = ({ username, email }) => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
+  const handleOk = useCallback(() => {
     setIsModalVisible(false);
-  };
+  }, []);
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
-  function parse(event) {
-    try {
-      return JSON.parse(event.data);
-    } catch (error) {
-      return null;
-    }
-  }
-
-  // eslint-disable-next-line no-unused-vars
-  function displayIframe() {
-    document.getElementById('frame').hidden = false;
-  }
-
-  // function openIframe() {
-  //   document.getElementById('frame').hidden = true;
-  // }
-
-  function subscribe(event) {
-    const json = parse(event);
-
-    if (json?.source !== 'readyplayerme') {
-      return;
-    }
-
-    // Subscribe to all events sent from Ready Player Me once frame is ready
-    if (json.eventName === 'v1.frame.ready') {
-      // eslint-disable-next-line no-undef
-      frame.contentWindow.postMessage(
-        JSON.stringify({
-          target: 'readyplayerme',
-          type: 'subscribe',
-          eventName: 'v1.**',
-        }),
-        '*',
-      );
-    }
-
-    // Get avatar GLB URL
-    if (json.eventName === 'v1.avatar.exported') {
-      console.log(`Avatar URL: ${json.data.url}`);
-
-      // send avatar url to save
-      axios.post(
-        buildPath('/user/save-avatar-url'),
-        {
-          avatarUrl: json.data.url,
+  const handleUpdateAvatar = useCallback(async (json) => {
+    // send avatar url to save
+    await axios.post(
+      buildPath('/user/save-avatar-url'),
+      {
+        avatarUrl: json.data.url,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-          },
-        },
-      );
-      message.success('Save your avatar successfully!');
+      },
+    );
+    message.success('Save your avatar successfully!');
 
-      // document.getElementById('frame').hidden = true;
-      setIsModalVisible(false);
-    }
-
-    // Get user id
-    if (json.eventName === 'v1.user.set') {
-      console.log(`User with id ${json.data.id} set: ${JSON.stringify(json)}`);
-    }
-  }
-
-  useEffect(() => {
-    if (isModalVisible) {
-      const frame = document.getElementById('frame');
-      if (!frame.src) {
-        const subdomain = process.env.REACT_APP_API_READY_PLAYER_ME_SUB_DOMAIN; // Replace with your custom subdomain
-        frame.src = `https://${subdomain}.readyplayer.me/avatar?frameApi`;
-
-        window.addEventListener('message', subscribe);
-        document.addEventListener('message', subscribe);
-      }
-    }
-
-    return () => {
-      window.removeEventListener('message', subscribe);
-      document.removeEventListener('message', subscribe);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isModalVisible]);
+    // document.getElementById('frame').hidden = true;
+    setIsModalVisible(false);
+  }, []);
 
   return (
     <Layout style={{ height: '240px' }}>
@@ -129,12 +66,7 @@ const UserInfo = ({ username, email }) => {
               onCancel={handleCancel}
               width={1100}
             >
-              <iframe
-                id="frame"
-                className="frame"
-                allow="camera *; microphone *"
-                title="ready_player_me"
-              ></iframe>
+              <ReadyPlayerMe onUpdateAvatar={handleUpdateAvatar} />
             </Modal>
           </div>
         </div>
