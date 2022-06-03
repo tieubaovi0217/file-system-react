@@ -2,6 +2,7 @@ import * as mime from 'mime-types';
 import { Row, Empty } from 'antd';
 
 import ResourceItem from './ResourceItem';
+import FileViewerModal from './FileViewerModal';
 
 const excludedMimeTypes = ['application/zip'];
 
@@ -18,6 +19,7 @@ const FileBrowserContent = ({
   onRename,
   onGetURL,
   onSyncDriveFile,
+  onGetDownloadURL,
 }) => {
   const handleDoubleClick = (name, isDirectory = false) => {
     if (isDirectory) return onFolderDoubleClick(name);
@@ -44,12 +46,18 @@ const FileBrowserContent = ({
         onGetURL={onGetURL}
         onDoubleClick={handleDoubleClick}
         onSyncDriveFile={onSyncDriveFile}
+        onGetDownloadURL={onGetDownloadURL}
       />
     ));
     content = <Row gutter={[8, 12]}>{resourceItems}</Row>;
   }
 
-  return <div className="file-browser__content">{content}</div>;
+  return (
+    <>
+      <div className="file-browser__content">{content}</div>
+      <FileViewerModal />
+    </>
+  );
 };
 
 export default FileBrowserContent;

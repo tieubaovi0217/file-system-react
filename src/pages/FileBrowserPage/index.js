@@ -226,7 +226,7 @@ const FileBrowserPage = () => {
             !(
               mimeType.startsWith('image') ||
               mimeType.startsWith('video') ||
-              ALLOWED_MIME_TYPES.includes(mimeType)
+              Object.values(ALLOWED_MIME_TYPES).includes(mimeType)
             )
           ) {
             continue;
@@ -294,10 +294,17 @@ const FileBrowserPage = () => {
     // attach token
     // url += `&token=${localStorage.getItem('token') || ''}`;
 
-    console.log('url:', url);
     message.info('Copied Content URL to clipboard');
     navigator.clipboard.writeText(url);
     return url;
+  };
+
+  const handleGetDownloadURL = (fileName) => {
+    return (
+      normalizeURL(
+        `${process.env.REACT_APP_API_URL}/root/${username}/${path}/${fileName}`,
+      ) + `?token=${localStorage.getItem('token')}`
+    );
   };
 
   const isOnDrive = path === 'google:drive';
@@ -343,6 +350,7 @@ const FileBrowserPage = () => {
                   onDelete={handleDelete}
                   onRename={handleRename}
                   onGetURL={handleGetURL}
+                  onGetDownloadURL={handleGetDownloadURL}
                 />
               )}
             </Content>

@@ -1,14 +1,12 @@
 FROM node:12-alpine AS builder
 WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install
 COPY . ./
+RUN npm install
 RUN npm run build
 
 FROM nginx:alpine
-COPY proxy.conf /etc/nginx/
-COPY nginx.conf /etc/nginx/nginx.conf
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
+COPY proxy.conf nginx.conf /etc/nginx/
 COPY --from=builder /usr/src/app/build ./
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

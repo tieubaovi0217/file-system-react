@@ -17,7 +17,12 @@ import FileInfoModal from './FileInfoModal';
 import ModalForm from './ModalForm';
 import { useIsMounted } from 'hooks/useIsMounted';
 
+import { useDispatch } from 'react-redux';
+
+import { fileActions } from 'slices/file';
+
 import * as mime from 'mime-types';
+import { ALLOWED_MIME_TYPES } from 'common/constants';
 
 const ResourceItem = ({
   name,
@@ -32,7 +37,9 @@ const ResourceItem = ({
   onSyncDriveFile,
   driveFileId,
   mimeType,
+  onGetDownloadURL,
 }) => {
+  const dispatch = useDispatch();
   const isMounted = useIsMounted();
   const [isShowRenameForm, setIsShowRenameForm] = useState(false);
 
@@ -128,9 +135,33 @@ const ResourceItem = ({
     }
   }
 
+  const handleOpen = () => {
+    if (isDirectory) {
+      handleFolderOpen();
+    } else {
+      const mimeType = mime.lookup(name);
+      let type;
+      if (mimeType.startsWith('image')) {
+        type = 'jpeg';
+      } else if (mimeType.startsWith('video')) {
+        type = 'mp4';
+      } else if (mimeType === ALLOWED_MIME_TYPES.PDF) {
+        type = 'pdf';
+      } else if (mimeType === ALLOWED_MIME_TYPES.DOCX) {
+        type = 'docx';
+      } else if (mimeType === ALLOWED_MIME_TYPES.XLSX) {
+        type = 'xlsx';
+      } else if (mimeType === ALLOWED_MIME_TYPES.PPTX) {
+        type = 'pptx';
+      }
+      const url = onGetDownloadURL(name);
+      dispatch(fileActions.setFile({ url, type }));
+    }
+  };
+
   const menu = (
     <Menu>
-      <Menu.Item key="0" onClick={handleFolderOpen}>
+      <Menu.Item key="0" onClick={handleOpen}>
         Open
       </Menu.Item>
       <Menu.Item key="1" onClick={handleShowInfoModal}>
