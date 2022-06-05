@@ -23,3 +23,10 @@
 .signup-form h1 {
   text-align: center;
 }
+
+@media screen and (max-width: 576px) {
+  .signup-form {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+}
