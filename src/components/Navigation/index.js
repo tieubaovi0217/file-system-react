@@ -29,6 +29,7 @@ const Navigation = () => {
 
   return (
     <Menu
+      className="navigation"
       onClick={handleClick}
       selectedKeys={[current]}
       mode="horizontal"
@@ -69,7 +70,7 @@ const Navigation = () => {
           <Menu.Item key="/profile">
             <Link to="/profile">
               <div>
-                <span>Hello, {user.username} </span>
+                <span>Profile, {user.username} </span>
                 <span>
                   <UserOutlined />
                 </span>

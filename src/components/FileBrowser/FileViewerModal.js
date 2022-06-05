@@ -25,7 +25,7 @@ const FileViewerModal = () => {
       visible={isModalVisible}
       onOk={handleOk}
       onCancel={handleCancel}
-      bodyStyle={{ height: 560 }}
+      bodyStyle={{ height: 560, textAlign: 'center' }}
       key={`${Math.random()}`}
     >
       {type === 'pptx' ? (

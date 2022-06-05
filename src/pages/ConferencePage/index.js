@@ -11,6 +11,7 @@ import ConferenceActions from './ConferenceActions';
 
 const ConferencePage = () => {
   const [conferences, setConferences] = useState([]);
+  const [owner, setOwner] = useState(true);
 
   const getConferences = useCallback(async () => {
     try {
@@ -48,10 +49,12 @@ const ConferencePage = () => {
 
   const handleGetOwnConferences = () => {
     getConferences();
+    setOwner(true);
   };
 
   const handleGetOnlineConferences = () => {
     getOnlineConference();
+    setOwner(false);
   };
 
   return (
@@ -63,7 +66,11 @@ const ConferencePage = () => {
         onRefresh={getConferences}
       />
       <Divider dashed></Divider>
-      <ConferenceList conferences={conferences} onRefresh={getConferences} />
+      <ConferenceList
+        owner={owner}
+        conferences={conferences}
+        onRefresh={getConferences}
+      />
     </div>
   );
 };

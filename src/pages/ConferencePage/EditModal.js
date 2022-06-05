@@ -32,6 +32,7 @@ const EditModal = ({
       onOk={() => setVisible(false)}
       onCancel={() => setVisible(false)}
       width={800}
+      className="edit-conference-modal"
     >
       <Form
         labelCol={{
@@ -89,7 +90,7 @@ const EditModal = ({
             format={DATE_FORMAT}
           />
         </Form.Item>
-        <div style={{ marginLeft: '64px' }}>
+        <div className="edit-conference__timeline">
           <Form.List name="timeline">
             {(fields, { add, remove }) => (
               <>

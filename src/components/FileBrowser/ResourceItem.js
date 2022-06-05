@@ -219,7 +219,14 @@ const ResourceItem = ({
   return (
     <>
       <Dropdown overlay={menu} trigger={['contextMenu']}>
-        <Col span={3} onDoubleClick={handleFolderOpen}>
+        <Col
+          xl={3}
+          lg={4}
+          md={4}
+          sm={6}
+          xs={8}
+          onDoubleClick={handleFolderOpen}
+        >
           <Tooltip title={name}>
             <div className="resource">
               <div className="resource__icon">{icon}</div>

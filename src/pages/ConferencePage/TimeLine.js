@@ -15,7 +15,7 @@ const TimeLine = ({ timeline }) => {
   });
 
   return (
-    <div style={{ width: '50%' }}>
+    <div>
       <Divider
         type="horizontal"
         dashed
@@ -27,8 +27,8 @@ const TimeLine = ({ timeline }) => {
         <Timeline
           style={{
             textAlign: 'left',
-            marginLeft: '24px',
-            textShadow: '2px 2px #ccc',
+            marginLeft: '16px',
+            textShadow: '1px 1px #ccc',
           }}
         >
           {timelineItems}

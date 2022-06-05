@@ -10,30 +10,35 @@ const thumbnailURLs = [
   'https://eventsolutions.com/wp-content/uploads/2020/07/Screen-Shot-2020-07-16-at-3.40.48-PM1-845x321.png',
 ];
 
-const ConferenceList = ({ conferences, onRefresh }) => {
+const ConferenceList = ({ conferences, onRefresh, owner }) => {
   const cards = conferences.map(
     ({ name, _id, startTime, endTime, timeline }) => {
       return (
-        <Col key={_id} span={24} style={{ display: 'flex' }}>
-          <ConferenceCard
-            onRefresh={onRefresh}
-            key={_id}
-            name={name}
-            id={_id}
-            startTime={startTime}
-            endTime={endTime}
-            timeline={timeline}
-            thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
-          />
-          <TimeLine timeline={timeline} />
-        </Col>
+        <>
+          <Col key={_id} md={12} sm={24} style={{ display: 'flex' }}>
+            <ConferenceCard
+              owner={owner}
+              onRefresh={onRefresh}
+              key={_id}
+              name={name}
+              id={_id}
+              startTime={startTime}
+              endTime={endTime}
+              timeline={timeline}
+              thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
+            />
+          </Col>
+          <Col md={12} sm={24}>
+            <TimeLine timeline={timeline} />
+          </Col>
+        </>
       );
     },
   );
 
   return (
     <div className="conferences__list">
-      <Row gutter={[24, 24]} style={{ width: '75%' }}>
+      <Row gutter={[24, 24]} style={{ width: '85%' }}>
         {cards}
       </Row>
     </div>

@@ -283,6 +283,8 @@ const FileBrowserPage = () => {
       url = notConvertedURL + '?type=Picture';
     } else if (mimeType.startsWith('video')) {
       url = notConvertedURL + '?type=Video';
+    } else if (mimeType === ALLOWED_MIME_TYPES.PPTX) {
+      url = notConvertedURL + '?type=Slide';
     } else {
       // temporarily
       url =
@@ -311,7 +313,7 @@ const FileBrowserPage = () => {
 
   return (
     <Layout className="file-browser">
-      <Layout>
+      <Layout className="file-browser__main">
         <Sider width={320}>
           <TreeView
             treeData={treeData}

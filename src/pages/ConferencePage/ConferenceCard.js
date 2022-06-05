@@ -11,6 +11,7 @@ const ConferenceCard = ({
   endTime,
   timeline,
   onRefresh,
+  owner,
 }) => {
   const handleGetConferenceID = () => {
     console.log(id);
@@ -22,11 +23,10 @@ const ConferenceCard = ({
     <Card
       title={name}
       style={{
-        width: '50%',
         height: '420px',
         border: '1px solid #c7c7c7',
-        borderRadius: '16px',
-        opacity: '0.8',
+        borderRadius: '8px',
+        opacity: '0.95',
         boxShadow:
           'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
       }}
@@ -39,6 +39,7 @@ const ConferenceCard = ({
 
       <Divider />
       <CardActions
+        owner={owner}
         onGetConferenceID={handleGetConferenceID}
         onRefresh={onRefresh}
         conference={{

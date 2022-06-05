@@ -21,7 +21,7 @@
 }
 
 .conferences {
-  margin: 3rem auto;
+  margin: 40px auto;
   text-align: center;
   padding-bottom: 100px;
 }
@@ -65,11 +65,82 @@
 
 .conferences__actions {
   display: flex;
-  padding-left: 224px;
+  margin-left: 16px;
   margin-bottom: 32px;
 }
 
 .conferences__actions button {
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.edit-conference-modal {
+}
+
+.edit-conference__timeline {
+  margin-left: 64px;
+}
+
+@media screen and (max-width: 1200px) {
+  .card-actions .ant-btn {
+    font-size: 90%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .card-actions {
+    flex-direction: column;
+  }
+
+  .conferences__list .ant-row {
+    width: 100% !important;
+  }
+
+  .conferences__list .ant-card {
+    height: auto !important;
+    margin-right: -16px;
+  }
+
+  .card-actions .ant-btn {
+    margin-right: 0px !important;
+    margin-bottom: 4px;
+    font-size: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .conference__heading span {
+    font-size: 48px;
+  }
+
+  .edit-conference__timeline {
+    margin-left: 16px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .conferences__actions {
+    flex-direction: column;
+  }
+
+  .conferences__list .ant-card {
+    margin-right: 0px;
+  }
+
+  .conferences__actions .ant-btn:first-child {
+    width: 100% !important;
+  }
+
+  .conferences__actions {
+    margin: auto 16px;
+  }
+
+  .conferences__actions .ant-btn:nth-child(2) {
+    margin-top: 16px;
+    margin-left: 0px !important ;
+  }
+
+  .conference__heading span {
+    font-size: 32px;
+  }
 }

@@ -134,3 +134,42 @@
 #file-browser__header {
   border-bottom: 0px;
 }
+
+@media screen and (max-width: 1000px) {
+  .file-browser {
+    max-width: 95%;
+  }
+
+  .resource__icon {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+}
+
+@media screen and (max-width: 768px) {
+  .file-browser__actions {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .file-browser__main .ant-layout-sider {
+    min-width: 100% !important;
+    max-height: 240px;
+  }
+
+  .ant-layout .file-browser__main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .file-browser__main .ant-layout-content {
+    min-width: 100% !important;
+    min-height: 300px !important;
+  }
+
+  .ant-layout.file-browser {
+    min-height: 900px;
+  }
+}

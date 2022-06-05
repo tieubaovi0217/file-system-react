@@ -6,7 +6,12 @@ import { buildPath } from 'common/helpers';
 
 import { DeleteOutlined } from '@ant-design/icons';
 
-const CardActions = ({ onGetConferenceID, conference, onRefresh }) => {
+const CardActions = ({
+  onGetConferenceID,
+  conference,
+  onRefresh,
+  owner = false,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
@@ -76,18 +81,7 @@ const CardActions = ({ onGetConferenceID, conference, onRefresh }) => {
   };
 
   return (
-    <div className="flex justify-content-center">
-      <Button
-        type="primary"
-        style={{
-          marginRight: '16px',
-        }}
-        size={'large'}
-        onClick={() => showEditModal()}
-      >
-        Edit Conference
-      </Button>
-
+    <div className="flex justify-content-center card-actions">
       <Button
         type="primary"
         onClick={showModal}
@@ -98,14 +92,29 @@ const CardActions = ({ onGetConferenceID, conference, onRefresh }) => {
       >
         Click to join!
       </Button>
-      <Button
-        type="danger"
-        icon={<DeleteOutlined />}
-        onClick={handleDelete}
-        size={'large'}
-      >
-        Delete
-      </Button>
+      {owner && (
+        <Button
+          type="primary"
+          style={{
+            marginRight: '16px',
+          }}
+          size={'large'}
+          onClick={() => showEditModal()}
+        >
+          Edit Conference
+        </Button>
+      )}
+
+      {owner && (
+        <Button
+          type="danger"
+          icon={<DeleteOutlined />}
+          onClick={handleDelete}
+          size={'large'}
+        >
+          Delete
+        </Button>
+      )}
       <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <Divider>Instruction</Divider>
         <p>
