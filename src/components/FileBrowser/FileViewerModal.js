@@ -25,7 +25,7 @@ const FileViewerModal = () => {
       visible={isModalVisible}
       onOk={handleOk}
       onCancel={handleCancel}
-      bodyStyle={{ height: 560, textAlign: 'center' }}
+      bodyStyle={{ height: 560, textAlign: 'center', overflowY: 'auto' }}
       key={`${Math.random()}`}
     >
       {type === 'pptx' ? (
@@ -35,15 +35,14 @@ const FileViewerModal = () => {
             'http://localhost:8080',
             'https://36cf-113-173-172-158.ap.ngrok.io',
           )}`}
-          width="100%"
-          height="540px"
+          className="pptx-viewer"
           frameBorder="0"
         ></iframe>
       ) : (
         <FileViewer
           filePath={url}
           fileType={type}
-          errorComponent={<div>abc</div>}
+          errorComponent={<div>Error</div>}
         />
       )}
     </Modal>
