@@ -111,6 +111,10 @@
 .file-info-modal td {
   padding: 0 4px;
 }
+
+.file-breadcrumb {
+  flex-basis: 70%;
+}
 /* 
 .file-info-modal__name {
   overflow: hidden;
@@ -120,7 +124,12 @@
 
 /* Directory Tree */
 .directory-tree {
+  max-height: 490px;
+}
+
+.file-browser__main .ant-layout-sider {
   overflow-x: auto;
+  overflow-y: auto;
 }
 
 .ant-layout-footer {
@@ -156,7 +165,8 @@
 
   .file-browser__main .ant-layout-sider {
     min-width: 100% !important;
-    max-height: 240px;
+    height: 240px !important;
+    overflow-y: auto;
   }
 
   .ant-layout .file-browser__main {
@@ -167,6 +177,10 @@
   .file-browser__main .ant-layout-content {
     min-width: 100% !important;
     min-height: 300px !important;
+  }
+
+  .file-browser__header {
+    border-top: 1px solid #ccc;
   }
 
   .ant-layout.file-browser {

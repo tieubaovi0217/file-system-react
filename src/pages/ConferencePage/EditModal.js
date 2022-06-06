@@ -24,7 +24,7 @@ const EditModal = ({
     <Modal
       title={
         <Divider>
-          <h1>{title}</h1>
+          <h1 className="edit-conference-modal__heading">{title}</h1>
         </Divider>
       }
       centered

@@ -31,7 +31,6 @@ const TreeView = ({
       expandedKeys={expandedKeys}
       onSelect={handleSelect}
       onExpand={handleExpand}
-      style={{ maxHeight: '510px' }}
     />
   );
 };

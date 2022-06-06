@@ -74,9 +74,6 @@
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
-.edit-conference-modal {
-}
-
 .edit-conference__timeline {
   margin-left: 64px;
 }
@@ -142,5 +139,19 @@
 
   .conference__heading span {
     font-size: 32px;
+  }
+
+  .edit-conference-modal__heading {
+    font-size: 24px;
+  }
+
+  .edit-conference__timeline {
+    margin-left: 0px;
+  }
+}
+
+@media screen and (max-width: 377px) {
+  .edit-conference-modal__heading {
+    font-size: 20px;
   }
 }

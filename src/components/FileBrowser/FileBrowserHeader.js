@@ -35,7 +35,7 @@ const FileBrowserHeader = ({
       >
         <ArrowUpOutlined />
       </Button>
-      <Breadcrumb className="disable-text-selection">
+      <Breadcrumb className="disable-text-selection file-breadcrumb">
         {breadcrumbItems}
       </Breadcrumb>
       <Search
