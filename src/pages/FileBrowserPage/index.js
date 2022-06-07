@@ -284,7 +284,10 @@ const FileBrowserPage = () => {
     } else if (mimeType.startsWith('video')) {
       url = notConvertedURL + '?type=Video';
     } else if (mimeType === ALLOWED_MIME_TYPES.PPTX) {
-      url = notConvertedURL + '?type=Slide';
+      url =
+        normalizeURL(
+          `${process.env.REACT_APP_API_URL}/cloudconvert/${path}/${fileName}`,
+        ) + '?type=Slide';
     } else {
       // temporarily
       url =
