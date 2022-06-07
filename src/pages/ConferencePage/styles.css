@@ -113,6 +113,10 @@
   .edit-conference__timeline {
     margin-left: 16px;
   }
+
+  .conferences__list .ant-card {
+    margin-right: 0px;
+  }
 }
 
 @media screen and (max-width: 576px) {
