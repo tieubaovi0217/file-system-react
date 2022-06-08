@@ -60,6 +60,7 @@ const UserInfo = ({ username, email }) => {
               Update Virtual Avatar
             </Button>
             <Modal
+              keyboard
               title="Update Your Avatar"
               visible={isModalVisible}
               onOk={handleOk}

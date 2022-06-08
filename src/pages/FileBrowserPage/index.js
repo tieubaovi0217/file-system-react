@@ -10,6 +10,7 @@ import FileBrowserHeader from 'components/FileBrowser/FileBrowserHeader';
 import TreeView from 'components/FileBrowser/TreeView';
 
 import { Layout, message } from 'antd';
+import { useLocation } from 'react-router-dom';
 
 import { SyncOutlined, GoogleOutlined } from '@ant-design/icons';
 import { getUserFromLocalStorage } from 'common/localStorage';
@@ -25,6 +26,7 @@ import { ALLOWED_MIME_TYPES } from 'common/constants';
 const { Header, Sider, Content, Footer } = Layout;
 
 const FileBrowserPage = () => {
+  const location = useLocation();
   const { username } = getUserFromLocalStorage();
 
   const isMounted = useIsMounted();
@@ -42,6 +44,15 @@ const FileBrowserPage = () => {
     isRejected,
     fetchData,
   } = useAxios(process.env.REACT_APP_API_URL);
+
+  useEffect(() => {
+    const queryString = location.search;
+    const params = new URLSearchParams(queryString);
+    const queryPath = params.get('path');
+    if (queryPath === 'google:drive') {
+      handleSelectDrive();
+    }
+  }, []);
 
   useEffect(() => {
     const remotePath =

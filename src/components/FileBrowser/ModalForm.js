@@ -50,6 +50,7 @@ const ModalForm = ({
 
   return (
     <Modal
+      keyboard
       width={360}
       title={modalTitle}
       visible={isVisible}

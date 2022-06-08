@@ -20,6 +20,7 @@ const FileViewerModal = () => {
 
   return (
     <Modal
+      keyboard
       width={1000}
       title="Preview file"
       visible={isModalVisible}

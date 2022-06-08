@@ -86,7 +86,6 @@ const ResourceItem = ({
   };
 
   const handleSyncDriveFile = () => {
-    console.log('drive fileId:', driveFileId);
     onSyncDriveFile(driveFileId);
   };
 
@@ -159,6 +158,14 @@ const ResourceItem = ({
     }
   };
 
+  const driveMenu = (
+    <Menu>
+      <Menu.Item key="0" className="blue-text" onClick={handleSyncDriveFile}>
+        Download to server
+      </Menu.Item>
+    </Menu>
+  );
+
   const menu = (
     <Menu>
       <Menu.Item key="0" onClick={handleOpen}>
@@ -167,58 +174,33 @@ const ResourceItem = ({
       <Menu.Item key="1" onClick={handleShowInfoModal}>
         Get Info
       </Menu.Item>
-      {!isDriveFile && (
-        <>
-          <Menu.Item key="2" onClick={handleRenameFormOpen}>
-            Rename
-          </Menu.Item>
-          <Menu.Divider />
-          <Menu.Item
-            key="3"
-            className="red-text"
-            onClick={() => onDelete(name)}
-          >
-            Delete
-          </Menu.Item>
-        </>
-      )}
-      {!isDirectory && (
-        <>
-          <Menu.Divider />
+      <Menu.Item key="2" onClick={handleRenameFormOpen}>
+        Rename
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="3" className="red-text" onClick={() => onDelete(name)}>
+        Delete
+      </Menu.Item>
 
-          {isDriveFile ? (
-            <Menu.Item
-              key="4"
-              className="blue-text"
-              onClick={handleSyncDriveFile}
-            >
-              Download to server
-            </Menu.Item>
-          ) : (
-            <Menu.Item key="4" className="blue-text" onClick={handleDownload}>
-              Download
-            </Menu.Item>
-          )}
-          {!isDriveFile && (
-            <>
-              <Menu.Divider />
-              <Menu.Item
-                key="5"
-                className="blue-text"
-                onClick={() => onGetURL(name)}
-              >
-                Get Content URL
-              </Menu.Item>
-            </>
-          )}
-        </>
-      )}
+      <Menu.Divider />
+
+      <Menu.Item key="4" className="blue-text" onClick={handleDownload}>
+        Download
+      </Menu.Item>
+
+      <Menu.Divider />
+      <Menu.Item key="5" className="blue-text" onClick={() => onGetURL(name)}>
+        Get Content URL
+      </Menu.Item>
     </Menu>
   );
 
   return (
     <>
-      <Dropdown overlay={menu} trigger={['contextMenu']}>
+      <Dropdown
+        overlay={isDriveFile ? driveMenu : menu}
+        trigger={['contextMenu']}
+      >
         <Col
           xl={3}
           lg={4}

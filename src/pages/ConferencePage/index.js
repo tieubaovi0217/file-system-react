@@ -21,7 +21,8 @@ const ConferencePage = () => {
           Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
         },
       });
-      console.log(resp);
+      console.log('own conferences', resp);
+      setOwner(true);
       setConferences(resp.data);
     } catch (error) {
       console.log(error);
@@ -36,7 +37,8 @@ const ConferencePage = () => {
           Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
         },
       });
-      console.log(resp);
+      console.log('online conferences', resp);
+      setOwner(false);
       setConferences(resp.data);
     } catch (error) {
       console.log(error);
@@ -49,12 +51,10 @@ const ConferencePage = () => {
 
   const handleGetOwnConferences = () => {
     getConferences();
-    setOwner(true);
   };
 
   const handleGetOnlineConferences = () => {
     getOnlineConference();
-    setOwner(false);
   };
 
   return (

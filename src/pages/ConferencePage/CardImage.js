@@ -21,11 +21,11 @@ const CardImage = ({ thumbnailUrl, startTime, endTime }) => {
           Today: [moment(), moment()],
           'This Month': [moment().startOf('month'), moment().endOf('month')],
         }}
-        defaultValue={[moment(startTime), moment(endTime)]}
+        value={[moment(startTime), moment(endTime)]}
         showTime
         format={DATE_FORMAT}
         style={{
-          marginTop: '16px',
+          marginTop: '8px',
         }}
         disabled
       />

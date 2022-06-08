@@ -52,7 +52,6 @@ const CardActions = ({
   };
 
   const handleUpdateConference = async (values) => {
-    console.log(values);
     const startTime = values.date[0];
     const endTime = values.date[1];
     try {
@@ -115,7 +114,12 @@ const CardActions = ({
           Delete
         </Button>
       )}
-      <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        keyboard
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
         <Divider>Instruction</Divider>
         <p>
           Click the following buttons to get Conference ID and paste it into

@@ -3,6 +3,8 @@ import { Modal, Form, Input, Space, Divider, DatePicker, Button } from 'antd';
 
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { DATE_FORMAT } from 'common/constants';
+import { useCallback } from 'react';
+import { useIsMounted } from 'hooks/useIsMounted';
 
 const { RangePicker } = DatePicker;
 
@@ -20,17 +22,27 @@ const EditModal = ({
   update = false,
   timeline = [],
 }) => {
+  const isMounted = useIsMounted();
+
+  const handleOk = useCallback(() => {
+    if (isMounted) {
+      setVisible(false);
+    }
+  }, [setVisible, isMounted]);
+
   return (
     <Modal
+      keyboard
       title={
         <Divider>
           <h1 className="edit-conference-modal__heading">{title}</h1>
         </Divider>
       }
       centered
+      destroyOnClose
       visible={visible}
-      onOk={() => setVisible(false)}
-      onCancel={() => setVisible(false)}
+      onOk={handleOk}
+      onCancel={handleOk}
       width={800}
       className="edit-conference-modal"
     >

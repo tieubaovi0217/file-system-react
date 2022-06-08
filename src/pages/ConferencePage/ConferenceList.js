@@ -15,7 +15,7 @@ const ConferenceList = ({ conferences, onRefresh, owner }) => {
     ({ name, _id, startTime, endTime, timeline }) => {
       return (
         <>
-          <Col key={_id} md={12} sm={24} style={{ display: 'flex' }}>
+          <Col md={12} sm={24} style={{ display: 'flex' }}>
             <ConferenceCard
               owner={owner}
               onRefresh={onRefresh}
