@@ -138,13 +138,22 @@ const FileBrowserPage = () => {
   };
 
   const handleSyncDriveFile = async (fileId) => {
-    await axios.get(buildPath(`/google/${fileId}`), {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-      },
-    });
-    message.success(`Downloaded`);
+    try {
+      await axios.get(buildPath(`/google/${fileId}`), {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+        },
+      });
+      message.success(`Downloaded`);
+    } catch (error) {
+      console.log(error.response);
+      message.error(
+        `Cannot download this file due to: ${
+          error.response?.data?.error || 'Server error'
+        }`,
+      );
+    }
   };
 
   const handleDelete = async (name) => {

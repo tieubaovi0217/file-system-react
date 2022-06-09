@@ -9,6 +9,12 @@ const UploadFile = ({ path, onSuccess, isOnDrive }) => {
     onDownload: () => {
       console.log('downloading');
     },
+    progress: {
+      type: 'dashboard',
+      strokeWidth: 2,
+      showInfo: true,
+      format: (percent) => `${parseFloat(percent).toFixed(0)}%`,
+    },
     multiple: true,
     // showUploadList: false,
     action: `${process.env.REACT_APP_API_URL}/upload`,
