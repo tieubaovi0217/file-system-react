@@ -52,6 +52,7 @@ const FileBrowserPage = () => {
     if (queryPath === 'google:drive') {
       handleSelectDrive();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
