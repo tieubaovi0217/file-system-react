@@ -21,7 +21,6 @@ const ConferencePage = () => {
           Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
         },
       });
-      console.log('own conferences', resp);
       setOwner(true);
       setConferences(resp.data);
     } catch (error) {

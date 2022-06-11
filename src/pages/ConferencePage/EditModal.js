@@ -121,6 +121,21 @@ const EditModal = ({
                           required: true,
                           message: 'Date required',
                         },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (
+                              !value ||
+                              (value >= moment(startTime) &&
+                                value <= moment(endTime))
+                            ) {
+                              return Promise.resolve(true);
+                            }
+
+                            return Promise.reject(
+                              new Error('Must be in range (start, end)!'),
+                            );
+                          },
+                        }),
                       ]}
                     >
                       <DatePicker showTime format={DATE_FORMAT} />
