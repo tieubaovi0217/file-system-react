@@ -21,7 +21,7 @@ import {
   truncateFileName,
 } from 'common/helpers';
 import { useIsMounted } from 'hooks/useIsMounted';
-import { ALLOWED_MIME_TYPES } from 'common/constants';
+import { ALLOWED_MIME_TYPES, GOOGLE_DRIVE_PATH } from 'common/constants';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -49,26 +49,31 @@ const FileBrowserPage = () => {
     const queryString = location.search;
     const params = new URLSearchParams(queryString);
     const queryPath = params.get('path');
-    if (queryPath === 'google:drive') {
-      handleSelectDrive();
+    let remotePath;
+    if (queryPath === GOOGLE_DRIVE_PATH) {
+      remotePath = normalizeURL(`/google/files`);
+      setPath(GOOGLE_DRIVE_PATH);
+      setSelectedKeys([GOOGLE_DRIVE_PATH]);
+    } else {
+      remotePath = getRemotePath(username, path);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    handleFetchData(remotePath);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const remotePath =
-      path === 'google:drive'
-        ? normalizeURL(`/google/files`)
-        : getRemotePath(username, path);
-    fetchData({
-      path: remotePath,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-      },
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path, toggleRefresh]);
+  const handleFetchData = useCallback(
+    (path) => {
+      fetchData({
+        path,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+        },
+      });
+    },
+    [fetchData],
+  );
 
   const handleRefresh = () => {
     setIsToggleRefresh((prevState) => !prevState);
@@ -78,10 +83,17 @@ const FileBrowserPage = () => {
     setFilterValue(value);
   };
 
-  const handleSetPath = (newPath) => {
-    sessionStorage.setItem('path', newPath);
-    setPath(newPath);
-  };
+  const handleSetPath = useCallback(
+    (newPath) => {
+      setPath(newPath);
+      const remotePath =
+        newPath === 'google:drive'
+          ? normalizeURL(`/google/files`)
+          : getRemotePath(username, newPath);
+      handleFetchData(remotePath);
+    },
+    [handleFetchData, username],
+  );
 
   const handleSelectTree = (key) => {
     if (isMounted.current) {
@@ -99,21 +111,26 @@ const FileBrowserPage = () => {
     }
   };
 
-  const handleBackButtonClick = () => {
+  const handleBackButtonClick = useCallback(() => {
     if (path.length > 0) {
       const updatedPath = path.substring(0, path.lastIndexOf('/'));
 
       handleSetPath(updatedPath);
-      setSelectedKeys([updatedPath]);
-      setExpandedKeys((prev) => {
-        prev.pop();
-        return prev;
-      });
+      if (updatedPath === '') {
+        setSelectedKeys(['/']);
+        setExpandedKeys(['/']);
+      } else {
+        setSelectedKeys([updatedPath]);
+        setExpandedKeys((prev) => {
+          prev.pop();
+          return prev;
+        });
+      }
     }
-  };
+  }, [path, handleSetPath]);
 
   const handleFolderDoubleClick = (name) => {
-    const updatedPath = `${path}/${name}`;
+    const updatedPath = path === '/' ? `/${name}` : `${path}/${name}`;
     handleSelectTree(updatedPath);
   };
 
@@ -271,7 +288,7 @@ const FileBrowserPage = () => {
         },
         {
           title: 'My Drive',
-          key: 'google:drive',
+          key: GOOGLE_DRIVE_PATH,
           type: 'directory',
           children: [],
           icon: <GoogleOutlined />,
@@ -285,10 +302,8 @@ const FileBrowserPage = () => {
   }, [isMounted, toggleRefresh, fetchTreeData]);
 
   const handleSelectDrive = async () => {
-    const key = 'google:drive';
-
-    handleSetPath(key);
-    setSelectedKeys([key]);
+    handleSetPath(GOOGLE_DRIVE_PATH);
+    setSelectedKeys([GOOGLE_DRIVE_PATH]);
   };
 
   const handleGetURL = (fileName) => {
@@ -333,7 +348,7 @@ const FileBrowserPage = () => {
     );
   };
 
-  const isOnDrive = path === 'google:drive';
+  const isOnDrive = path === GOOGLE_DRIVE_PATH;
 
   return (
     <Layout className="file-browser">

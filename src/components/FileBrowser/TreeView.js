@@ -1,4 +1,5 @@
 import { Tree } from 'antd';
+import { GOOGLE_DRIVE_PATH } from 'common/constants';
 
 const { DirectoryTree } = Tree;
 
@@ -15,7 +16,7 @@ const TreeView = ({
   };
 
   const handleSelect = (selectedKeysValue, info) => {
-    if (selectedKeysValue[0] === 'google:drive') {
+    if (selectedKeysValue[0] === GOOGLE_DRIVE_PATH) {
       onSelectDrive();
     } else if (info.node.type === 'directory') {
       onSelect(selectedKeysValue[0]);

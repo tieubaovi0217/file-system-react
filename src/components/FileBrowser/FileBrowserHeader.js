@@ -1,5 +1,7 @@
+import React from 'react';
 import { Button, Breadcrumb, Input } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
+import { GOOGLE_DRIVE_PATH } from 'common/constants';
 
 const { Search } = Input;
 
@@ -23,7 +25,7 @@ const FileBrowserHeader = ({
   const isDisabledBackBtn =
     currentPath.length === 0 ||
     currentPath === '/' ||
-    currentPath === 'google:drive';
+    currentPath === GOOGLE_DRIVE_PATH;
 
   return (
     <div className="file-browser__header">
@@ -48,4 +50,4 @@ const FileBrowserHeader = ({
   );
 };
 
-export default FileBrowserHeader;
+export default React.memo(FileBrowserHeader);

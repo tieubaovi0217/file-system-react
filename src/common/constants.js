@@ -14,3 +14,5 @@ export const ALLOWED_MIME_TYPES = {
   XLSX: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   PPTX: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 };
+
+export const GOOGLE_DRIVE_PATH = 'google:drive';
