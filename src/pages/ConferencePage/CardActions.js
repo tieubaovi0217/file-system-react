@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Button, Modal, Divider, message } from 'antd';
+import { Button, message } from 'antd';
 import EditModal from './EditModal';
 import { buildPath } from 'common/helpers';
 
@@ -12,23 +12,10 @@ const CardActions = ({
   onRefresh,
   owner = false,
 }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const showEditModal = () => {
     setIsEditModalVisible(true);
-  };
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
   };
 
   const handleDelete = async () => {
@@ -83,11 +70,12 @@ const CardActions = ({
     <div className="flex justify-content-center card-actions">
       <Button
         type="primary"
-        onClick={showModal}
         size={'large'}
         style={{
           marginRight: '16px',
         }}
+        href={process.env.REACT_APP_CONFERENCE_PAGE_URL}
+        target={'_blank'}
       >
         Click to join!
       </Button>
@@ -114,29 +102,7 @@ const CardActions = ({
           Delete
         </Button>
       )}
-      <Modal
-        keyboard
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Divider>Instruction</Divider>
-        <p>
-          Click the following buttons to get Conference ID and paste it into
-          login conference page.
-        </p>
-        <div className="flex justify-content-center">
-          <Button style={{ marginRight: '16px' }} onClick={onGetConferenceID}>
-            Get conference ID
-          </Button>
-          <Button
-            href={process.env.REACT_APP_CONFERENCE_PAGE_URL}
-            target={'_blank'}
-          >
-            Join the conference!
-          </Button>
-        </div>
-      </Modal>
+
       <EditModal
         visible={isEditModalVisible}
         setVisible={setIsEditModalVisible}
