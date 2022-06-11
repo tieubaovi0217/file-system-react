@@ -11,7 +11,7 @@ import { useIsMounted } from 'hooks/useIsMounted';
 const formItemLayout = {
   labelCol: {
     xs: {
-      span: 8,
+      span: 10,
     },
   },
   wrapperCol: {
