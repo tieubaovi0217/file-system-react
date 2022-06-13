@@ -72,7 +72,8 @@ const CardActions = ({
         type="primary"
         size={'large'}
         style={{
-          marginRight: '16px',
+          marginRight: '8px',
+          borderRadius: '16px',
         }}
         href={process.env.REACT_APP_CONFERENCE_PAGE_URL}
         target={'_blank'}
@@ -83,7 +84,8 @@ const CardActions = ({
         <Button
           type="primary"
           style={{
-            marginRight: '16px',
+            marginRight: '8px',
+            borderRadius: '16px',
           }}
           size={'large'}
           onClick={() => showEditModal()}
@@ -98,6 +100,9 @@ const CardActions = ({
           icon={<DeleteOutlined />}
           onClick={handleDelete}
           size={'large'}
+          style={{
+            borderRadius: '16px',
+          }}
         >
           Delete
         </Button>

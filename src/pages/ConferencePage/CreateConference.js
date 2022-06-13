@@ -51,7 +51,7 @@ const CreateConference = ({ onRefresh }) => {
         onClick={() => setVisible(true)}
         style={{
           marginLeft: '16px',
-          borderRadius: '24px',
+          borderRadius: '16px',
         }}
       >
         Create your conference

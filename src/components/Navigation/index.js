@@ -78,7 +78,11 @@ const Navigation = () => {
             </Link>
           </Menu.Item>
           <Menu.Item key="/auth/logout">
-            <Button type="primary" onClick={handleLogout}>
+            <Button
+              type="primary"
+              onClick={handleLogout}
+              style={{ borderRadius: '16px' }}
+            >
               Logout
             </Button>
           </Menu.Item>

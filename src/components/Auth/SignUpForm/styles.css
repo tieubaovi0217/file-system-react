@@ -3,7 +3,7 @@
   padding: 16px;
   max-width: 440px;
   margin: 100px auto;
-  border-radius: 8px;
+  border-radius: 16px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
   background-color: #fff;
 }
@@ -16,8 +16,9 @@
   float: left;
 }
 
-.signup-form-button {
+.signup-form button {
   width: 100%;
+  border-radius: 16px;
 }
 
 .signup-form h1 {

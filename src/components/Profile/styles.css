@@ -6,10 +6,9 @@
   padding: 12px;
   margin: 40px auto;
   border: 1px solid #d7d7d7;
-  border-radius: 4px;
+  border-radius: 16px;
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   max-width: 60%;
-  /* padding: 8px; */
   background-color: #fff;
 }
 
@@ -26,10 +25,6 @@
   #profile {
     max-width: 90%;
   }
-
-  /* .ant-layout.user-info {
-    flex-direction: column;
-  } */
 }
 
 .ant-tabs-content .ant-layout {
@@ -48,10 +43,34 @@
   .ant-tabs-content .ant-layout-sider.ant-layout-sider-dark {
     border-right: none;
     min-width: 100% !important;
-    max-height: 144px;
+    /* max-height: 144px; */
   }
 
   .ant-tabs-content .ant-layout-content {
     min-width: 100%;
+  }
+}
+
+.ant-input.user-info-label {
+  color: #264d59;
+  border-radius: 8px;
+}
+
+.ant-row.user-list-info {
+  padding-left: 16px;
+}
+
+.ant-layout-sider.user-avatar model-viewer {
+  height: 500px;
+}
+
+@media screen and (max-width: 576px) {
+  .ant-layout-sider.user-avatar {
+    padding-bottom: 16px;
+    border-bottom: 2px solid #ccc;
+  }
+
+  .ant-layout-content.user-info-content {
+    padding-top: 16px;
   }
 }

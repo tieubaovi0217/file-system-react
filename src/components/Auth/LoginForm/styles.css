@@ -4,7 +4,7 @@
   padding: 16px;
   max-width: 300px;
   margin: 100px auto;
-  border-radius: 8px;
+  border-radius: 16px;
   background-color: #fff;
 }
 
@@ -18,6 +18,7 @@
 
 .login-form__button {
   width: 100%;
+  border-radius: 16px;
 }
 
 .spinner {

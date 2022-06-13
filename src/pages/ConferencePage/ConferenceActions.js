@@ -24,6 +24,7 @@ const ConferenceActions = ({
           size={'large'}
           style={{
             padding: '0 100px',
+            borderRadius: '16px',
           }}
         >
           Options

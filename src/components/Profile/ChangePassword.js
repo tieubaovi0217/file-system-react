@@ -100,7 +100,12 @@ const ChangePassword = () => {
         </Form.Item>
         <Divider />
         <div className="flex justify-content-center">
-          <Button size="large" type="primary" htmlType="submit">
+          <Button
+            size="large"
+            type="primary"
+            htmlType="submit"
+            style={{ borderRadius: '16px' }}
+          >
             Update Password
           </Button>
         </div>

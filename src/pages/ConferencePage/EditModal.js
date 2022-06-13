@@ -68,7 +68,7 @@ const EditModal = ({
         }}
       >
         {update && (
-          <Form.Item name="id" label="id">
+          <Form.Item name="id" label="id" rules={[{ required: true }]}>
             <Input disabled />
           </Form.Item>
         )}
@@ -175,7 +175,14 @@ const EditModal = ({
           </Form.List>
         </div>
         <div className="flex justify-content-center">
-          <Button htmlType="submit">Submit</Button>
+          <Button
+            htmlType="submit"
+            type="primary"
+            size="large"
+            style={{ width: '100%', borderRadius: '16px' }}
+          >
+            SUBMIT
+          </Button>
         </div>
       </Form>
       <Divider />
@@ -194,7 +201,8 @@ const EditModal = ({
         >
           Edit Resources
         </Button>
-        in your conference (videos, documents, images, banners,...)
+        in your conference (videos, documents Word, PDF, PowerPoint, images,
+        banners,...)
       </div>
     </Modal>
   );

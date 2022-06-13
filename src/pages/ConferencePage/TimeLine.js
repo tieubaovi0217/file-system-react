@@ -15,11 +15,11 @@ const TimeLine = ({ timeline }) => {
   });
 
   return (
-    <div>
+    <div className="timeline">
       <Divider
         type="horizontal"
         dashed
-        style={{ letterSpacing: '4px', color: '#f6f6f6', fontSize: '24px' }}
+        style={{ letterSpacing: '4px', color: '#f6f6f6', fontSize: '32px' }}
       >
         Timeline
       </Divider>
