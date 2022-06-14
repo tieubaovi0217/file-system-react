@@ -64,6 +64,7 @@ const ResourceItem = ({
           mtime={mtime}
           size={size}
           isDirectory={isDirectory}
+          icon={icon}
         />
       ),
       onOk() {},

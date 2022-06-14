@@ -2,17 +2,13 @@ import * as moment from 'moment';
 import prettyBytes from 'pretty-bytes';
 
 import { Tooltip, Divider } from 'antd';
-import { FolderOpenFilled, FileOutlined } from '@ant-design/icons';
 
 import { truncateFileName } from 'common/helpers';
 
-const FileInfoModal = ({ name, mtime, size, isDirectory }) => {
+const FileInfoModal = ({ name, mtime, size, isDirectory, icon }) => {
   return (
     <div>
-      <div className="file-info-icon">
-        {isDirectory && <FolderOpenFilled />}
-        {!isDirectory && <FileOutlined />}
-      </div>
+      <div className="file-info-icon">{icon}</div>
 
       <Divider />
       <div className="file-info-modal">
