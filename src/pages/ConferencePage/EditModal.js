@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import * as moment from 'moment';
 import { Modal, Form, Input, Space, Divider, DatePicker, Button } from 'antd';
 
@@ -15,13 +16,15 @@ const EditModal = ({
   visible,
   setVisible,
   name,
-  startTime,
-  endTime,
+  startTime: initialStartTime,
+  endTime: initialEndTime,
   title,
   onFinish,
   update = false,
   timeline = [],
 }) => {
+  const [startTime, setStartTime] = useState(initialStartTime);
+  const [endTime, setEndTime] = useState(initialEndTime);
   const isMounted = useIsMounted();
 
   const handleOk = useCallback(() => {
@@ -88,7 +91,16 @@ const EditModal = ({
         <Form.Item
           label="Date"
           name="date"
-          rules={[{ required: true, message: 'Please select date' }]}
+          rules={[
+            { required: true, message: 'Please select date' },
+            () => ({
+              validator(_, value) {
+                setStartTime(value[0]);
+                setEndTime(value[1]);
+                return Promise.resolve(true);
+              },
+            }),
+          ]}
         >
           <RangePicker
             ranges={{
