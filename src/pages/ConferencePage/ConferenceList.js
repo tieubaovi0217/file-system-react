@@ -1,5 +1,4 @@
-import { Row, Col } from 'antd';
-
+import { Row, Col, Divider } from 'antd';
 import TimeLine from './TimeLine';
 import ConferenceCard from './ConferenceCard';
 
@@ -12,10 +11,10 @@ const thumbnailURLs = [
 
 const ConferenceList = ({ conferences, onRefresh, owner }) => {
   const cards = conferences.map(
-    ({ name, _id, startTime, endTime, timeline }) => {
+    ({ name, _id, startTime, endTime, timeline }, idx) => {
       return (
         <>
-          <Col md={12} sm={24} style={{ display: 'flex' }}>
+          <Col key={2 * idx} md={12} sm={24} style={{ display: 'flex' }}>
             <ConferenceCard
               owner={owner}
               onRefresh={onRefresh}
@@ -28,9 +27,10 @@ const ConferenceList = ({ conferences, onRefresh, owner }) => {
               thumbnailUrl={thumbnailURLs[Math.floor(Math.random() * 4)]}
             />
           </Col>
-          <Col md={12} sm={24}>
+          <Col key={2 * idx + 1} md={12} sm={24}>
             <TimeLine timeline={timeline} />
           </Col>
+          <Divider />
         </>
       );
     },
@@ -38,7 +38,7 @@ const ConferenceList = ({ conferences, onRefresh, owner }) => {
 
   return (
     <div className="conferences__list">
-      <Row gutter={[24, 24]} style={{ width: '85%' }}>
+      <Row gutter={[24, 24]} style={{ width: '75%' }}>
         {cards}
       </Row>
     </div>

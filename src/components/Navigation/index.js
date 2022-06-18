@@ -42,7 +42,9 @@ const Navigation = () => {
       }}
     >
       <Menu.Item key="/">
-        <Link to="/">VIRTUAL CONFERENCE</Link>
+        <Link to="/">
+          <h3 className="brand">VIRTUAL CONFERENCE</h3>
+        </Link>
       </Menu.Item>
 
       {!isAuthenticated && (

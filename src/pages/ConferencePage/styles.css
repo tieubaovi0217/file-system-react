@@ -159,3 +159,38 @@
     font-size: 20px;
   }
 }
+
+.timeline {
+  -webkit-transition: background 1s, font-size 1s, transform 0.6s;
+  -moz-transition: background 1s, font-size 1s, transform 0.6s;
+  -o-transition: background 1s, font-size 1s, transform 0.6s;
+  transition: background 1s, font-size 1s, transform 0.6s;
+}
+
+.timeline:hover {
+  background-color: rgba(0, 0, 0, 0.22);
+  border-radius: 16px;
+  transform: scale(110%);
+}
+
+.conference__name {
+  text-shadow: 0 2px 1px #747474, -1px 3px 1px #767676;
+}
+
+.ant-card.conference__card {
+  height: 440px;
+  border: 1px solid #c7c7c7;
+  border-radius: 16px;
+  opacity: '0.95';
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  -webkit-transition: transform 0.6s;
+  -moz-transition: transform 0.6s;
+  -o-transition: transform 0.6s;
+  transition: transform 0.6s;
+  margin-bottom: 16px;
+}
+
+.ant-card.conference__card:hover {
+  transform: scale(105%);
+}

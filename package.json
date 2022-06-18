@@ -17,6 +17,7 @@
     "moment": "^2.29.1",
     "pretty-bytes": "^6.0.0",
     "rc-banner-anim": "^2.4.5",
+    "rc-queue-anim": "^2.0.0",
     "rc-texty": "^0.2.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

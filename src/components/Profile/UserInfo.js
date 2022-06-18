@@ -1,9 +1,11 @@
-import { useState, useCallback } from 'react';
+import axios from 'axios';
+import { useState, useCallback, useEffect } from 'react';
 import { Layout, Input, Row, Col, Modal, Button, message } from 'antd';
+
+import { EditOutlined } from '@ant-design/icons';
 
 import ReadyPlayerMe from './ReadyPlayerMe';
 import { buildPath } from 'common/helpers';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
 import { authActions } from '../../slices/auth';
@@ -15,12 +17,17 @@ const UserInfo = ({
   username,
   email,
   phoneNumber = '0912345678',
-  address = 'HCMC',
+  address = 'Vietnam, Ho Chi Minh City',
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const dispatch = useDispatch();
   const avatarUrl = useSelector((state) => state.auth.avatarUrl);
+
+  useEffect(() => {
+    const hide = message.loading('Loading your avatar...', 0);
+    setTimeout(hide, 1000);
+  }, []);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -66,7 +73,6 @@ const UserInfo = ({
     <Layout>
       <Sider width={300} className="user-avatar">
         <div className="flex flex-column justify-content-center">
-          {/* <Avatar size={64} icon={<UserOutlined />} /> */}
           <model-viewer
             alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
             src={avatarUrl}
@@ -135,7 +141,12 @@ const UserInfo = ({
             />
           </Col>
           <Col className="gutter-row" md={15} xs={24}>
-            <div className="user-info">{phoneNumber}</div>
+            <Input
+              className="user-info"
+              defaultValue={phoneNumber}
+              bordered={false}
+              suffix={<EditOutlined className="edit-icon" />}
+            />
           </Col>
           <Col className="gutter-row" md={9} xs={24}>
             <Input
@@ -145,7 +156,12 @@ const UserInfo = ({
             />
           </Col>
           <Col className="gutter-row" md={15} xs={24}>
-            <div className="user-info">{address}</div>
+            <Input
+              className="user-info"
+              defaultValue={address}
+              bordered={false}
+              suffix={<EditOutlined className="edit-icon" />}
+            />
           </Col>
           <Col span={39}></Col>
         </Row>
