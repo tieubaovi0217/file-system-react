@@ -76,6 +76,7 @@ const FileBrowserPage = () => {
   );
 
   const handleRefresh = () => {
+    handleSetPath(path);
     setIsToggleRefresh((prevState) => !prevState);
   };
 

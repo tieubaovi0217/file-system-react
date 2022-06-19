@@ -8,7 +8,9 @@ import { fileActions } from 'slices/file';
 
 const FileViewerModal = () => {
   const dispatch = useDispatch();
-  const { url, type, isModalVisible } = useSelector((state) => state.file);
+  const { url, type, isModalVisible, name } = useSelector(
+    (state) => state.file,
+  );
 
   const handleOk = () => {
     handleCancel();
@@ -21,13 +23,19 @@ const FileViewerModal = () => {
   return (
     <Modal
       keyboard
-      width={1000}
-      title="Preview file"
+      style={{
+        minWidth: '1024px',
+      }}
+      title={`Preview file: ${name}`}
       visible={isModalVisible}
       onOk={handleOk}
       onCancel={handleCancel}
-      bodyStyle={{ height: 560, textAlign: 'center', overflowY: 'auto' }}
-      key={`${Math.random()}`}
+      bodyStyle={{
+        height: '540px',
+        textAlign: 'center',
+        overflowY: 'auto',
+      }}
+      key={url}
     >
       {type === 'pptx' ? (
         <iframe

@@ -156,7 +156,7 @@ const ResourceItem = ({
         type = 'pptx';
       }
       const url = onGetDownloadURL(name);
-      dispatch(fileActions.setFile({ url, type }));
+      dispatch(fileActions.setFile({ url, type, name }));
     }
   };
 
