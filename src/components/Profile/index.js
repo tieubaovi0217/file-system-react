@@ -1,14 +1,14 @@
 import './styles.css';
 
 import { Tabs } from 'antd';
-import { getUserFromLocalStorage } from 'common/localStorage';
 import UserInfo from './UserInfo';
+import { useSelector } from 'react-redux';
 import ChangePassword from './ChangePassword';
 
 const { TabPane } = Tabs;
 
 const UserProfile = () => {
-  const user = getUserFromLocalStorage();
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <section id="profile">
@@ -16,7 +16,7 @@ const UserProfile = () => {
 
       <Tabs defaultActiveKey="1" type="card" size={'small'}>
         <TabPane tab="User Profile" key="1">
-          <UserInfo username={user.username} email={user.email} />
+          <UserInfo {...user} />
         </TabPane>
         <TabPane tab="Change Password" key="2">
           <ChangePassword />

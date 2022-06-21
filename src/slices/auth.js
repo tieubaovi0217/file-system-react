@@ -4,7 +4,6 @@ import { getUserFromLocalStorage } from 'common/localStorage';
 
 const initialAuthState = {
   user: getUserFromLocalStorage(),
-  avatarUrl: getUserFromLocalStorage().avatarUrl,
   isAuthenticated: localStorage.getItem('token') ? true : false,
 };
 
@@ -23,7 +22,12 @@ const authSlice = createSlice({
     },
 
     setUserAvatarURL(state, action) {
-      state.avatarUrl = action.payload;
+      state.user.avatarUrl = action.payload;
+    },
+
+    setContactInfo(state, { payload }) {
+      state.user.phoneNumber = payload.phoneNumber;
+      state.user.address = payload.address;
     },
   },
 });

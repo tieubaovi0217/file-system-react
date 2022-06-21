@@ -78,3 +78,11 @@
 .edit-icon {
   font-size: 24px;
 }
+
+.update-info-btn {
+  padding-left: 16px;
+}
+
+.update-info-btn .ant-btn {
+  border-radius: 16px;
+}

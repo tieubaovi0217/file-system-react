@@ -20,7 +20,7 @@ export const loginUserThunk = (username, password) => {
     );
     const { user, token } = resp.data;
     dispatch(authActions.setCredentials(user));
-    dispatch(authActions.setUserAvatarURL(user.avatarUrl));
+    // dispatch(authActions.setUserAvatarURL(user.avatarUrl));
 
     saveCredentialsToLocalStorage({ user, token });
 

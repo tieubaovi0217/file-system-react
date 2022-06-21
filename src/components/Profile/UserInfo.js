@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { useState, useCallback, useEffect } from 'react';
-import { Layout, Input, Row, Col, Modal, Button, message } from 'antd';
+import { useState, useCallback } from 'react';
+import { Layout, Input, Row, Col, Modal, Button, message, Form } from 'antd';
 
 import { EditOutlined } from '@ant-design/icons';
 
@@ -9,25 +9,14 @@ import { buildPath } from 'common/helpers';
 import { useDispatch } from 'react-redux';
 
 import { authActions } from '../../slices/auth';
-import { useSelector } from 'react-redux';
+import { saveContactInfoToLocalStorage } from 'common/localStorage';
 
 const { Sider, Content } = Layout;
 
-const UserInfo = ({
-  username,
-  email,
-  phoneNumber = '0912345678',
-  address = 'Vietnam, Ho Chi Minh City',
-}) => {
+const UserInfo = ({ username, email, phoneNumber, address, avatarUrl }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const dispatch = useDispatch();
-  const avatarUrl = useSelector((state) => state.auth.avatarUrl);
-
-  useEffect(() => {
-    const hide = message.loading('Loading your avatar...', 0);
-    setTimeout(hide, 1000);
-  }, []);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -68,6 +57,39 @@ const UserInfo = ({
     },
     [dispatch],
   );
+
+  const handleUpdateInfo = async (values) => {
+    try {
+      const resp = await axios.post(
+        buildPath('/user'),
+        {
+          phoneNumber: values.phoneNumber,
+          address: values.address,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        },
+      );
+      console.log(resp.data);
+      dispatch(
+        authActions.setContactInfo({
+          phoneNumber: values.phoneNumber,
+          address: values.address,
+        }),
+      );
+      saveContactInfoToLocalStorage({
+        phoneNumber: values.phoneNumber,
+        address: values.address,
+      });
+      message.success('Update user information successfully!');
+    } catch (error) {
+      console.log(error);
+      message.error('Update user information failed!');
+    }
+  };
 
   return (
     <Layout>
@@ -112,59 +134,77 @@ const UserInfo = ({
         </div>
       </Sider>
       <Content className="user-info-content">
-        <Row gutter={[8, 8]} className="user-list-info">
-          <Col className="gutter-row" md={9} xs={24}>
-            <Input
-              className="user-info-label"
-              defaultValue="Username:"
-              disabled
-            />
-          </Col>
-          <Col className="gutter-row" md={15} xs={24}>
-            <div className="user-info">{username}</div>
-          </Col>
-          <Col className="gutter-row" md={9} xs={24}>
-            <Input
-              className="user-info-label"
-              defaultValue="Email Address:"
-              disabled
-            />
-          </Col>
-          <Col className="gutter-row" md={15} xs={24}>
-            <div className="user-info">{email}</div>
-          </Col>
-          <Col className="gutter-row" md={9} xs={24}>
-            <Input
-              className="user-info-label"
-              defaultValue="Phone Number:"
-              disabled
-            />
-          </Col>
-          <Col className="gutter-row" md={15} xs={24}>
-            <Input
-              className="user-info"
-              defaultValue={phoneNumber}
-              bordered={false}
-              suffix={<EditOutlined className="edit-icon" />}
-            />
-          </Col>
-          <Col className="gutter-row" md={9} xs={24}>
-            <Input
-              className="user-info-label"
-              defaultValue="Address:"
-              disabled
-            />
-          </Col>
-          <Col className="gutter-row" md={15} xs={24}>
-            <Input
-              className="user-info"
-              defaultValue={address}
-              bordered={false}
-              suffix={<EditOutlined className="edit-icon" />}
-            />
-          </Col>
-          <Col span={39}></Col>
-        </Row>
+        <Form
+          onFinish={handleUpdateInfo}
+          initialValues={{ phoneNumber, address }}
+        >
+          <Row gutter={[8, 8]} className="user-list-info">
+            <Col className="gutter-row" md={9} xs={24}>
+              <Form.Item>
+                <Input
+                  className="user-info-label"
+                  defaultValue="Username:"
+                  disabled
+                />
+              </Form.Item>
+            </Col>
+            <Col className="gutter-row" md={15} xs={24}>
+              <div className="user-info">{username}</div>
+            </Col>
+            <Col className="gutter-row" md={9} xs={24}>
+              <Form.Item>
+                <Input
+                  className="user-info-label"
+                  defaultValue="Email Address:"
+                  disabled
+                />
+              </Form.Item>
+            </Col>
+            <Col className="gutter-row" md={15} xs={24}>
+              <div className="user-info">{email}</div>
+            </Col>
+            <Col className="gutter-row" md={9} xs={24}>
+              <Input
+                className="user-info-label"
+                defaultValue="Phone Number:"
+                disabled
+              />
+            </Col>
+
+            <Col className="gutter-row" md={15} xs={24}>
+              <Form.Item name="phoneNumber">
+                <Input
+                  className="user-info"
+                  defaultValue={phoneNumber}
+                  bordered={false}
+                  suffix={<EditOutlined className="edit-icon" />}
+                />
+              </Form.Item>
+            </Col>
+            <Col className="gutter-row" md={9} xs={24}>
+              <Input
+                className="user-info-label"
+                defaultValue="Address:"
+                disabled
+              />
+            </Col>
+            <Col className="gutter-row" md={15} xs={24}>
+              <Form.Item name="address">
+                <Input
+                  className="user-info"
+                  defaultValue={address}
+                  bordered={false}
+                  suffix={<EditOutlined className="edit-icon" />}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <div className="update-info-btn">
+            <Button block type="primary" htmlType="submit">
+              Update
+            </Button>
+          </div>
+        </Form>
       </Content>
     </Layout>
   );
