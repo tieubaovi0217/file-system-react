@@ -56,7 +56,7 @@ const LoginForm = () => {
         <Input
           allowClear
           autoFocus
-          prefix={<UserOutlined className="site-form-item-icon" />}
+          prefix={<UserOutlined />}
           placeholder="Username"
         />
       </Form.Item>
@@ -71,7 +71,7 @@ const LoginForm = () => {
       >
         <Input
           allowClear
-          prefix={<LockOutlined className="site-form-item-icon" />}
+          prefix={<LockOutlined />}
           type="password"
           placeholder="Password"
         />
@@ -92,6 +92,8 @@ const LoginForm = () => {
           </Button>
           <Divider />
           Or <Link to="/auth/signup">Register now!</Link>
+          <br />
+          Forgot your password?<Link to="/auth/forgot"> Reset now!</Link>
         </div>
       </Form.Item>
     </Form>

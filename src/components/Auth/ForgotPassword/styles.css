@@ -1,4 +1,4 @@
-.login-form {
+.reset-form {
   border: 1px solid #ccc;
   box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.1);
   padding: 16px;
@@ -6,28 +6,17 @@
   margin: 100px auto;
   border-radius: 16px;
   background-color: #fff;
-  padding-bottom: 0px;
 }
 
-.login-form__forgot {
+.reset-form__forgot {
   float: right;
 }
 
-.ant-col-rtl .login-form__forgot {
+.ant-col-rtl .reset-form__forgot {
   float: left;
 }
 
-.login-form__button {
+.reset-form__button {
   width: 100%;
   border-radius: 16px;
-}
-
-.spinner {
-  margin: auto auto;
-}
-
-.lock-circle {
-  display: block;
-  color: red;
-  font-size: 32px;
 }
