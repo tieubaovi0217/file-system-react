@@ -1,4 +1,14 @@
 FROM node:12-alpine AS builder
+ARG REACT_APP_API_URL
+ARG REACT_APP_API_READY_PLAYER_ME_SUB_DOMAIN
+ARG REACT_APP_CONFERENCE_PAGE_URL
+ARG SKIP_PREFLIGHT_CHECK
+
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+ENV REACT_APP_API_READY_PLAYER_ME_SUB_DOMAIN=$REACT_APP_API_READY_PLAYER_ME_SUB_DOMAIN
+ENV REACT_APP_CONFERENCE_PAGE_URL=$REACT_APP_CONFERENCE_PAGE_URL
+ENV SKIP_PREFLIGHT_CHECK=$SKIP_PREFLIGHT_CHECK
+
 WORKDIR /usr/src/app
 COPY . ./
 RUN npm install
@@ -7,6 +17,7 @@ RUN npm run build
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
+COPY example.key example.crt /etc/nginx/ssl/
 COPY proxy.conf nginx.conf /etc/nginx/
 COPY --from=builder /usr/src/app/build ./
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

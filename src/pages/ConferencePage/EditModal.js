@@ -202,7 +202,7 @@ const EditModal = ({
         Or
         <Button
           type="dashed"
-          href={process.env.REACT_APP_EDITOR_PAGE_URL}
+          href={`${process.env.REACT_APP_API_URL}/EditorPage`}
           target={'_blank'}
           style={{
             marginRight: '8px',
