@@ -17,7 +17,7 @@ RUN npm run build
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
-COPY example.key example.crt /etc/nginx/ssl/
+COPY localhost* /etc/nginx/ssl/
 COPY proxy.conf nginx.conf /etc/nginx/
 COPY --from=builder /usr/src/app/build ./
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
