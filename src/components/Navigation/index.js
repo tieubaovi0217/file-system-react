@@ -2,7 +2,7 @@ import './styles.css';
 import { Link, useHistory } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
-import { Menu, Button, message } from 'antd';
+import { Menu, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUserThunk } from 'actions/auth';
