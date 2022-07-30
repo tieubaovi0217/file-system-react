@@ -29,7 +29,7 @@ const UploadFile = ({ path, onSuccess, isOnDrive }) => {
         console.log(info.file, info.fileList);
       }
       if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`, 1);
+        message.success(`Tải lên file ${info.file.name} thành công!`, 1);
         onSuccess();
       } else if (info.file.status === 'error') {
         const status = info.file.error.status;
@@ -55,7 +55,7 @@ const UploadFile = ({ path, onSuccess, isOnDrive }) => {
         icon={<UploadOutlined className="font-125" />}
         {...config}
       >
-        Upload
+        Tải lên
       </Button>
     </Upload>
   );

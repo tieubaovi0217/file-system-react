@@ -75,9 +75,7 @@ const ResetPassword = () => {
                 return Promise.resolve(true);
               }
 
-              return Promise.reject(
-                new Error('The two passwords that you entered do not match!'),
-              );
+              return Promise.reject(new Error('Không khớp mật khẩu!'));
             },
           }),
         ]}

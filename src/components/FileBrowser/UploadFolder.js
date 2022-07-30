@@ -35,11 +35,11 @@ const UploadFolder = ({ onCreateFolder, isOnDrive }) => {
         onClick={handleNewFolderFormOpen}
         {...config}
       >
-        New folder
+        Thư mục mới
       </Button>
       <ModalForm
-        modalTitle="Create a new folder"
-        inputPlaceholder="Folder name"
+        modalTitle="Tạo thư mục mới"
+        inputPlaceholder="Tên thư mục"
         defaultValue=""
         onConfirm={handleCreateFolder}
         isVisible={isShowNewFolderForm}

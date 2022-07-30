@@ -33,7 +33,7 @@ const CreateConference = ({ onRefresh }) => {
         },
       );
       console.log(resp);
-      message.success('Create conference successfully!');
+      message.success('Tạo hội nghị mới thành công!');
       setVisible(false);
       onRefresh();
     } catch (error) {
@@ -54,12 +54,13 @@ const CreateConference = ({ onRefresh }) => {
           borderRadius: '16px',
         }}
       >
-        Create your conference
+        Tạo hội nghị mới
       </Button>
       <EditModal
+        editing={false}
         visible={visible}
         setVisible={setVisible}
-        title="Create new conference"
+        title="Tạo hội nghị mới"
         onFinish={onFinish}
       />
     </>

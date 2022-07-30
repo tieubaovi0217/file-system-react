@@ -9,10 +9,10 @@ const ConferenceActions = ({
   const menu = (
     <Menu>
       <Menu.Item key="0" onClick={onShowOwnConferences}>
-        Show Your Conferences
+        * Hiển thị hội nghị của bạn
       </Menu.Item>
       <Menu.Item key="1" onClick={onShowOnlineConferences}>
-        Show Online Conferences
+        * Hiển thị tất cả hội nghị
       </Menu.Item>
     </Menu>
   );
@@ -27,7 +27,7 @@ const ConferenceActions = ({
             borderRadius: '16px',
           }}
         >
-          Options
+          Lựa chọn
         </Button>
       </Dropdown>
       <CreateConference onRefresh={onRefresh} />

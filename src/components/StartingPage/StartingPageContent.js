@@ -14,14 +14,14 @@ const StartingPageContent = () => {
                 style={{ letterSpacing: '2px' }}
                 animation={{ y: 30, opacity: 0, type: 'from' }}
               >
-                Welcome to Virtual Conference
+                Chào mừng bạn đến với nền tảng hội nghị ảo
               </TweenOne>
               <TweenOne
                 className="banner-user-text"
                 style={{ fontSize: '28px', letterSpacing: '4px' }}
                 animation={{ y: 30, opacity: 0, type: 'from', delay: 100 }}
               >
-                The Fast Way To Create Your Own Virtual Conference
+                Nơi nhanh nhất cho bạn tự tạo các cuộc hội nghị ảo trực tuyến
               </TweenOne>
             </Element>
           </BannerAnim>

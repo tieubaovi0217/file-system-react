@@ -22,6 +22,7 @@ const EditModal = ({
   onFinish,
   update = false,
   timeline = [],
+  editing = true,
 }) => {
   const [startTime, setStartTime] = useState(initialStartTime);
   const [endTime, setEndTime] = useState(initialEndTime);
@@ -48,6 +49,8 @@ const EditModal = ({
       onCancel={handleOk}
       width={800}
       className="edit-conference-modal"
+      okText="Đóng"
+      cancelText="Hủy"
     >
       <Form
         labelCol={{
@@ -76,23 +79,23 @@ const EditModal = ({
           </Form.Item>
         )}
         <Form.Item
-          label="Name"
+          label="Tên"
           name="name"
           rules={[
             {
               required: true,
-              message: 'Please type your conference name!',
+              message: 'Tên hội nghị không dược để trống!',
             },
           ]}
         >
-          <Input autoFocus allowClear placeholder="Conference name..." />
+          <Input autoFocus allowClear placeholder="Tên hội nghị..." />
         </Form.Item>
 
         <Form.Item
-          label="Date"
+          label="Ngày"
           name="date"
           rules={[
-            { required: true, message: 'Please select date' },
+            { required: true, message: 'Ngày giờ không được để trống!' },
             () => ({
               validator(_, value) {
                 setStartTime(value[0]);
@@ -131,7 +134,7 @@ const EditModal = ({
                       rules={[
                         {
                           required: true,
-                          message: 'Date required',
+                          message: 'Thời gian không được để trống!',
                         },
                         ({ getFieldValue }) => ({
                           validator(_, value) {
@@ -157,7 +160,7 @@ const EditModal = ({
                       rules={[
                         {
                           required: true,
-                          message: 'Content required',
+                          message: 'Nội dung không được để trống!',
                         },
                       ]}
                     >
@@ -165,7 +168,7 @@ const EditModal = ({
                         showCount
                         allowClear
                         maxLength={100}
-                        placeholder="Content...."
+                        placeholder="Nội dung...."
                       />
                     </Form.Item>
 
@@ -179,7 +182,7 @@ const EditModal = ({
                     block
                     icon={<PlusOutlined />}
                   >
-                    Add Timeline
+                    Thêm lịch trình
                   </Button>
                 </Form.Item>
               </>
@@ -193,29 +196,33 @@ const EditModal = ({
             size="large"
             style={{ width: '100%', borderRadius: '16px' }}
           >
-            SUBMIT
+            Gửi
           </Button>
         </div>
       </Form>
-      <Divider />
-      <div style={{ textAlign: 'center' }}>
-        Or
-        <Button
-          type="dashed"
-          href={`${process.env.REACT_APP_API_URL}/EditorPage`}
-          target={'_blank'}
-          style={{
-            marginRight: '8px',
-            marginLeft: '8px',
-            borderRadius: '20px',
-          }}
-          size={'large'}
-        >
-          Edit Resources
-        </Button>
-        in your conference (videos, documents Word, PDF, PowerPoint, images,
-        banners,...)
-      </div>
+      {editing && (
+        <>
+          <Divider />
+          <div style={{ textAlign: 'center' }}>
+            Hoặc
+            <Button
+              type="dashed"
+              href={`${process.env.REACT_APP_API_URL}/EditorPage`}
+              target={'_blank'}
+              style={{
+                marginRight: '8px',
+                marginLeft: '8px',
+                borderRadius: '20px',
+              }}
+              size={'large'}
+            >
+              Chỉnh sửa Tài nguyên
+            </Button>
+            trong hội nghị của bạn (videos, hình ảnh, tài liệu Word, PDF,
+            PowerPoint, banners, posters,...)
+          </div>
+        </>
+      )}
     </Modal>
   );
 };

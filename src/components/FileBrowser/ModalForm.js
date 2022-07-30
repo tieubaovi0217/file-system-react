@@ -58,6 +58,8 @@ const ModalForm = ({
       confirmLoading={confirmLoading}
       onCancel={handleCancel}
       destroyOnClose={true}
+      cancelText="Hủy"
+      okText="Gửi"
     >
       <Input
         allowClear

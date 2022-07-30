@@ -12,10 +12,17 @@ const ForgotPassword = () => {
         email: values.email,
       });
       console.log(resp);
-      message.success(resp.data.message);
+      message.success(
+        `Email đặt lại mật khẩu đã được gửi tới email ${values.email}!` ||
+          resp.data.message,
+      );
     } catch (err) {
       console.log(err.response?.data);
-      message.error(err.response?.data?.error || 'Server Error');
+      message.error(
+        'Địa chỉ Email không tồn tại trong hệ thống!' ||
+          err.response?.data?.error ||
+          'Server Error',
+      );
     }
   };
 
@@ -28,19 +35,19 @@ const ForgotPassword = () => {
       }}
     >
       <Form.Item>
-        <h2>Find your password</h2>
-        <p>Please enter your email address to reset for your password.</p>
+        <h2>Lấy lại mật khẩu</h2>
+        <p>Nhập địa chỉ Email tài khoản bạn muốn lấy lại mật khẩu.</p>
       </Form.Item>
       <Form.Item
         name="email"
         rules={[
           {
             type: 'email',
-            message: 'The input is not valid E-mail!',
+            message: 'Email không hợp lệ!',
           },
           {
             required: true,
-            message: 'Please input your E-mail!',
+            message: 'Email không để trống!',
           },
         ]}
       >
@@ -60,7 +67,7 @@ const ForgotPassword = () => {
             boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
           }}
         >
-          Submit
+          Gửi
         </Button>
       </Form.Item>
     </Form>

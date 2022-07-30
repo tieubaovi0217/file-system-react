@@ -29,7 +29,12 @@ const FileBrowserContent = ({
 
   let content;
   if (filteredItems.length === 0) {
-    content = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+    content = (
+      <Empty
+        image={Empty.PRESENTED_IMAGE_SIMPLE}
+        description="Không có dữ liệu"
+      />
+    );
   } else {
     const resourceItems = filteredItems.map((item) => (
       <ResourceItem

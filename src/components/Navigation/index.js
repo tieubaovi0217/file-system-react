@@ -24,7 +24,6 @@ const Navigation = () => {
   const handleLogout = () => {
     dispatch(logoutUserThunk());
     history.replace('/');
-    message.success('Logout Successfully');
   };
 
   return (
@@ -50,10 +49,10 @@ const Navigation = () => {
       {!isAuthenticated && (
         <>
           <Menu.Item key="/auth/login" className="margin-left-auto">
-            <Link to="/auth/login">Login</Link>
+            <Link to="/auth/login">Đăng nhập</Link>
           </Menu.Item>
           <Menu.Item key="/auth/signup">
-            <Link to="/auth/signup">Sign Up</Link>
+            <Link to="/auth/signup">Đăng ký</Link>
           </Menu.Item>
         </>
       )}
@@ -61,18 +60,18 @@ const Navigation = () => {
       {isAuthenticated && (
         <>
           <Menu.Item key="/root" className="margin-left-auto">
-            <Link to="/root">Resources</Link>
+            <Link to="/root">Quản lý Tài nguyên</Link>
           </Menu.Item>
           {/* <Menu.Item key="/editor">
             <Link to="/editor">Edit Conference</Link>
           </Menu.Item> */}
           <Menu.Item key="/conference">
-            <Link to="/conference">Conferences</Link>
+            <Link to="/conference">Danh sách Hội nghị</Link>
           </Menu.Item>
           <Menu.Item key="/profile">
             <Link to="/profile">
               <div>
-                <span>Profile, {user.username} </span>
+                <span>Thông tin cá nhân, {user.username} </span>
                 <span>
                   <UserOutlined />
                 </span>
@@ -85,7 +84,7 @@ const Navigation = () => {
               onClick={handleLogout}
               style={{ borderRadius: '16px' }}
             >
-              Logout
+              Đăng xuất
             </Button>
           </Menu.Item>
         </>

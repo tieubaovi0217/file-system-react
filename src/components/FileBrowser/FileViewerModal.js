@@ -26,10 +26,12 @@ const FileViewerModal = () => {
       style={{
         minWidth: '1024px',
       }}
-      title={`Preview file: ${name}`}
+      title={`Xem trước file: ${name}`}
       visible={isModalVisible}
       onOk={handleOk}
       onCancel={handleCancel}
+      okText="Đóng"
+      cancelText="Hủy"
       bodyStyle={{
         height: '540px',
         textAlign: 'center',

@@ -84,10 +84,10 @@ const UserInfo = ({ username, email, phoneNumber, address, avatarUrl }) => {
         phoneNumber: values.phoneNumber,
         address: values.address,
       });
-      message.success('Update user information successfully!');
+      message.success('Cập nhật thông tin cá nhân thành công!');
     } catch (error) {
       console.log(error);
-      message.error('Update user information failed!');
+      message.error('Cập nhật thông tin cá nhân thất bại!');
     }
   };
 
@@ -118,15 +118,17 @@ const UserInfo = ({ username, email, phoneNumber, address, avatarUrl }) => {
                 borderRadius: '16px',
               }}
             >
-              Update Virtual Avatar
+              Cập nhật hình đại diện 3D
             </Button>
             <Modal
               keyboard
-              title="Update Your Avatar"
+              title="Cập nhật Hình đại diện nhân vật 3D"
               visible={isModalVisible}
               onOk={handleOk}
               onCancel={handleCancel}
               width={1100}
+              cancelText="Hủy"
+              okText="Đóng"
             >
               <ReadyPlayerMe onUpdateAvatar={handleUpdateAvatar} />
             </Modal>
@@ -143,7 +145,7 @@ const UserInfo = ({ username, email, phoneNumber, address, avatarUrl }) => {
               <Form.Item>
                 <Input
                   className="user-info-label"
-                  defaultValue="Username:"
+                  defaultValue="Tên đăng nhập:"
                   disabled
                 />
               </Form.Item>
@@ -155,7 +157,7 @@ const UserInfo = ({ username, email, phoneNumber, address, avatarUrl }) => {
               <Form.Item>
                 <Input
                   className="user-info-label"
-                  defaultValue="Email Address:"
+                  defaultValue="Địa chỉ Email:"
                   disabled
                 />
               </Form.Item>
@@ -166,7 +168,7 @@ const UserInfo = ({ username, email, phoneNumber, address, avatarUrl }) => {
             <Col className="gutter-row" md={9} xs={24}>
               <Input
                 className="user-info-label"
-                defaultValue="Phone Number:"
+                defaultValue="Số điện thoại:"
                 disabled
               />
             </Col>
@@ -184,7 +186,7 @@ const UserInfo = ({ username, email, phoneNumber, address, avatarUrl }) => {
             <Col className="gutter-row" md={9} xs={24}>
               <Input
                 className="user-info-label"
-                defaultValue="Address:"
+                defaultValue="Địa chỉ:"
                 disabled
               />
             </Col>
@@ -201,7 +203,7 @@ const UserInfo = ({ username, email, phoneNumber, address, avatarUrl }) => {
           </Row>
           <div className="update-info-btn">
             <Button block type="primary" htmlType="submit">
-              Update
+              Cập nhật
             </Button>
           </div>
         </Form>

@@ -58,7 +58,7 @@ const ResourceItem = ({
 
   const handleShowInfoModal = () => {
     Modal.info({
-      title: 'Detail Info',
+      title: 'Thông tin file',
       content: (
         <FileInfoModal
           name={name}
@@ -171,17 +171,21 @@ const ResourceItem = ({
   const menu = (
     <Menu>
       <Menu.Item key="0" onClick={handleOpen}>
-        Open
+        Mở
       </Menu.Item>
+      <Menu.Divider />
+
       <Menu.Item key="1" onClick={handleShowInfoModal}>
-        Get Info
+        Xem thông tin
       </Menu.Item>
+      <Menu.Divider />
+
       <Menu.Item key="2" onClick={handleRenameFormOpen}>
-        Rename
+        Đổi tên
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="3" className="red-text" onClick={() => onDelete(name)}>
-        Delete
+        Xóa
       </Menu.Item>
 
       <Menu.Divider />
@@ -190,10 +194,18 @@ const ResourceItem = ({
         Download
       </Menu.Item>
 
-      <Menu.Divider />
-      <Menu.Item key="5" className="blue-text" onClick={() => onGetURL(name)}>
-        Get Content URL
-      </Menu.Item>
+      {!isDirectory && (
+        <>
+          <Menu.Divider />
+          <Menu.Item
+            key="5"
+            className="blue-text"
+            onClick={() => onGetURL(name)}
+          >
+            Sao chép Content URL
+          </Menu.Item>
+        </>
+      )}
     </Menu>
   );
 
@@ -223,8 +235,8 @@ const ResourceItem = ({
         </Col>
       </Dropdown>
       <ModalForm
-        modalTitle="Rename"
-        inputPlaceholder="New name"
+        modalTitle="Đổi tên file"
+        inputPlaceholder="Tên file mới"
         defaultValue={name}
         isVisible={isShowRenameForm}
         onConfirm={handleRename}

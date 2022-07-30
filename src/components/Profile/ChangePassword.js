@@ -35,7 +35,7 @@ const ChangePassword = () => {
         },
       );
       console.log(resp);
-      message.success('Update password successfully');
+      message.success('Cập nhật mật khẩu thành công!');
     } catch (error) {
       message.error(error.response?.data?.error || 'Server Error');
     }
@@ -51,10 +51,11 @@ const ChangePassword = () => {
       >
         <Form.Item
           name={['oldPassword']}
-          label="Old Password"
+          label="Mật khẩu hiện tại"
           rules={[
             {
               required: true,
+              message: 'Mật khẩu hiện tại không để trống!',
             },
           ]}
         >
@@ -62,11 +63,11 @@ const ChangePassword = () => {
         </Form.Item>
         <Form.Item
           name="password"
-          label="Password"
+          label="Mật khẩu mới"
           rules={[
             {
               required: true,
-              message: 'Please input your password!',
+              message: 'Mật khẩu mới không để trống!',
             },
           ]}
           hasFeedback
@@ -75,13 +76,13 @@ const ChangePassword = () => {
         </Form.Item>
         <Form.Item
           name="confirmPassword"
-          label="Confirm Password"
+          label="Nhập lại mật khẩu"
           dependencies={['password']}
           hasFeedback
           rules={[
             {
               required: true,
-              message: 'Please confirm your password!',
+              message: 'Xác nhận mật khẩu mới!',
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -89,9 +90,7 @@ const ChangePassword = () => {
                   return Promise.resolve(true);
                 }
 
-                return Promise.reject(
-                  new Error('The two passwords that you entered do not match!'),
-                );
+                return Promise.reject(new Error('Không khớp mật khẩu!'));
               },
             }),
           ]}
@@ -106,7 +105,7 @@ const ChangePassword = () => {
             htmlType="submit"
             style={{ borderRadius: '16px' }}
           >
-            Update Password
+            Cập nhật mật khẩu
           </Button>
         </div>
       </Form>

@@ -22,12 +22,12 @@ const LoginForm = () => {
     setIsLoggingIn(true);
     dispatch(loginUserThunk(username, password))
       .then(() => {
-        message.success('Login Successfully');
+        message.success('Đăng nhập thành công!');
         history.replace('/');
       })
       .catch((err) => {
         console.log(err.response?.data);
-        message.error(err.response?.data?.error || 'Server Error');
+        message.error('Sai tài khoản hoặc mật khẩu!' || 'Server Error');
       })
       .finally(() => isMounted.current && setIsLoggingIn(false));
   };
@@ -49,7 +49,7 @@ const LoginForm = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your Username!',
+            message: 'Xin hãy nhập tên đăng nhập!',
           },
         ]}
       >
@@ -57,7 +57,7 @@ const LoginForm = () => {
           allowClear
           autoFocus
           prefix={<UserOutlined />}
-          placeholder="Username"
+          placeholder="Tên đăng nhập"
         />
       </Form.Item>
       <Form.Item
@@ -65,7 +65,7 @@ const LoginForm = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your Password!',
+            message: 'Xin hãy nhập mật khẩu!',
           },
         ]}
       >
@@ -73,7 +73,7 @@ const LoginForm = () => {
           allowClear
           prefix={<LockOutlined />}
           type="password"
-          placeholder="Password"
+          placeholder="Mật khẩu"
         />
       </Form.Item>
 
@@ -88,12 +88,12 @@ const LoginForm = () => {
               boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
             }}
           >
-            Log In
+            Đăng nhập
           </Button>
           <Divider />
-          Or <Link to="/auth/signup">Register now!</Link>
+          Hoặc <Link to="/auth/signup">Đăng ký ngay!</Link>
           <br />
-          Forgot your password?<Link to="/auth/forgot"> Reset now!</Link>
+          Quên mật khẩu?<Link to="/auth/forgot"> Lấy lại mật khẩu!</Link>
         </div>
       </Form.Item>
     </Form>

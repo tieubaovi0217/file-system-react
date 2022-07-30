@@ -190,11 +190,11 @@ const FileBrowserPage = () => {
         },
       );
       console.log(resp);
-      message.success(`Delete ${name} successfully`);
+      message.success(`Xóa ${name} thành công!`);
       handleRefresh();
     } catch (error) {
       console.log(error);
-      message.error('Cannot delete file or folder, server error');
+      message.error('Không thể xóa, Server error');
     }
   };
 
@@ -235,11 +235,11 @@ const FileBrowserPage = () => {
         },
       );
       console.log(resp);
-      message.success('Rename successfully');
+      message.success('Đổi tên thành công!');
       handleRefresh();
     } catch (err) {
       console.log(err);
-      message.error('Rename failed');
+      message.error('Đổi tên thất bại!');
     }
   };
 
@@ -336,7 +336,7 @@ const FileBrowserPage = () => {
     // attach token
     // url += `&token=${localStorage.getItem('token') || ''}`;
 
-    message.info('Copied Content URL to clipboard');
+    message.info('Đã sao chép Content URL');
     navigator.clipboard.writeText(url);
     return url;
   };

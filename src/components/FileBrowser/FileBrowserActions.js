@@ -33,7 +33,7 @@ const FileBrowserActions = ({ onRefresh, path, onCreateFolder, isOnDrive }) => {
   return (
     <div className="file-browser__actions">
       <Button type="text" icon={<GoogleOutlined />} href={oauth2URL}>
-        Mirror from Google account
+        Kết nối Google Drive
       </Button>
       <UploadFolder
         isOnDrive={isOnDrive}
@@ -42,7 +42,7 @@ const FileBrowserActions = ({ onRefresh, path, onCreateFolder, isOnDrive }) => {
       />
       <UploadFile isOnDrive={isOnDrive} path={path} onSuccess={onRefresh} />
       <Button type="text" icon={<SyncOutlined />} onClick={onRefresh}>
-        Refresh
+        Làm mới
       </Button>
     </div>
   );

@@ -42,7 +42,7 @@ const FileBrowserHeader = ({
       </Breadcrumb>
       <Search
         className="file-browser__search"
-        placeholder="Search files"
+        placeholder="Tìm kiếm"
         allowClear
         onChange={onChange}
       />

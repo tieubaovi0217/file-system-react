@@ -35,19 +35,23 @@ const SignUpForm = () => {
     setIsSigningUp(true);
     dispatch(signUpUserThunk({ username, password, email, confirmPassword }))
       .then(() => {
-        message.success('Signup Successfully');
+        message.success('Đăng ký thành công!');
         history.push('/');
       })
       .catch((err) => {
         console.log(err.response?.data);
-        message.error(err.response?.data?.error || 'Server Error');
+        message.error(
+          'Tên đăng nhập hoặc địa chỉ Email đã được sử dụng!' ||
+            err.response?.data?.error ||
+            'Server Error',
+        );
       })
       .finally(() => isMounted.current && setIsSigningUp(false));
   };
 
   return (
     <div className="signup-form">
-      <h1>Create your account </h1>
+      <h1>Tạo tài khoản</h1>
       <Form
         {...formItemLayout}
         form={form}
@@ -57,11 +61,12 @@ const SignUpForm = () => {
       >
         <Form.Item
           name="username"
-          label="Username"
+          label="Tên đăng nhập"
           rules={[
             {
               required: true,
-              message: 'Please input your Username!',
+              min: 4,
+              message: 'Tên đăng nhập chứa ít nhất 4 kí tự!',
             },
           ]}
         >
@@ -73,11 +78,11 @@ const SignUpForm = () => {
           rules={[
             {
               type: 'email',
-              message: 'The input is not valid E-mail!',
+              message: 'Email không hợp lệ!',
             },
             {
               required: true,
-              message: 'Please input your E-mail!',
+              message: 'Email không để trống!',
             },
           ]}
         >
@@ -86,11 +91,11 @@ const SignUpForm = () => {
 
         <Form.Item
           name="password"
-          label="Password"
+          label="Mật khẩu"
           rules={[
             {
               required: true,
-              message: 'Please input your password!',
+              message: 'Mật khẩu không để trống!',
             },
           ]}
           hasFeedback
@@ -100,13 +105,13 @@ const SignUpForm = () => {
 
         <Form.Item
           name="confirmPassword"
-          label="Confirm Password"
+          label="Xác nhận mật khẩu"
           dependencies={['password']}
           hasFeedback
           rules={[
             {
               required: true,
-              message: 'Please confirm your password!',
+              message: 'Xác nhận mật khẩu!',
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -114,9 +119,7 @@ const SignUpForm = () => {
                   return Promise.resolve(true);
                 }
 
-                return Promise.reject(
-                  new Error('The two passwords that you entered do not match!'),
-                );
+                return Promise.reject(new Error('Không khớp mật khẩu!'));
               },
             }),
           ]}
@@ -134,7 +137,7 @@ const SignUpForm = () => {
               boxShadow: 'rgba(3, 102, 214, 0.3) 0px 0px 0px 3px',
             }}
           >
-            Register
+            Đăng ký
           </Button>
         </div>
       </Form>

@@ -9,7 +9,7 @@ const ConferenceHeading = () => {
           style={{ letterSpacing: '4px' }}
           animation={{ y: 30, opacity: 0, type: 'from', delay: 300 }}
         >
-          CONFERENCES
+          Danh sách Hội nghị
         </TweenOne>
       </span>
     </h1>

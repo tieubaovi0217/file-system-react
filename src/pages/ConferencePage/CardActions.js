@@ -30,7 +30,7 @@ const CardActions = ({
         },
       );
       console.log(resp);
-      message.success('Delete conference successfully!');
+      message.success('Xóa hội nghị thành công');
       onRefresh();
     } catch (error) {
       console.log(error.response?.data);
@@ -57,7 +57,7 @@ const CardActions = ({
         },
       );
       console.log(resp);
-      message.success('Update conference successfully!');
+      message.success('Cập nhật hội nghị thành công!');
       setIsEditModalVisible(false);
       onRefresh();
     } catch (error) {
@@ -78,7 +78,7 @@ const CardActions = ({
         href={process.env.REACT_APP_CONFERENCE_PAGE_URL}
         target={'_blank'}
       >
-        Click to join!
+        Tham gia ngay !
       </Button>
       {owner && (
         <Button
@@ -90,7 +90,7 @@ const CardActions = ({
           size={'large'}
           onClick={() => showEditModal()}
         >
-          Edit Conference
+          Chỉnh sửa hội nghị
         </Button>
       )}
 
@@ -104,14 +104,14 @@ const CardActions = ({
             borderRadius: '16px',
           }}
         >
-          Delete
+          Xóa
         </Button>
       )}
 
       <EditModal
         visible={isEditModalVisible}
         setVisible={setIsEditModalVisible}
-        title="Update conference"
+        title="Cập nhật hội nghị"
         onFinish={handleUpdateConference}
         update
         {...conference}

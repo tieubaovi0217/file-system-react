@@ -17,7 +17,7 @@ const FileInfoModal = ({ name, mtime, size, isDirectory, icon }) => {
             <tr>
               <td align="right">
                 <div>
-                  <strong>Name:</strong>
+                  <strong>Tên file:</strong>
                 </div>
               </td>
               <Tooltip title={name}>
@@ -26,14 +26,14 @@ const FileInfoModal = ({ name, mtime, size, isDirectory, icon }) => {
             </tr>
             <tr>
               <td align="right">
-                <strong>Type: </strong>
+                <strong>Loại: </strong>
               </td>
-              <td align="center">{isDirectory ? 'Directory' : 'File'}</td>
+              <td align="center">{isDirectory ? 'Thư mục' : 'Tập tin'}</td>
             </tr>
             {!isDirectory && (
               <tr>
                 <td align="right">
-                  <strong>Size: </strong>
+                  <strong>Kích thước: </strong>
                 </td>
                 <td align="center">
                   {prettyBytes(typeof size === 'string' ? Number(size) : size)}
@@ -43,7 +43,7 @@ const FileInfoModal = ({ name, mtime, size, isDirectory, icon }) => {
             {mtime && (
               <tr>
                 <td align="right">
-                  <strong>Last modified:</strong>
+                  <strong>Chỉnh sửa lần cuối:</strong>
                 </td>
                 <td align="center">
                   {moment(mtime).format('DD/MM/YYYY HH:mm:ss')}
